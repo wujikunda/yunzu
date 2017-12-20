@@ -1,0 +1,25 @@
+[{
+	"listid":"1",
+	"pic":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1509031380244&di=612c1d96ca99b76a4a3e3fc433d48c80&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F3812b31bb051f8193b46726cd0b44aed2e73e7b1.jpg",
+	"title":"高崎机场西厂立方里房",
+	"pricename":"60",
+  "typename":"住宅",
+	"typeid":"1",
+	"way":"整租",
+	"spacename":"500㎡",
+	"payway":"季付",
+	"floorname":"10层",
+  "hot":"60"
+},{
+	"listid":"2",
+	"pic":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1509031380244&di=612c1d96ca99b76a4a3e3fc433d48c80&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F3812b31bb051f8193b46726cd0b44aed2e73e7b1.jpg",
+	"title":"西厂立方里房",
+	"pricename":"80",
+  "typename":"住宅",
+	"typeid":"1",
+	"way":"合租",
+	"spacename":"1000㎡",
+	"payway":"月付",
+	"floorname":"20层",
+  "hot":"60"
+}]
