@@ -13,6 +13,8 @@
             </div>
             <div class="compareBtn"  @click="compareStart"  v-show="selectList.length > 1"><span>开始对比</span></div>
           </div>
+          <p class="no-title" v-show="!conpareList.length">无对比房源</p>
+
           <ul>
             <li v-for="(item, index) in conpareList" :key="index" class="needsclick"  @click="selcetHome(item)">
               <img class="posImg" :src="item.picurl" @error="_loadError" >
@@ -108,7 +110,6 @@
             }
           });
         });
-        console.log(type[0],type[1])
         if(type[0]!==type[1]){
           alert('请对比同一类型房源')
           return
@@ -158,6 +159,11 @@
         font-size $font-size-large-x
         color $color-theme
         padding 20px 10px
+    .no-title
+      text-align center
+      line-height 100px
+      font-size 30px
+
     .listContentS
       .listContent
         width 100%

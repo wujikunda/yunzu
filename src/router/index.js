@@ -209,6 +209,10 @@ const mobileRouter = [
       path: 'system',
       component: SettingInput,
       meta: { title: '系统设置' }
+    }, {
+      path: ':id',
+      component: PublishPage,
+      meta: { title: '我要预租' }
     }]
   }
 ]
@@ -399,6 +403,10 @@ const pcRouter = [
       path: 'system',
       component: PCSettingInput,
       meta: { title: '设置' }
+    }, {
+      path: ':id',
+      component: PCPublishPage,
+      meta: { title: '我要预租' }
     }]
   }
 ]

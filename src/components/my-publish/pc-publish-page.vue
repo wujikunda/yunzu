@@ -6,7 +6,7 @@
             :confirmTxt="'完成'"></picker>
       <div class="listContentS">
       <div class="listContent">
-        <ul>
+        <ul v-if="!isPre">
           <li ><b>上传房源照片<i>*</i></b></li>
           <div class="picList">
             <div class="listBox">
@@ -35,14 +35,17 @@
               </div>
             </div>
           </li>
-          <li>
-            <textarea placeholder="请输入您对房源的简单描述" v-model="formDate.housedesc"></textarea>
+          <li v-if="isPre">
+            <textarea placeholder="请输入其他要求..." v-model="formDate.desc"></textarea>
           </li>
-          <li>
-            <textarea placeholder="请输入您对房源周边的简单描述" v-model="formDate.addressdesc"></textarea>
+          <li v-else>
+            <textarea placeholder="请输入您对房源的简单描述..." v-model="formDate.housedesc"></textarea>
+          </li>
+          <li v-else>
+            <textarea placeholder="请输入您对房源周边的简单描述..." v-model="formDate.addressdesc"></textarea>
           </li>
         </ul>
-        <div class="buttonG" @click="submitBtn">立即发布</div>
+        <div class="buttonG" @click="submitBtn">{{isPre? "确认提交" : "立即发布"}}</div>
         <div class="blank"></div>
       </div>
     </div>
@@ -54,11 +57,12 @@
   import Picker from 'base/picker/picker'
   import Uploader from 'base/uploader/uploader'
   import Loading from 'base/loading/loading'
-  import {getPubliList} from 'api/home'
+  import {getPubliList, getAreaList} from 'api/home' 
   import {deepCopy} from 'common/js/util'
-  import {houseUpload} from 'api/publish'
+  import {houseUpload, addBefore} from 'api/publish'
   import {uploadImg} from 'api/setting'
-  import {mapGetters} from 'vuex'
+  import {mapGetters, mapMutations} from 'vuex'
+  import iMlrz from 'lrz'
   export default {
     props: {
     },
@@ -72,18 +76,29 @@
         return obj
       },
       ...mapGetters([
-        'areaList'
+        'areaList',
+        'homeCity'
       ])
     },
     data() {
       return {
         pickerData: [[]],
         pickerSelected: [-1],
-        formDate:{},
+        formDate:{
+          'picAry':[
+          ],
+          'showtypeAry':[
+          ],
+          'nearby': []
+        },
         publishTypeList:[],
         showloading:false,
-        uploadImgs: []
+        uploadImgs: [],
+        isPre:false
       }
+    },
+    mounted() {
+      this._getPublishType()
     },
     activated() {
       this._getPublishType()
@@ -97,7 +112,8 @@
           'picAry':[
           ],
           'showtypeAry':[
-          ]
+          ],
+          'cityid':this.homeCity.cityid
         }
         switch (this.$route.params.id) {
           case '1':
@@ -238,12 +254,42 @@
             this.formDate.nearbyAry = []
             this.typeName = '住房高级筛选'
             break;
+          case 'preLease':
+            this.publishTypeList = [
+              { "id": "name","title": "姓名","needs":true, "placeholder":"请输入您的姓名" },
+              { "id": "phone","title": "电话","needs":true, "placeholder":"请输入您的电话" },
+              { "id": "business","title": "业务范围","needs":true, "placeholder":"请输入业务范围" },
+              search.areaname,
+              search.address,
+              { "id": "transportation","title": "交通/车流量","needs":true, "placeholder":"请输入交通/车流量要求" },
+              search.floor,
+              { "id": "floorheight","title": "层高","needs":true, "placeholder":"请输入物业公司" },
+              search.structure,
+              search.pricename,
+              search.tenancy
+            ]
+            this.isPre = true
+            this.typeName = '我要预租'
+            break
           default:
             break;
         }
       },
       selectDone(file) {
-        this.uploadImgs = file
+        let _this = this
+        lrz(file,{
+          quality:0.3,
+          width:600,
+          fieldName: 'headimg'
+        }).then(function (rst) {
+          _this.uploadImgs.push({
+            src: rst.base64,
+            file: rst.formData
+          })
+          _this.$refs.uploadFiles.finished()
+        }).catch(function (err) {
+          alert('浏览器不支持上传图片')
+        });
       },
       selectImg() {
         this.$refs.uploadFiles.$refs.file.click()
@@ -268,6 +314,10 @@
         item.list.forEach(function(element) {
           listCreat.push({text:element,value:index})
         });
+        if(!listCreat.length && item.id == 'areaid'){
+          alert('请选择城市')
+          return
+        }
         this.pickerData = [listCreat]
         this.pickerSelected = [item.selectIndex]
         picker.scrollTo(0,item.selectIndex)
@@ -286,21 +336,26 @@
         let allneeds = true
         _this.publishTypeList.forEach(element => {
           if(element.needs && !_this.formDate[element.id]){
-            console.log(element.id)
             allneeds = false
           }
         });
-        console.log(_this.formDate)
-        if(!this.uploadImgs.length || !allneeds){
+        if((!this.uploadImgs.length && !this.isPre) || !allneeds){
           alert('请上传带*号的必要描述')
+          return
+        }
+        _this.formDate.areaname = parseFloat(_this.formDate.areaname)
+        _this.formDate.pricename = parseFloat(_this.formDate.pricename)
+         //预租
+        if(this.isPre){
+          _this._preRentHouse()
           return
         }
         for(let x in _this.areaList){
           if(_this.areaList[x].areaname === _this.formDate.areaid){
-          console.log(_this.formDate.areaid)
             _this.formDate.areaid = _this.areaList[x].areaid
           }
         }
+        
         _this.showloading = true
         if(_this.formDate.picAry.length === _this.uploadImgs.length){
           _this.showloading = false
@@ -310,9 +365,7 @@
         this.uploadImgs.forEach(element => {
           uploadImg(localStorage.getItem('usertoken'),element.file).then((res) => {
             if(!res.code){
-              console.log(res)
               _this.formDate.picAry.push({picurl: res.data.headimg})
-              console.log(_this.formDate)
               if(_this.formDate.picAry.length === _this.uploadImgs.length){
                 _this.showloading = false
                 _this.uploadHouse()
@@ -338,6 +391,50 @@
             // })
           }
         })
+      },
+      _preRentHouse() {
+        let _this = this
+        addBefore(localStorage.getItem('usertoken'),this.formDate).then((res) => {
+          if(!res.code){
+            alert('提交成功')
+            _this._getPublishType()
+          }else{
+            alert(res.msg)
+          }
+        })
+      },
+      _getAreaList(cirtyId){
+        let _this = this
+        getAreaList(localStorage.getItem('usertoken'), cirtyId).then((res) => {
+          if(!res.code){
+            let arealist = {}
+            res.data.forEach(element => {
+              arealist[element.areaid] = {}
+              arealist[element.areaid]['areaname'] = element.areaname
+              arealist[element.areaid]['areaid'] = element.areaid
+            });
+            _this.setAreaList(arealist)
+          }else{
+            alert(res.msg)
+          }
+        })
+      },
+      ...mapMutations({
+        setAreaList: 'SET_AREA_LIST'
+      })
+    },
+    watch: {
+      areaList(to , from) {
+        if(from === to){
+          return
+        }
+        this.publishTypeList[3].list = this.areaidListobj.list
+      },
+      homeCity(to , from) {
+        if(from === to){
+          return
+        }
+        this._getAreaList(to.cityid)
       }
     },
     components: {
@@ -353,9 +450,7 @@
   @import "~common/stylus/mixin"
   #publishPage
     width 100%
-    position absolute
-    left 0
-    top 100px
+    padding 10px 0
     background-color $color-white
     z-index 2
     .listContentS

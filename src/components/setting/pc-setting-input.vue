@@ -126,6 +126,7 @@ import {userInfo,modifyUserInfo,uploadImg,adviceCommit} from 'api/setting'
 import {modifyPW ,bindPhone,getVerifycode} from 'api/login'
 import {mapGetters, mapMutations} from 'vuex'
 import uploader from 'base/uploader/uploader'
+import iMlrz from 'lrz'
   export default {
     props: {
     },
@@ -272,9 +273,19 @@ import uploader from 'base/uploader/uploader'
         })
       },
       selectDone(file) {
-        this.file = file[0]['file']
-        this.imgFile = file[0]['src']
-        this.$refs.uploadFiles.finished()
+        let _this = this
+        // return
+        lrz(file,{
+          quality:0.3,
+          width:600,
+          fieldName: 'headimg'
+        }).then(function (rst) {
+          _this.file = rst.formData
+          _this.imgFile = rst.base64
+          _this.$refs.uploadFiles.finished()
+        }).catch(function (err) {
+          alert('浏览器不支持上传图片')
+        });
       },
       _uploadImg(imgObj) {
         let _this = this

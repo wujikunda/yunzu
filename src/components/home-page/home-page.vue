@@ -127,7 +127,7 @@
         this._getLocalCity()
       },
       switchItem(type,index,id,text) {
-        if(type === 'priceid' && index !== 0) {
+        if(type === 'priceid') {
           if(index === 1){
             this.serachCont['pricedesc'] = '0-' + text.substring(0, text.length - 5)
           }else if(index === this.sortObjects[2].data.length-1){
@@ -135,18 +135,20 @@
           }else{
             this.serachCont['pricedesc'] = text.substring(0, text.length - 3)
           }
-          
+          this._getHomeList(this.serachCont)
         }else{
           this.serachCont[type] = id
+          this._getHomeList(this.serachCont)
         }
-        this._getHomeList(this.serachCont)
+        
         
       },
       updateLoad() {
         if(this.homeList.length<10){
           return
         }
-        this._getHomeList({limit: this.homeList.length+10})
+        this.serachCont.limit = this.homeList.length+10
+        this._getHomeList(this.serachCont)
       },  
       searchChange(query) {
         let _this = this
@@ -301,7 +303,8 @@
         if(from.cityname === to.cityname || !from.cityname){
           return
         }
-        this._getHomeList({cityid:to.cityid})
+        this.serachCont.cityid = to.cityid
+        this._getHomeList(this.serachCont)
         this._initSearchCondition(to.cityid)
         this._getAreaList(to.cityid)
       }

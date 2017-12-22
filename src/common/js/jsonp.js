@@ -10,8 +10,12 @@ export default function jsonp(url, data, option) {
       if (!err) {
         console.log('get', urlindx, data)
         if (data.code === 10001) {
+          if (!localStorage.getItem('usertoken', '')) {
+            getPlatform() ? location.href = '/#/login' : location.href = '/#/pc/login'
+            return
+          }
+          alert('请重新登录')
           localStorage.setItem('usertoken', '')
-          alert('请登录')
           getPlatform() ? location.href = '/#/login' : location.href = '/#/pc/login'
           return false
         }

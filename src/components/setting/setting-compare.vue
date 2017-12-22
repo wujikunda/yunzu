@@ -1,7 +1,9 @@
 <template>
   <div id = "compareList">
+    
     <section class="compareListCont">
-      <scroll :data = "conpareList" class="listContentS">
+      <p class="no-title" v-show="!conpareList.length">无对比房源</p>
+      <scroll :data = "conpareList" class="listContentS" >
         <div class="listContent">
           <ul>
             <li v-for="(item, index) in conpareList" :key="index" @click="selectToCompare(item.listid)" class="needsclick">
@@ -26,7 +28,7 @@
         </div>
       </scroll>
     </section>
-
+    
     <footer>
       <div class="buttonG" v-show="selectList.length > 1" @click="compareStart">开始对比</div>
     </footer>
@@ -105,7 +107,6 @@
         loadError(event)
       },
       selectToCompare(id) {
-        console.log("selectToCompare",id)
         var index = this.selectList.indexOf(id)
         if(index < 0){
           if(this.selectList.length < 2){
@@ -137,6 +138,10 @@
       top 0
       left 0
       z-index 200
+    .no-title
+      text-align center
+      line-height 100px
+      font-size 30px
     footer
       position fixed
       z-index 201

@@ -22,6 +22,7 @@
               </div>
             </li>
           </ul>
+          <p class="no-title" v-show="!collectList.length">无收藏内容</p>
           <div class="blank"></div>
         </div>
       </div>
@@ -122,6 +123,10 @@
         font-size $font-size-large-x
         color $color-theme
         padding 20px 10px
+    .no-title
+      text-align center
+      line-height 100px
+      font-size 30px
     .listContentS
       .listContent
         width 100%

@@ -41,6 +41,7 @@
               {icon:require('common/image/icon_shoucang.png'),text: '我的收藏',type:'collect'},
               {icon:require('common/image/icon_duibi.png'),text: '我的对比',type:'compare'},
               {icon:require('common/image/icon_qianbao.png'),text: '我的钱包',type:'wallet'},
+              {icon:require('common/image/icon_yuzhu.png'),text: '我要预租',type:'preLease'},
               {icon:require('common/image/icon_fankui.png'),text: '意见反馈',type:'suggest'},
               {icon:require('common/image/icon_lianxi.png'),text: '联系我们',type:'connect'},
               {icon:require('common/image/icon_shezhi.png'),text: '设置',type:'system'}

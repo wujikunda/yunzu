@@ -20,6 +20,7 @@
                   <div class="textCont color-theme">{{houseType(item.housetype)}}</div>  
             </li>
           </ul>
+          <p class="no-title" v-show="!collectList.length">无收藏内容</p>
           <div class="blank"></div>
         </div>
       </scroll>
@@ -113,6 +114,10 @@
       top 0
       left 0
       z-index 200
+    .no-title
+      text-align center
+      line-height 100px
+      font-size 30px
     footer
       position fixed
       z-index 201

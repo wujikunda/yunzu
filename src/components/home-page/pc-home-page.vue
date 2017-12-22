@@ -1,7 +1,7 @@
 <template>
   <div id = "homePage" ref="homePage">
     <div v-if="adverts.length"  class="slider-wrapper" ref="sliderWrapper">
-      <slider :showDots = "true" :showCount = "false">
+      <slider :showDots = "true" :showCount = "false" :dotClick="true">
         <a v-for="(item,index) in adverts" :key="index">
            <!-- :href="item.adverturl" -->
           <img :src="item.picurl"  @error="_loaderrorx" > 
@@ -66,7 +66,23 @@
         serachCont: {
 
         },
-        adverts: [],
+        adverts: [
+          {
+            picurl: require('common/image/banner/1.png')
+          },
+          {
+            picurl: require('common/image/banner/2.png')
+          },
+          {
+            picurl: require('common/image/banner/3.png')
+          },
+          {
+            picurl: require('common/image/banner/4.png')
+          },
+          {
+            picurl: require('common/image/banner/5.png')
+          }
+        ],
         homeList:[],
         sortObjects: [
           {
@@ -112,17 +128,30 @@
     methods: {
       _initPage() {
         this._getLocalCity()
-        this._getAdverts()
+        // this._getAdverts()
       },
-      switchItem(type,index,id) {
-        this.serachCont[type] = id
-        this._getHomeList(this.serachCont)
+      switchItem(type,index,id,text) {
+        if(type === 'priceid') {
+          if(index === 1){
+            this.serachCont['pricedesc'] = '0-' + text.substring(0, text.length - 5)
+          }else if(index === this.sortObjects[2].data.length-1){
+            this.serachCont['pricedesc'] = text.substring(0, text.length - 5) + '-10000000'
+          }else{
+            this.serachCont['pricedesc'] = text.substring(0, text.length - 3)
+          }
+          this._getHomeList(this.serachCont)
+        }else{
+          this.serachCont[type] = id
+          this._getHomeList(this.serachCont)
+        }
+        
       },
       updateLoad() {
         if(this.homeList.length<10 || this.$route.path !== '/pc/home'){
           return
         }
-        this._getHomeList({limit: this.homeList.length+10})
+        this.serachCont.limit = this.homeList.length+10
+        this._getHomeList(this.serachCont)
       },  
       houseType(id) {
         switch (id) {
@@ -261,7 +290,8 @@
         if(from.cityname === to.cityname || !from.cityname){
           return
         }
-        this._getHomeList({cityid:to.cityid})
+        this.serachCont.cityid = to.cityid
+        this._getHomeList(this.serachCont)
         this._initSearchCondition(to.cityid)
         this._getAreaList(to.cityid)
       }

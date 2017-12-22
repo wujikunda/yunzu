@@ -9,7 +9,7 @@
   "rentway":{ "id": "rentway","title": "租金递增","needs":true, "placeholder":"请输入规则" },
   "showtype_ary":{ "id": "showtypeAry", "keyVal":"showtypename", "title": "房屋特点","needs":true, "select":true,"arrSelectIndex":[], "list": ["随时看房", "预约看房", "周末看房", "押一付一", "押一付三", "半年一交", "一年一交", "一次性交"] },
   "ageround":{ "id": "ageround", "title": "出租年限","needs":true, "selectIndex":-1, "list": ["1年以内", "1-3年","3-5年","5-10年","10-20年","20年以上"]},
-  "tenancy":{ "id": "tenancy","title": "租期", "selectIndex":-1,  "list": ["1年","两年"] },
+  "tenancy":{ "id": "tenancy","title": "租期", "selectIndex":-1,  "list": ["一个月","三个月","半年","一年","两年","三年以上"] },
   "checkin":{ "id": "checkin","title": "入住", "selectIndex":-1,  "list": ["随时入住","一周内","一月内","三月内","半年内","一年内"] },
   "letway":{ "id": "letway","title": "出租方式", "selectIndex":-1,  "list": ["短租","半年以上","一年以上","长租"] },
   "completetime":{ "id": "completetime","title": "竣工时间", "selectIndex":-1,  "list": ["已竣工","一个月内","三个月内","半年内","一年"] },
@@ -45,5 +45,5 @@
   "firecontrol":{ "id": "firecontrol","title": "消防措施","selectIndex":-1,  "list": ["有", "无"] },
   "redchart":{ "id": "redchart","title": "红线图","selectIndex":-1,  "list": ["有", "无"] },
   "power":{ "id": "power","title": "供电","selectIndex":-1,  "list": ["两相", "三相"] },
-  "floor":{ "id": "floor","selectIndex":-1, "title": "楼房层高", "list": ["1层","2层","3层","4层","5层","6层","7层","8层","9层","10层以上"] }
+  "floor":{ "id": "floor","selectIndex":-1, "title": "楼层", "list": ["1层","2层","3层","4层","5层","6层","7层","8层","9层","10层以上"] }
 }

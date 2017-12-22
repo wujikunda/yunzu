@@ -75,7 +75,6 @@
     },
     mounted() {
       this._getSearchDate()
-      console.log(this.areaidListobj)
     },
     watch: {
       '$route':['_getSearchDate']
@@ -247,9 +246,7 @@
       },
       selectCity(item, index){
         this.setHomeCity(item)
-        this.$router.replace({
-          path:'/home'
-        })
+        this.$router.back()
       },
       toIndex(  ){
         let _this = this

@@ -146,14 +146,15 @@ import iMlrz from 'lrz'
       },
       selectDone(file) {
         let _this = this
-        // return
         lrz(file,{
           quality:0.3,
           width:600,
           fieldName: 'headimg'
         }).then(function (rst) {
-          _this.file = rst.formData
-          _this.imgFile = rst.base64
+          _this.uploadImgs.push({
+            src: rst.base64,
+            file: rst.formData
+          })
           _this.$refs.uploadFiles.finished()
         }).catch(function (err) {
           alert('浏览器不支持上传图片')

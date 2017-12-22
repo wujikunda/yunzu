@@ -57,3 +57,14 @@ export function houseUpload(token, upobj, type) {
   // })
   return jsonp(url, objData, options)
 }
+
+export function addBefore(token, upobj) {
+  let url = HTTPIP + '/v1/addBefore'
+  let objData = Object.assign({}, upobj, {
+    accesstoken: token,
+    timestamp: getDate()
+  })
+  let sign = getSign(objData)
+  objData.sign = sign
+  return jsonp(url, objData, options)
+}

@@ -6,7 +6,7 @@
     </div>
     <div class="count" v-show="showCount">{{currentPageIndex+1}}/{{dots.length}}</div>
     <div class="dots" v-show="true">
-      <span class="dot" :class="{active: currentPageIndex === index }" v-for="(item, index) in dots"></span>
+      <span @click.stop="_dotClick(index)" class="dot" :class="{active: currentPageIndex === index }" v-for="(item, index) in dots"></span>
     </div>
   </div>
 
@@ -38,6 +38,10 @@
       interval: {
         type: Number,
         default: 4000
+      },
+      dotClick:{
+        type: Boolean,
+        default: false
       }
     },
     data() {
@@ -135,6 +139,9 @@
         this.timer = setTimeout(() => {
           this.slider.goToPage(pageIndex, 0, 400)
         }, this.interval)
+      },
+      _dotClick(index) {
+        this._moveToPage( index )
       },
       _moveToPage( pageIndex ) {
         setTimeout(() => {
