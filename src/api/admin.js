@@ -1,7 +1,6 @@
-import jsonp from 'common/js/jsonp'
-import { commonParams, options, HTTPIP } from './config'
+import {jsonpAdmin} from 'common/js/jsonp'
+import { options, HTTPIP } from './config'
 import { getSign, getDate } from './crypto'
-import axios from 'axios'
 
 // 用户注册
 export function userRegister(mobile, verifycode, password) {
@@ -14,7 +13,7 @@ export function userRegister(mobile, verifycode, password) {
   }
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 // 用户登录
 export function managerLogin(account, password) {
@@ -26,7 +25,7 @@ export function managerLogin(account, password) {
   }
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 // 用户注销
 export function userLogout(acctoken) {
@@ -37,7 +36,7 @@ export function userLogout(acctoken) {
   }
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 // 用户忘记密码
 export function forgetPW(phone, vfcode, password) {
@@ -50,7 +49,7 @@ export function forgetPW(phone, vfcode, password) {
   }
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 
 // 用户修改密码
@@ -64,7 +63,7 @@ export function managerModifyPW(account, oldpw, password) {
   }
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 // 用户忘记密码
 export function bindPhone(token, phone, vfcode, type) {
@@ -80,7 +79,7 @@ export function bindPhone(token, phone, vfcode, type) {
   }
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 // 用户列表
 export function managerUserList(start, limit) {
@@ -93,7 +92,7 @@ export function managerUserList(start, limit) {
   }
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 // 用户搜索
 export function managerSearchUser(mobile) {
@@ -105,7 +104,7 @@ export function managerSearchUser(mobile) {
   }
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 
 // 用户删除
@@ -118,60 +117,54 @@ export function managerDelUser(userid) {
   }
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 
 // 房源列表
-export function managerHouseList(searchkey, housetype, state) {
+export function managerHouseList(obj) {
   let url = HTTPIP + '/v1/managerHouseList'
 
-  let objData = {
-    searchkey: searchkey,
-    housetype: housetype,
-    state: state,
+  let objData = Object.assign({}, obj, {
     timestamp: getDate()
-  }
+  })
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 // 删除房源
-export function managerDelHouse(houeid) {
+export function managerDelHouse(houseid) {
   let url = HTTPIP + '/v1/managerDelHouse'
 
   let objData = {
-    houeid: houeid,
+    houseid: houseid,
     timestamp: getDate()
   }
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 // 设置房源状态
-export function managerHouseState(houeid, state) {
+export function managerHouseState(houseid, state) {
   let url = HTTPIP + '/v1/managerHouseState'
 
   let objData = {
-    houeid: houeid,
+    houseid: houseid,
     state: state,
     timestamp: getDate()
   }
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 // 资金管理列表
-export function managerAccountList(mobile, start, limit) {
+export function managerAccountList(obj) {
   let url = HTTPIP + '/v1/managerAccountList'
-  let objData = {
-    mobile: mobile,
-    start: start,
-    limit: limit,
+  let objData = Object.assign({}, obj, {
     timestamp: getDate()
-  }
+  })
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 // 广告列表
 export function managerAdvertList() {
@@ -182,23 +175,17 @@ export function managerAdvertList() {
   }
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 // 添加/更新广告
-export function managerAdvertAdd(adverturl, title, picurl, advertid) {
+export function managerAdvertAdd(obj) {
   let url = HTTPIP + '/v1/managerAdvertAdd'
-  let objData = {
-    adverturl: adverturl,
-    title: title,
-    picurl: picurl,
+  let objData = Object.assign({}, obj, {
     timestamp: getDate()
-  }
-  if(advertid){
-    objData.advertid = advertid
-  }
+  })
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 // 删除广告
 export function managerAdvertDel(advertid) {
@@ -210,7 +197,7 @@ export function managerAdvertDel(advertid) {
   }
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 // 意见列表
 export function managerFeedbackList(content) {
@@ -222,7 +209,7 @@ export function managerFeedbackList(content) {
   }
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 // 删除建议
 export function managerFeedbackDel(feedbackid) {
@@ -234,7 +221,7 @@ export function managerFeedbackDel(feedbackid) {
   }
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 // 更新建议
 export function managerFeedbackState(feedbackid, dealstate) {
@@ -247,7 +234,7 @@ export function managerFeedbackState(feedbackid, dealstate) {
   }
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 // 获取押金
 export function managerCashGet() {
@@ -258,7 +245,7 @@ export function managerCashGet() {
   }
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
 }
 
 // 更改押金
@@ -271,5 +258,42 @@ export function managerCashUpdate(cashmoney) {
   }
   let sign = getSign(objData)
   objData.sign = sign
-  return jsonp(url, objData, options)
+  return jsonpAdmin(url, objData, options)
+}
+
+// 我要预租列表
+export function managerBeforeList(cashmoney) {
+  let url = HTTPIP + '/v1/managerBeforeList'
+
+  let objData = {
+    cashmoney: cashmoney,
+    timestamp: getDate()
+  }
+  let sign = getSign(objData)
+  objData.sign = sign
+  return jsonpAdmin(url, objData, options)
+}
+// 删除预租
+export function managerBeforeDel(beforeid) {
+  let url = HTTPIP + '/v1/managerBeforeDel'
+
+  let objData = {
+    beforeid: beforeid,
+    timestamp: getDate()
+  }
+  let sign = getSign(objData)
+  objData.sign = sign
+  return jsonpAdmin(url, objData, options)
+}
+// 预租详情
+export function managerBeforeDetail(beforeid) {
+  let url = HTTPIP + '/v1/managerBeforeDetail'
+
+  let objData = {
+    beforeid: beforeid,
+    timestamp: getDate()
+  }
+  let sign = getSign(objData)
+  objData.sign = sign
+  return jsonpAdmin(url, objData, options)
 }

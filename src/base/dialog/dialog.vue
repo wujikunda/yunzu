@@ -28,5 +28,20 @@
     justify-content center
     .dialog
       background-color #fff
-  
+      .btnBox
+        display flex
+      .confirm,.cancel 
+        cursor pointer
+        padding 0 20px
+        margin 10px
+        border 1px solid $color-border
+        line-height 35px
+        height 35px
+        display block
+        border-radius 10px
+        &:hover
+          opacity 0.8
+      .confirm 
+        background-color $color-theme
+        color white
 </style>

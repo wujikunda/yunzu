@@ -8,10 +8,10 @@
       <li :key="i" class="tab-item" @click="selectItem(item)" v-for="(item, i) in tabData">
         <div class="cel" :class="{'mincel': index===0 }" :key="index" v-for="(ele, index) in item">
           <span v-if="ele.type === 'text'"  :style="ele.color ? 'color:'+ele.color : '' ">{{ele.text || '--'}}</span>
-          <span v-else><img class="cel-icon" :src="ele.text" alt="用户头像"></span>
+          <span v-else><img class="cel-icon" :src="ele.text" alt="--"></span>
         </div>
         <div class="cel controlsBox" v-if="showTabControls">
-          <div @click.stop="control(ele, item)" class="cel btnBox" v-for="(ele,index) in tabControls" :key="index">
+          <div @click.stop="control(ele, item, i)" class="cel btnBox" v-for="(ele,index) in tabControls" :key="index" v-show="stateNeedShow(item,index)">
             <img :src="ele.icon">
             <span :style="'color:'+ele.color">{{ele.text}}</span>
           </div>
@@ -48,12 +48,16 @@
       total: {
         type: Number,
         default: 0
-      }
+      },
+      onePageNumber: {
+        type: Number,
+        default: 10
+      },
     },
     computed:{
       pageCount() {
         if(this.total){
-          return 10//Math.ceil(this.total/this.tabData.length)
+          return Math.ceil(this.total/this.onePageNumber)
         }else{
           return 0
         }
@@ -78,8 +82,14 @@
         }
         this.$emit('toPage', this.currentPage)
       },
-      control(fun,item){
-        this.$emit('control', fun.funname, item)
+      control(fun,item, index){
+        this.$emit('control', fun.funname, item, index)
+      },
+      stateNeedShow(item, index) {
+        if(!item[4] || !item[4].controlsLimit){
+          return true
+        }
+        return item[4].controlsLimit.indexOf(index) > -1
       }
     }
   }
@@ -119,8 +129,6 @@
           -webkit-line-clamp: 2
           -webkit-box-orient: vertical
         .cel-icon
-          width 40px
-          border-radius 50%
           height 40px
           margin-bottom -2px
       .mincel
@@ -139,7 +147,7 @@
           justify-content center
           img
             width 18px
-            padding 5px 10px
+            margin 5px 10px
           &:hover
             text-decoration underline
       .icon

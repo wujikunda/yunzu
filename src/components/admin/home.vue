@@ -38,7 +38,7 @@
             menuItem:[
               {icon:require('common/image/icon_dingdan.png'),text: '会员管理',type:'member'},
               {icon:require('common/image/icon_shoucang.png'),text: '房源管理',type:'house'},
-              {icon:require('common/image/icon_duibi.png'),text: '订单管理',type:'order'},
+              {icon:require('common/image/icon_duibi.png'),text: '预租管理',type:'preLease'},
               {icon:require('common/image/icon_qianbao.png'),text: '资金管理',type:'fund'},
               {icon:require('common/image/icon_fankui.png'),text: '广告管理',type:'advertisement'},
               {icon:require('common/image/icon_lianxi.png'),text: '反馈管理',type:'reply'},
@@ -117,5 +117,6 @@
     .routerView
       flex 1
       padding 0px 50px
+      overflow-y scroll
       background-color #fafbfd
 </style>

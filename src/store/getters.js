@@ -14,6 +14,8 @@ export const selectList = state => state.selectList
 
 export const userAdmin = state => state.userAdmin
 
+export const advertisement = state => state.advertisement
+
 export const playing = state => state.playing
 
 export const fullScreen = state => state.fullScreen

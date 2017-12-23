@@ -1,82 +1,133 @@
 <template>
-  <div id = "userCenter">
-    <wave class="waveBox">
-      <div class="warpContent">
-        <div class="imgBox">
-          <img :src="userimg" alt="">
-        </div>
-      </div>
-    </wave>
-    <div class="box">
+  <section class="content">
+    <loading v-show="showloading"></loading>
+    <div class="headerBox">
+      <img style="width:35px;cursor:pointer" src="~common/image/btn_back.png" alt="返回" @click="_back">
+      <p>广告管理</p>
+      <span>{{pageType}}</span>
+    </div>
+    <div class="formBox">
+      <div class="inputBox">广告名称 <span>*</span> <input type="text" v-model="adverObj.title" placeholder="输入名称"></div>
+      <div class="inputBox">广告链接 <span>&nbsp</span><input type="text" v-model="adverObj.adverturl" placeholder="输入链接"></div>
       <div class="inputBox">
-        <span>手机号</span>
-        <input ref="phoneInput" v-model="userphone"  placeholder="输入手机号"/>
-      </div>
-      <div class="inputBox">
-        <span>密码</span>
-        <input ref="passWord" type="password" v-model="password"  placeholder="请输入密码"/>
+        <p>广告照片<span>*</span></p>
+        <div class="img">
+          <img :src="userimg"  @click="selectImg" class="needsclick" >
+          <b>(1张)</b>
+        </div> 
+        <uploader ref="uploadFiles"  @selectFinish="selectDone" v-show="false"></uploader>
       </div>
     </div>
-    <div class="buttonC" @click="login">登录</div>
-    <div class="linkto">
-      <router-link tag="span" to="/register/1">立即注册</router-link>
-      <span>|</span>
-      <router-link tag="span" to="/register/2">忘记密码</router-link>
-    </div>
-  </div>
+    <div class="buttonC" @click="submitClick">确认提交</div>
+  </section>
 </template>
 
 <script type="text/ecmascript-6">
-  import Wave from 'base/wave/wave'
-  import {userLogin} from 'api/login'
-  import {getPlatform} from 'api/login'
-  import {mapMutations} from 'vuex'
+import {uploadImg} from 'api/setting'
+import {managerAdvertAdd} from 'api/admin'
+import loading from 'base/loading/loading'
+import uploader from 'base/uploader/uploader'
+import {mapGetters, mapMutations} from 'vuex'
+import iMlrz from 'lrz'
   export default {
     props: {
     },
+    computed: {
+      userimg() {
+        if(this.imgFile){
+          return this.imgFile
+        }
+        return this.advertisement.picurl || require('common/image/button_addHouse.png')
+      },
+      ...mapGetters([
+        'advertisement'
+      ])
+    },
     data() {
       return {
-        userimg: require('common/image/tab_center_normal.png'),
-        password: '',
-        userphone: ''
+        pageType:'',
+        adverObj:{},
+        showloading:false,
+        file:null,
+        imgFile:null,
+      }
+    },
+    mounted() {
+      console.log(this.advertisement)
+      if(this.advertisement.advertid) {
+        this.pageType = '编辑页面'
+        this.$set(this.adverObj, 'advertid', this.advertisement.advertid)
+        this.$set(this.adverObj, 'title', this.advertisement.title)
+        this.$set(this.adverObj, 'adverturl', this.advertisement.adverturl)
+      }else{
+        this.pageType = '添加页面'
+        
+        
       }
     },
     methods: {
-      login() {
-        if(!this.testPhone(this.userphone)){
-          alert("请输入正确的手机号")
-          return  
+      _back() {
+        this.$router.back()
+      },
+      selectImg() {
+        this.$refs.uploadFiles.$refs.file.click()
+      },
+      submitClick() {
+        if(!this.file){
+          alert('请选择广告图片')
+          return
         }
-        userLogin(this.userphone, this.password).then((res) => {
+        this.showloading =true
+        this._uploadImg(this.file)
+      },
+      _uploadImg(imgObj) {
+        let _this = this
+        uploadImg('',imgObj).then((res) => {
           if(!res.code){
-            this.setUserToken(res.data.accesstoken) 
-            localStorage.setItem('usertoken',res.data.accesstoken)
-            if(getPlatform()){
-              this.$router.replace({
-                path:'/home'
-              })
-            }else{
-              this.$router.replace({
-                path:'/pc/home'
-              })
-            }
-            
+            _this.showloading =false
+            _this.adverObj.picurl = res.data.headimg
+            _this._managerAdvertAdd()
+          }else{
+            alert(res.msg)
+            _this.showloading =false
+          }
+        })
+      },
+      _managerAdvertAdd() {
+        let _this = this
+        managerAdvertAdd(_this.adverObj).then((res) => {
+          if(!res.code){
+            alert('提交成功')
+            _this.$router.replace({
+              path: '/admin/advertisement'
+            })
           }else{
             alert(res.msg)
           }
-          console.log('login',res)
         })
       },
-      testPhone(phone) {
-        let re = /^1\d{10}$/
-        return re.test(phone)
-      },
-      ...mapMutations({
-        setUserToken: 'SET_USER_TOKEN'
-      })
+      selectDone(file) {
+        let _this = this
+        lrz(file,{
+          quality:0.7,
+          fieldName: 'headimg'
+        }).then(function (rst) {
+          _this.file = rst.formData
+          _this.imgFile = rst.base64
+          _this.$refs.uploadFiles.finished()
+        }).catch(function (err) {
+          alert('浏览器不支持上传图片')
+        });
+      }
+    },
+    watch: {
+      advertisement(to, from) {
+        console.log(to)
+      }
     },
     components: {
-      Wave
+      uploader,
+      loading
     }
   }
 </script>
@@ -84,55 +135,47 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
   @import "~common/stylus/mixin"
-  #userCenter
+  .content
     width 100%
-    background-color $color-background
-    z-index 2
-    top 0
-    position fixed
-    height 100%
-  .waveBox
-    .warpContent
-      height 100px
-      top 25px
-      width 50%
-      color white
-      .imgBox
-        position relative
-        left 50%
-        width 60px
-        margin 10px 0px 10px -30px
-        background-color #fff
-        border-radius 50%
-        img
-          width 60px
-          height 60px
-  .box
-    background: $color-white
-    padding 0 20px
-    width 100%
-    box-sizing border-box
-    line-height: 30px
-    border-radius: 6px
-    position relative
+    .headerBox
+      display flex
+      align-items center
+      margin 20px 0
+      p
+        margin 0 20px
+      span
+        color #909090
+    .formBox
+      margin-left 50px
     .inputBox 
-      border-bottom 1px solid $color-border
+      color #909090
       padding 10px 0
       position relative
       display flex
-      align-items center
-      line-height 30px
+      line-height 35px
       width 100%
       span 
         display inline-block
-        width 95px
+        color $color-theme
         font-weight bold
+        margin-right 20px
+      .img
+        text-align center
+        line-height 50px
+        img
+          display block
+          width 100px
+          height 100px
+      .icon
+        width 15px
+        height 15px
       input
-        outline none
-        flex 1
-        line-height 30px
-        text-align right
+        width 400px
+        line-height 35px
+        text-indent 10px
+        border 1px solid $color-text-d
         background: $color-white
+        border-radius 5px
         color: $color-text
         font-size: $font-size-medium-x
         &::placeholder
@@ -141,16 +184,9 @@
     color $color-white
     background-color $color-theme
     buttonD()
-  .linkto
-    color $color-theme
-    margin-top 10px
-    display flex
-    text-align center
-    align-items center
-    width 100%
-    justify-content center
-    span
-      padding 5px
-        
-
+    width 200px
+    height 50px
+    left 140px
+    line-height 50px
+    margin 0
 </style>

@@ -3,7 +3,7 @@
     <m-dialog v-show="showDialog">
       <div class="dialog">
         <div class="icon">
-          <img src="~common/image/button_shanchu.png" alt="删除">
+          <img src="~common/image/icon_gantanhao.png" alt="删除">
         </div>
         <div class="text">确定要删除吗?</div>
         <div class="btnBox">
@@ -32,7 +32,7 @@
 import TableList from 'base/table-list/table-list'
 import InputBox from 'components/admin/input-box'
 import MDialog from 'base/dialog/dialog'
-import {managerUserList, managerSearchUser} from 'api/admin'
+import {managerUserList, managerSearchUser, managerDelUser} from 'api/admin'
 import {formatD} from 'common/js/util'
 
   export default {
@@ -48,22 +48,12 @@ import {formatD} from 'common/js/util'
         tabData:[],
         tabTitle:[],
         tabControls:[],
-        page:1
+        page:1,
+        deleteID:-1,
+        controlsType:"",
       }
     },
     mounted() {
-      let arr = []
-      let obj = {
-        id: 1,
-        name: 'dawang',
-        date: '1991-02-98',
-        money: '1000',
-        phone:'111111111568'
-      }
-      for (let index = 0; index < 10; index++) {
-        arr[index] = obj
-      }
-      this.tabData = arr
       this.tabTitle = ['ID', '会员昵称', '注册日期', '缴交押金', '头像', '手机号码']
       this.tabControls = [{
         text:'删除',
@@ -71,17 +61,24 @@ import {formatD} from 'common/js/util'
         funname:'delete',
         color :'#ef5b5c'
       }]
-      this._getManagerUserList(1)
+      this._getDataList(1)
     },
     methods: {
       refresh() {
-        this._getManagerUserList( this.page )
+        this._getDataList( this.page )
       },
       _serachByPhone(query) {
+        if(!query) {
+          this.refresh()
+          return
+        }
         managerSearchUser(query).then((res) => {
           if(!res.code){
-            this._formTabList(res.data.list)
-            this.tabListNumber = parseInt(res.data.usernum)
+            if(!res.data){
+              alert('无搜索内容')
+            }
+            this._formTabList([res.data])
+            this.tabListNumber = 1
           }else{
             alert(res.msg)
           }
@@ -91,17 +88,32 @@ import {formatD} from 'common/js/util'
         this.showDialog = false
       },
       confirm() {
-        this.showDialog = false
+        if(this.controlsType === 'delete') {
+          managerDelUser(this.deleteID).then((res) => {
+            if(!res.code){
+              this.refresh()
+              alert('删除成功')
+              this.showDialog = false
+            }else{
+              alert(res.msg)
+            }
+          })
+        }
+        
       },
       toPage(index) {
         this.page = index
-        this._getManagerUserList( this.page )
+        this._getDataList( this.page )
       },
       controls(type,item) {
         console.log(type,item)
+        if(type==='delete') {
+          this.deleteID = item[0].text
+          this.controlsType = type
+        }
         this.showDialog = true
       },
-      _getManagerUserList( page ) {
+      _getDataList( page ) {
         managerUserList(page*10-9, page*10).then((res) => {
           if(!res.code){
             this._formTabList(res.data.list)
@@ -179,21 +191,7 @@ import {formatD} from 'common/js/util'
       .icon
         margin-top 10px
         img
-          width 60px
-      .btnBox
-        display flex
-        .confirm,.cancel 
-          cursor pointer
-          padding 0 20px
-          margin 10px
-          border 1px solid $color-border
-          line-height 35px
-          height 35px
-          display block
-          border-radius 10px
-        .confirm 
-          background-color $color-theme
-          color white
+          width 50px
     .headerBox
       padding 20px
       display flex

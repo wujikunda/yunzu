@@ -66,9 +66,9 @@
         top 0
         margin 13px
       input
-        line-height: 40px
+        line-height: 35px
         width:100%
-        text-indent: 50px
+        text-indent: 40px
         background: $color-white
         color: $color-text
         border-radius: 6px
@@ -78,7 +78,7 @@
           color: $color-text-d
     .searchBtn
       width 80px;
-      height 40px;
+      height 35px;
       line-height: 30px
       background-color $color-theme
       color $color-white

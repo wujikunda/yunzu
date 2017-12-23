@@ -13,9 +13,8 @@
       </div>
     </m-dialog>
     <div class="headerBox">
-      <p class="listCount">广告列表 (共{{tabListNumber}}条记录) <b class="refresh" @click="refresh">刷新</b></p>
-      <a @click="_add">添加广告</a>
-      <!-- <input-box @serachClick="_serachByPhone" class="inputBox" placeholder='请输入手机号...'></input-box> -->
+      <p class="listCount">预租列表 (共{{tabListNumber}}条记录) <b class="refresh" @click="refresh">刷新</b></p>
+      <input-box @serachClick="_serachByPhone" class="inputBox" placeholder='请输入手机号...'></input-box>
     </div>
     <table-list 
       :tabData="tabData" 
@@ -33,9 +32,9 @@
 import TableList from 'base/table-list/table-list'
 import InputBox from 'components/admin/input-box'
 import MDialog from 'base/dialog/dialog'
-import {managerAdvertList, managerAdvertAdd, managerAdvertDel} from 'api/admin'
+import {managerBeforeList, managerBeforeDel, managerBeforeDetail} from 'api/admin'
 import {formatD} from 'common/js/util'
-import {mapGetters, mapMutations} from 'vuex'
+
   export default {
     props: {
     },
@@ -52,21 +51,15 @@ import {mapGetters, mapMutations} from 'vuex'
         page:1,
         deleteID:-1,
         controlsType:"",
-        searchMobile:""
       }
     },
     mounted() {
-      this.tabTitle = ['ID', '名称', '图片', '链接']
+      this.tabTitle = ['ID', '姓名', '电话', '地址']
       this.tabControls = [{
         text:'删除',
         icon: require('common/image/btn_trash.png'),
         funname:'delete',
         color :'#ef5b5c'
-      },{
-        text:'编辑',
-        icon: require('common/image/btn_bianji_blue.png'),
-        funname:'edit',
-        color :'#5cb5f2'
       }]
       this._getDataList(1)
     },
@@ -75,15 +68,19 @@ import {mapGetters, mapMutations} from 'vuex'
         this._getDataList( this.page )
       },
       _serachByPhone(query) {
-        this.searchMobile = query
-        this.refresh()
+        if(!query) {
+          this.refresh()
+          return
+        }
       },
       cancel() {
         this.showDialog = false
       },
       confirm() {
+        this.showDialog = false
+        return
         if(this.controlsType === 'delete') {
-          managerAdvertDel(this.deleteID).then((res) => {
+          managerDelUser(this.deleteID).then((res) => {
             if(!res.code){
               this.refresh()
               alert('删除成功')
@@ -99,34 +96,18 @@ import {mapGetters, mapMutations} from 'vuex'
         this.page = index
         this._getDataList( this.page )
       },
-      _add() {
-        this.setAdvertisement({})
-        this.$router.push('/admin/addAdvertisement')
-      },
       controls(type,item) {
         if(type==='delete') {
           this.deleteID = item[0].text
           this.controlsType = type
-          this.showDialog = true
-        }else if(type==='edit'){
-          let obj = {}
-          obj.advertid = item[0].text
-          obj.title = item[1].text
-          obj.picurl = item[2].text
-          obj.adverturl = item[3].realVal
-          this.setAdvertisement(obj)
-          this.$router.push('/admin/addAdvertisement')
         }
-        
+        this.showDialog = true
       },
       _getDataList( page ) {
-        let obj = {}
-        obj.start = page*10-9
-        obj.limit = page*10
-        managerAdvertList(obj).then((res) => {
+        managerBeforeList(page*10-9, page*10).then((res) => {
           if(!res.code){
             this._formTabList(res.data.list)
-            this.tabListNumber = parseInt(res.data.advertnum)
+            this.tabListNumber = parseInt(res.data.beforenum)
           }else{
             alert(res.msg)
           }
@@ -134,38 +115,34 @@ import {mapGetters, mapMutations} from 'vuex'
       },
       _formTabList(list) {
         let newList = [];
-        list.forEach(element => {
+        list.forEach((element, index) => {
           newList.push(
             [
               {
                 type:'text',
-                id:'advertid',
-                text:element.advertid
+                id:'beforeid',
+                text:index+1
               },
               {
                 type:'text',
-                id:'title',
-                text:element.title
-              },
-              {
-                type:'img',
-                id:'picurl',
-                text:element.picurl
+                id:'nickname',
+                text:element.name
               },
               {
                 type:'text',
-                id:'adverturl',
-                text:element.adverturl ? "是" : "否",
-                realVal:element.adverturl
+                id:'createdate',
+                text:element.phone
+              },
+              {
+                type:'text',
+                id:'paycash',
+                text:element.address
               }
             ]
           )
         });
         this.tabData = newList
-      },
-      ...mapMutations({
-        setAdvertisement: 'SET_ADVERTISEMENT'
-      })
+      }
     },
     components: {
       TableList,

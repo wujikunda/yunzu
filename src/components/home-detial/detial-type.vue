@@ -47,7 +47,10 @@
           <div><span>QS认证:</span>{{detial.qs || '--'}}</div>
         </div>
         <div class="textBox">
-          <div><span>周边描述:</span>{{detial.housedec || '--'}}</div>
+          <div><span>房源描述:</span>{{detial.housedec || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>周边描述:</span>{{detial.addressdesc || '--'}}</div>
         </div>
       </div>
       <div v-if="detial.house_type==2">
@@ -84,6 +87,12 @@
         </div>
         <div class="textBox">
           <div><span>能否注册公司:</span>{{detial.register || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>房源描述:</span>{{detial.housedec || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>周边描述:</span>{{detial.addressdesc || '--'}}</div>
         </div>
       </div>
       <div v-if="detial.house_type==3">
@@ -128,7 +137,10 @@
           <div><span>QS认证:</span>{{detial.qs || '--'}}</div>
         </div>
         <div class="textBox">
-          <div><span>周边描述:</span>{{detial.housedec || '--'}}</div>
+          <div><span>房源描述:</span>{{detial.housedec || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>周边描述:</span>{{detial.addressdesc || '--'}}</div>
         </div>
       </div>          
       <div v-if="detial.house_type==4">
@@ -215,6 +227,12 @@
         </div>
         <div class="textBox">
           <div><span>电梯:</span>{{detial.elevator || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>房源描述:</span>{{detial.housedec || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>周边描述:</span>{{detial.addressdesc || '--'}}</div>
         </div>
       </div>
   </div>

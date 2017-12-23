@@ -25,6 +25,9 @@ const mutations = {
   [types.SET_USER_ADMIN](state, flag) {
     state.userAdmin = flag
   },
+  [types.SET_ADVERTISEMENT](state, flag) {
+    state.advertisement = flag
+  },
   [types.SET_PLAYING_STATE](state, flag) {
     state.playing = flag
   },

@@ -140,12 +140,11 @@
     updated() {
       document.body.scrollTop = 0
       document.documentElement.scrollTop = 0
-      
+      this.paycash = !!parseInt(localStorage.getItem('__paycash__'))
+      this.motoPage(0)
+      this.$refs.slider._refresh()
       if(this.$refs.map){
         this.$refs.map.updateMap()
-        this.paycash = !!parseInt(localStorage.getItem('__paycash__'))
-        this.motoPage(0)
-        this.$refs.slider._refresh()
       }
     },
     watch: {
@@ -439,11 +438,12 @@
         .pshowList
           display flex
           width 600px
+          flex-wrap wrap
           margin 0 auto
           img
             border 1px solid $color-border
-            height 98px
-            width 98px
+            height 100px
+            width 100px
             margin 10px 20px 10px 0 
             &.active
               border 1px solid $color-theme

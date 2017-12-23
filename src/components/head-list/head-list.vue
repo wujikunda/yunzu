@@ -51,6 +51,12 @@
       ])
     },
     mounted() {
+      this.initIconlist()
+      this._initLocalCity()
+      this._initCityList()
+      if(localStorage.getItem('cityid') && localStorage.getItem('cityname')){
+        return
+      }
       let _this = this;
       var geolocation = new BMap.Geolocation();
       geolocation.getCurrentPosition(function(r){
@@ -64,9 +70,7 @@
           alert('failed'+this.getStatus());
         }        
       },{enableHighAccuracy: true})
-      this.initIconlist()
-      _this._initLocalCity()
-      _this._initCityList()
+      
     },
     updated() {
       this._getAreaList(this.homeCity.cityid)

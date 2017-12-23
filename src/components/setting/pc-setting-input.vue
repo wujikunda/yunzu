@@ -303,9 +303,6 @@ import iMlrz from 'lrz'
           if(!res.code){
             this.setUserInfo(res.data)
             alert('保存成功')
-            _this.$router.replace({
-              path: '/pc/setting/member'
-            })
           }else{
             alert(res.msg)
           }

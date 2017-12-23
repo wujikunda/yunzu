@@ -38,10 +38,10 @@
           <li v-if="isPre">
             <textarea placeholder="请输入其他要求..." v-model="formDate.desc"></textarea>
           </li>
-          <li v-else>
-            <textarea placeholder="请输入您对房源的简单描述..." v-model="formDate.housedesc"></textarea>
+          <li v-if="!isPre">
+            <textarea placeholder="请输入您对房源的简单描述..." v-model="formDate.housedec"></textarea>
           </li>
-          <li v-else>
+          <li v-if="!isPre">
             <textarea placeholder="请输入您对房源周边的简单描述..." v-model="formDate.addressdesc"></textarea>
           </li>
         </ul>

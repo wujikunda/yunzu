@@ -6,6 +6,7 @@ const state = {
   homeCity: '',
   homeDetial: {},
   userAdmin: false,
+  advertisement: {},
   homeList: [],
   areaList: {},
   selectList: [],

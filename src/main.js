@@ -7,7 +7,7 @@ import store from './store'
 import VueLazyload from 'vue-lazyload'
 import axios from 'axios'
 import { setTitle } from 'common/js/dom'
-import iView from 'iview'
+import iview from 'iview'
 import 'iview/dist/styles/iview.css'
 import 'common/stylus/index.styl'
 
@@ -40,7 +40,8 @@ fastclick.attach(document.body)
 Vue.use(VueLazyload, {
   loading: require('common/image/default.png')
 })
-Vue.use(iView)
+// Vue.component('Modal', Modal)
+Vue.use(iview)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

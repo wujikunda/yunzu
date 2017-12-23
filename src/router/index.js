@@ -437,13 +437,13 @@ const AdminHouseDetial = (resolve) => {
     resolve(module)
   })
 }
-const AdminOrder = (resolve) => {
-  import ('components/admin/order').then((module) => {
+const AdminPreLease = (resolve) => {
+  import ('components/admin/prelease').then((module) => {
     resolve(module)
   })
 }
-const AdminOrderDetial = (resolve) => {
-  import ('components/admin/order-detial').then((module) => {
+const AdminPreLeaseDetial = (resolve) => {
+  import ('components/admin/prelease-detial').then((module) => {
     resolve(module)
   })
 }
@@ -506,18 +506,18 @@ const adminRouter = [
       component: AdminHouse,
       meta: { title: '房源管理' }
     }, {
-      path: 'houseDetial',
+      path: 'houseDetial/:id',
       component: AdminHouseDetial,
       meta: { title: '房源详情' }
     },
     {
-      path: 'order',
-      component: AdminOrder,
-      meta: { title: '订单管理' }
+      path: 'preLease',
+      component: AdminPreLease,
+      meta: { title: '预租管理' }
     }, {
-      path: 'orderDetial',
-      component: AdminOrderDetial,
-      meta: { title: '订单详情' }
+      path: 'preLeaseDetial',
+      component: AdminPreLeaseDetial,
+      meta: { title: '预租详情' }
     }, {
       path: 'fund',
       component: AdminFund,
@@ -532,6 +532,10 @@ const adminRouter = [
       meta: { title: '广告管理' }
     }, {
       path: 'advertisementDetial',
+      component: AdminAdvertisementDetial,
+      meta: { title: '广告详情' }
+    }, {
+      path: 'addAdvertisement',
       component: AdminAdvertisementDetial,
       meta: { title: '广告详情' }
     }, {

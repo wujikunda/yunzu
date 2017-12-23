@@ -5,7 +5,7 @@
       </slot>
     </div>
     <div class="count" v-show="showCount">{{currentPageIndex+1}}/{{dots.length}}</div>
-    <div class="dots" v-show="true">
+    <div class="dots" v-show="showDots">
       <span @click.stop="_dotClick(index)" class="dot" :class="{active: currentPageIndex === index }" v-for="(item, index) in dots"></span>
     </div>
   </div>
