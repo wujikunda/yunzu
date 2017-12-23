@@ -133,7 +133,7 @@ import Scroll from 'base/scroll/scroll'
           font-size: $font-size-medium
         img
           width: 12px
-          padding 0 6px
+          margin 0 6px
   .scrollBox 
     max-height calc(100vh - 140px)
     overflow hidden

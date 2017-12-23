@@ -512,7 +512,7 @@
               width 95px
             img 
               width 15px
-              padding 0 0 0 10px
+              margin 0 0 0 10px
             .arrBox
               b
                 width 100%
@@ -540,6 +540,7 @@
               height 80px
               border 1px solid $color-border
               box-sizing border-box
+              font-size $font-size-medium
               padding 10px 0
               text-indent 20px
               line-height 20px

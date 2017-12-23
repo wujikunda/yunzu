@@ -240,7 +240,7 @@
                   span
                     margin-left 10px
                     border-radius 5px
-                    height 20px
+                    display block
                     line-height 20px
                     padding 5px 10px
                     border 1px solid $color-theme

@@ -13,7 +13,7 @@
         <span @click="getVeri" ref="veriT" v-show="showR">{{getVercode?'发送验证码':count}}</span>
       </div>
       <div class="inputBox">
-        <input ref="verification" type="password" v-model="verification"  :placeholder="input2"/>
+        <input ref="verification" :type="input2Type" v-model="verification"  :placeholder="input2"/>
       </div>
       <div class="inputBox">
         <input ref="passWord" type="password" v-model="password"  :placeholder="input3"/>
@@ -38,6 +38,7 @@
         password: '',
         input1: '请输入手机号',
         input2: '',
+        input2Type:'text',
         input3: '',
         type: '立即注册',
         showR: true,
@@ -56,16 +57,19 @@
         this.password =''
         if(this.$route.params.type === '1'){
           this.input2 = '请输入验证码'
+          this.input2Type = 'text'
           this.input3 = '请输入密码'
           this.type = '立即注册'
           this.$setTitle('立即注册')
         }else if(this.$route.params.type === '2'){
           this.input2 = '请输入验证码'
+          this.input2Type = 'text'
           this.input3 = '请输入密码'
           this.type = '立即修改'
           this.$setTitle('忘记密码')
         }else if(this.$route.params.type === '3'){
           this.input2 = '请输入旧密码'
+          this.input2Type = 'password'
           this.input3 = '请输入新密码'
           this.type = '立即修改'
           this.showR = false
@@ -157,9 +161,10 @@
         }
         userRegister(this.username,this.verification,this.password).then((res) => {
           if(!res.code){
+            localStorage.setItem('usertoken',res.data.accesstoken)
             alert('成功注册')
             this.$router.replace({
-              path:'/home'
+              path:'/login'
             })
           }else{
             alert(res.msg)

@@ -151,10 +151,8 @@ import iMlrz from 'lrz'
           width:600,
           fieldName: 'headimg'
         }).then(function (rst) {
-          _this.uploadImgs.push({
-            src: rst.base64,
-            file: rst.formData
-          })
+          _this.file = rst.formData
+          _this.imgFile = rst.base64
           _this.$refs.uploadFiles.finished()
         }).catch(function (err) {
           alert('浏览器不支持上传图片')
@@ -206,6 +204,9 @@ import iMlrz from 'lrz'
           localStorage.setItem('usertoken','')
           }else{
             alert(res.msg)
+            this.$router.replace({
+              path:'/login'
+            })
           }
         })
       },

@@ -294,6 +294,8 @@
         this._getHomeList(this.serachCont)
         this._initSearchCondition(to.cityid)
         this._getAreaList(to.cityid)
+        localStorage.setItem('cityid', to.cityid)
+        localStorage.setItem('cityname', to.cityname)
       }
     },
     components: {
@@ -338,7 +340,7 @@
         img 
           width 20px
           height 20px
-          padding 0 20px
+          margin 0 20px
     .home-list 
       position relative
       width 100%
@@ -391,6 +393,6 @@
                 &.hotNum
                   color red
                 img 
-                  padding-right 10px
+                  margin-right 10px
                   width 15px
 </style>

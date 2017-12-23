@@ -8,9 +8,10 @@
         </div>
         <span>余额</span>
         <p>{{money}}元</p>
+        <div style="color:#cbcbcb">({{checkPay() ? '已': '未'}}缴纳押金)</div>
       </div>
-      <div class="buttonC" @click="_payForRent">充值</div>
-      <div class="buttonB" @click="_refund">提现</div>
+      <div class="buttonC" @click="_payForRent">缴纳押金</div>
+      <div class="buttonB" @click="_refund">退还押金</div>
     </section>
   </div>
 </template>
@@ -48,6 +49,9 @@
             alert(res.msg)
           }
         })
+      },
+      checkPay() {
+        return !!parseInt(localStorage.getItem('__paycash__'))
       },
       _payForRent() {
         let amount = 1

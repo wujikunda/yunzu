@@ -76,6 +76,6 @@
             img 
               width 40%
               height 40%
-              padding 20px
+              margin 20px
 
 </style>

@@ -4,6 +4,14 @@
       <div id="fullImg" @click="fullimg = ''" v-show="fullimg">
         <img :src="fullimg" alt="">
       </div>
+      <Modal
+        v-model="dialog"
+        title="云租房产"
+        ok-text="去缴纳"
+        @on-ok="dialogOk"
+        @on-cancel="dialogCancel">
+        <p style="font-size:16px">需缴纳押金后方可看到电话</p>
+      </Modal>
       <scroll ref="scroll" :data="detial.nearlist" class="home-detial-content">
         <div>
           <div v-if="detial.pic_ary"  class="slider-wrapper" ref="sliderWrapper">
@@ -127,6 +135,7 @@
         isCompare:false,
         fullimg:'',
         paycash:false,
+        dialog:false,
         paycashNoneStr: '缴纳押金后可见'
       }
     },
@@ -201,8 +210,16 @@
         if(this.paycash){
           location.href = 'tel:'+this.detial.owntel
         }else{
-          alert('需缴纳押金')
+          this.dialog = true
         }
+      },
+      dialogOk() {
+        this.$router.push({
+          path:`/setting/wallet`
+        })
+      },
+      dialogCancel(){
+
       },
       addToCollect() {
         let houseid = this.homeDetial.listid

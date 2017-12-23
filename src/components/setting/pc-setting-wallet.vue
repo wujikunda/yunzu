@@ -3,11 +3,11 @@
     <m-dialog v-show="showdialog" >
       
       <div class="dialog">
-        <div class="closeBtn" @click="showdialog=false">
+        <div class="closeBtn" @click="_closeBtn">
           <img src="~common/image/button_shanchu.png">
         </div>
         <div id="qrcode"></div>
-        <p>请用微信扫描完成付款</p>
+        <p>请用微信扫描完成押金充值</p>
       </div>
 
       
@@ -17,9 +17,10 @@
         <img src="~common/image/wodeqianbao.png" alt="">
         <span>余额</span>
         <p>{{money}}元</p>
+        <div style="color:#cbcbcb">({{checkPay() ? '已': '未'}}缴纳押金)</div>
       </div>
-      <div class="buttonC" @click="_payForRent">充值</div>
-      <div class="buttonB" @click="_refund">提现</div>
+      <div class="buttonC" @click="_payForRent">缴纳押金</div>
+      <div class="buttonB" @click="_refund">退还押金</div>
     </section>
   </div>
 </template>
@@ -34,7 +35,8 @@
     data() {
       return {
         money:'0.00',
-        showdialog:false
+        showdialog:false,
+        timer:null
       }
     },
     mounted() {
@@ -50,6 +52,9 @@
           }
         })
       },
+      checkPay() {
+        return !!parseInt(localStorage.getItem('__paycash__'))
+      },
       _payForRent() {
         let amount = 1
         if(this.haspay){
@@ -63,22 +68,25 @@
             this.haspay = true
             this._getQart(res.data.redirect_url)
             // location.href = res.data.redirect_url
-            let timer = setInterval(updateCount,1000)
-            function updateCount() {
-              userInfo(localStorage.getItem('usertoken')).then((res) => {
-                if(!res.code){
-                  localStorage.setItem('__paycash__',res.data.paycash)
-                  if(!!parseInt(res.data.paycash)){
-                    clearInterval(timer)
-                    _this.showdialog = false
-                    alert('充值成功')
-                  }
-                }
-              })
-              
-            }
+            this.timer = setInterval(this.updateCount,1000)
           }else{
             alert(res.msg)
+          }
+        })
+      },
+      _closeBtn(){
+        this.showdialog = false
+        clearInterval(this.timer)
+      },
+      updateCount() {
+        userInfo(localStorage.getItem('usertoken')).then((res) => {
+          if(!res.code){
+            localStorage.setItem('__paycash__',res.data.paycash)
+            if(!!parseInt(res.data.paycash)){
+              clearInterval(this.timer)
+              _this.showdialog = false
+              alert('缴纳成功')
+            }
           }
         })
       },

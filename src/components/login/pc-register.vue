@@ -14,7 +14,7 @@
           <span @click="getVeri" ref="veriT" v-show="showR">{{getVercode?'发送验证码':'重新发送('+count+')'}}</span>
         </div>
         <div class="inputBox">
-          <input ref="verification" type="password" v-model="verification"  :placeholder="input2"/>
+          <input ref="verification" type="text" v-model="verification"  :placeholder="input2"/>
         </div>
         <div class="inputBox">
           <input ref="passWord" type="password" v-model="password"  :placeholder="input3"/>
@@ -159,9 +159,10 @@
         }
         userRegister(this.username,this.verification,this.password).then((res) => {
           if(!res.code){
+            localStorage.setItem('usertoken',res.data.accesstoken)
             alert('成功注册')
             this.$router.replace({
-              path:'/home'
+              path:'/pc/login'
             })
           }else{
             alert(res.msg)
@@ -188,7 +189,7 @@
     background-color $color-background
     z-index 2
     top 0
-    position fixed
+    position absolute
     height 100%
   .pcbox
     width 1000px

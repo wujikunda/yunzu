@@ -7,6 +7,8 @@ import store from './store'
 import VueLazyload from 'vue-lazyload'
 import axios from 'axios'
 import { setTitle } from 'common/js/dom'
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
 import 'common/stylus/index.styl'
 
 /* eslint-disable no-unused-vars */
@@ -38,7 +40,7 @@ fastclick.attach(document.body)
 Vue.use(VueLazyload, {
   loading: require('common/image/default.png')
 })
-
+Vue.use(iView)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

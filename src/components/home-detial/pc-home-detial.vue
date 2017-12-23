@@ -3,6 +3,21 @@
         <div id="fullImg" @click="fullimg = ''" v-show="fullimg">
           <img :src="fullimg" alt="">
         </div>
+        <Modal
+          v-model="dialog"
+          title="云租房产"
+          ok-text="去缴纳"
+          @on-ok="dialogOk"
+          @on-cancel="dialogCancel">
+          <p style="font-size:18px">需缴纳押金后方可看到电话</p>
+        </Modal>
+        <Modal
+          v-model="dialog2"
+          title="云租房产"
+          @on-ok="dialog2 = false"
+          @on-cancel="dialog2 = false">
+          <p style="font-size:18px">请拨打电话{{detial.owntel}}</p>
+        </Modal>
         <div class="home-detial-content">
           <div class="detialTitle">
             <p class="routerLink">
@@ -149,6 +164,8 @@
         currentIndex: 0,
         paycash:false,
         fullimg:'',
+        dialog:false,
+        dialog2:false,
         paycashNoneStr: '缴纳押金后可见'
       }
     },
@@ -245,10 +262,18 @@
       },
       _rentHouse(){
         if(this.paycash){
-          alert('请拨打电话:'+this.detial.owntel)
+          this.dialog2 = true
         }else{
-          alert('需缴纳押金')
+          this.dialog = true
         }
+      },
+      dialogOk() {
+        this.$router.push({
+          path:`/pc/setting/wallet`
+        })
+      },
+      dialogCancel(){
+
       },
       addToCollect() {
         let houseid = this.homeDetial.listid

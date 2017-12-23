@@ -120,6 +120,6 @@
               &.hotNum
                 color red
               img 
-                padding 10px
+                margin 10px
                 width 15px
 </style>

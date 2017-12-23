@@ -15,7 +15,7 @@
         </div>
         <div class="inputBox">
           <span>密码</span>
-          <input ref="passWord" type="password" v-model="password"  placeholder="请输入密码"/>
+          <input @keyup.enter="login" ref="passWord" type="password" v-model="password"  placeholder="请输入密码"/>
         </div>
       </div>
       <div class="buttonC" @click="login">登录</div>
@@ -99,9 +99,9 @@
     width 100%
     background-color $color-background
     z-index 2
+    position absolute
     top 0
-    position fixed
-    height 100%
+    height 100vh
   .pcbox
     width 1000px
     overflow hidden

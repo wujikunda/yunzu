@@ -502,7 +502,7 @@
             img 
               width 18px
               height 18px
-              padding 0 10px
+              margin 0 10px
         ul
           width 100%
           padding 0 15px
@@ -547,7 +547,7 @@
               font-weight bold
             img 
               width 15px
-              padding 0 0 0 10px
+              margin 0 0 0 10px
             .pickerSelect 
               flex 1
               line-height 40px
@@ -576,6 +576,7 @@
               flex 1
               border none 
               outline none
+              font-size $font-size-medium
               resize none
               height 80px
               box-sizing border-box

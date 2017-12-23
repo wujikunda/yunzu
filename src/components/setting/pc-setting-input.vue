@@ -96,7 +96,7 @@
         </div>
         <div class="inputBox">
           <span>旧密码<i>*</i></span>
-          <input v-model="modifyObj.oldpw"  placeholder="请输入旧密码" />
+          <input type="password" v-model="modifyObj.oldpw"  placeholder="请输入旧密码" />
         </div>
         <div class="inputBox">
           <span>新密码<i>*</i></span>
@@ -264,9 +264,7 @@ import iMlrz from 'lrz'
         adviceCommit(localStorage.getItem('usertoken'),this.suggestText).then((res) => {
           if(!res.code){
             alert('感谢您的宝贵建议')
-            _this.$router.push({
-              path: "/pc/setting"
-            })
+            this.suggestText = ""
           }else{
             alert(res.msg)
           }
@@ -337,6 +335,10 @@ import iMlrz from 'lrz'
         modifyPW(this.userInfo.phone,this.modifyObj.oldpw,this.modifyObj.password).then((res) => {
           if(!res.code){
             alert('修改成功')
+            this.modifyObj.oldpw = ""
+            this.modifyObj.confirm = ""
+            this.modifyObj.password = ""
+            this.modifyObj.verify = ""
             this.$router.push('/pc/setting/member')
           }else{
             alert(res.msg)
@@ -353,6 +355,9 @@ import iMlrz from 'lrz'
           localStorage.setItem('usertoken','')
           }else{
             alert(res.msg)
+            this.$router.replace({
+              path:'/pc/login'
+            })
           }
         })
       },
