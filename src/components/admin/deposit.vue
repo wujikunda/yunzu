@@ -1,82 +1,72 @@
 <template>
-  <div id = "userCenter">
-    <wave class="waveBox">
-      <div class="warpContent">
-        <div class="imgBox">
-          <img :src="userimg" alt="">
-        </div>
-      </div>
-    </wave>
-    <div class="box">
-      <div class="inputBox">
-        <span>手机号</span>
-        <input ref="phoneInput" v-model="userphone"  placeholder="输入手机号"/>
-      </div>
-      <div class="inputBox">
-        <span>密码</span>
-        <input ref="passWord" type="password" v-model="password"  placeholder="请输入密码"/>
-      </div>
+  <section class="content">
+    <div class="headerBox">
+      <img style="width:35px;cursor:pointer" src="~common/image/btn_back.png" alt="返回" @click="_back">
+      <p>押金管理</p>
     </div>
-    <div class="buttonC" @click="login">登录</div>
-    <div class="linkto">
-      <router-link tag="span" to="/register/1">立即注册</router-link>
-      <span>|</span>
-      <router-link tag="span" to="/register/2">忘记密码</router-link>
+    <div class="formBox">
+      <div class="inputBox"> <span>当前押金</span><b>¥{{payCash}}</b></div>
+      <div class="inputBox"> <span>押金设置<b style="color:#ff5000">*</b></span> <input  v-model="upPayCash" placeholder="请输入要设置的押金" ></div>
     </div>
-  </div>
+    <div class="buttonC" @click="_managerCashUpdate">确认提交</div>
+  </section>
 </template>
 
 <script type="text/ecmascript-6">
-  import Wave from 'base/wave/wave'
-  import {userLogin} from 'api/login'
-  import {getPlatform} from 'api/login'
-  import {mapMutations} from 'vuex'
+import {managerCashGet, managerCashUpdate} from 'api/admin'
+import {mapGetters, mapMutations} from 'vuex'
   export default {
     props: {
     },
+    computed: {
+      ...mapGetters([
+        'advertisement'
+      ])
+    },
     data() {
       return {
-        userimg: require('common/image/tab_center_normal.png'),
-        password: '',
-        userphone: ''
+        adverObj:{},
+        payCash:0,
+        upPayCash:""
       }
     },
+    mounted() {
+      this._managerCashGet()
+    },
     methods: {
-      login() {
-        if(!this.testPhone(this.userphone)){
-          alert("请输入正确的手机号")
-          return  
-        }
-        userLogin(this.userphone, this.password).then((res) => {
+      _back() {
+        this.$router.back()
+      },
+      _managerCashGet() {
+        managerCashGet().then((res) => {
           if(!res.code){
-            this.setUserToken(res.data.accesstoken) 
-            localStorage.setItem('usertoken',res.data.accesstoken)
-            if(getPlatform()){
-              this.$router.replace({
-                path:'/home'
-              })
-            }else{
-              this.$router.replace({
-                path:'/pc/home'
-              })
-            }
-            
+            this.payCash = (parseFloat(res.data)/100).toFixed(2) 
           }else{
             alert(res.msg)
           }
-          console.log('login',res)
         })
       },
-      testPhone(phone) {
-        let re = /^1\d{10}$/
-        return re.test(phone)
-      },
-      ...mapMutations({
-        setUserToken: 'SET_USER_TOKEN'
-      })
+      _managerCashUpdate() {
+        if(!this.upPayCash ){
+          alert('请输入设置金额')
+        }
+        let carsh = (parseFloat(this.upPayCash)*100)
+        if(!carsh) {
+          alert('只能输入数字和小数点')
+          return
+        }
+        managerCashUpdate(carsh).then((res) => {
+          if(!res.code){
+            this._managerCashGet()
+            this.upPayCash = ""
+            alert("提交成功")
+          }else{
+            alert(res.msg)
+          }
+        })
+      }
     },
     components: {
-      Wave
     }
   }
 </script>
@@ -84,73 +74,71 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
   @import "~common/stylus/mixin"
-  #userCenter
+  .content
     width 100%
-    background-color $color-background
-    z-index 2
-    top 0
-    position fixed
-    height 100%
-  .waveBox
-    .warpContent
-      height 100px
-      top 25px
-      width 50%
-      color white
-      .imgBox
-        position relative
-        left 50%
-        width 60px
-        margin 10px 0px 10px -30px
-        background-color #fff
-        border-radius 50%
-        img
-          width 60px
-          height 60px
-  .box
-    background: $color-white
-    padding 0 20px
-    width 100%
-    box-sizing border-box
-    line-height: 30px
-    border-radius: 6px
-    position relative
+    .headerBox
+      display flex
+      align-items center
+      margin 20px 0
+      p
+        margin 0 20px
+      span
+        color #909090
+    .formBox
+      margin-left 50px
     .inputBox 
-      border-bottom 1px solid $color-border
+      color #909090
       padding 10px 0
       position relative
       display flex
-      align-items center
-      line-height 30px
+      line-height 35px
       width 100%
       span 
         display inline-block
-        width 95px
         font-weight bold
-      input
-        outline none
-        flex 1
-        line-height 30px
-        text-align right
+        margin-right 20px
+        width 95px
+      .img
+        text-align center
+        line-height 50px
+        img
+          display block
+          width 100px
+          height 100px
+      .icon
+        width 15px
+        height 15px
+      input,textarea
+        width 400px
+        line-height 35px
+        text-indent 10px
+        border 1px solid $color-text-d
         background: $color-white
+        border-radius 5px
         color: $color-text
         font-size: $font-size-medium-x
         &::placeholder
           color: $color-text-d
+  .iconBox
+    display flex
+    align-items center
+    margin-left 165px
+    .btnBox
+      cursor pointer
+      display flex
+      align-items center
+      margin-right 30px
+    .green
+      color #48d663
+    .regg
+      color #ac7a7a
   .buttonC
     color $color-white
     background-color $color-theme
     buttonD()
-  .linkto
-    color $color-theme
-    margin-top 10px
-    display flex
-    text-align center
-    align-items center
-    width 100%
-    justify-content center
-    span
-      padding 5px
-        
-
+    width 200px
+    height 40px
+    left 160px
+    line-height 40px
+    margin 20px 0
 </style>

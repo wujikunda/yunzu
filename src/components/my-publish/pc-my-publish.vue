@@ -25,6 +25,7 @@
                 </div>
                 <div class="textCont">
                   <div class="hotNum"><img src="~common/image/icon_fire.png" alt="">{{item.hot}}</div>
+                  <span :style="'color:' + getStateColor(item.state)">{{getStateText(item.state)}}</span>
                 </div>
               </div>
             </li>
@@ -91,6 +92,36 @@
             return '住房'
             break;
           default: return ''
+            break;
+        }
+      },
+      getStateText(id) {
+        switch (id) {
+          case '0':
+            return '未审核'
+            break;
+          case '1':
+            return '审核通过'
+            break;
+          case '2':
+            return '审核未通过'
+            break;
+          default: return '未审核'
+            break;
+        }
+      },
+      getStateColor(id) {
+        switch (id) {
+          case '0':
+            return '#909090'
+            break;
+          case '1':
+            return '#59d33d'
+            break;
+          case '2':
+            return '#ef5b5c'
+            break;
+          default: return '#909090'
             break;
         }
       },

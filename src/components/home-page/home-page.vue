@@ -21,7 +21,7 @@
         <ul>
           <li @click="selcetHome(item)"  v-for="(item,key) in homeList" class="list-content" :key="key">
             <div class="imgWCBox">
-              <img :src="item.picurl" alt="" ref="imgI"  @load="loadImage" @error="loaderror" >
+              <img alt="" ref="imgI" v-lazy="item.picurl" @load="loadImage" >
             </div>
             <!-- <img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" alt=""  @load="loadImage" > -->
             <div class="nameBox">

@@ -275,7 +275,7 @@
               search.address,
               { "id": "transportation","title": "交通/车流量","needs":true, "placeholder":"请输入交通/车流量要求" },
               search.floor,
-              { "id": "floorheight","title": "层高","needs":true, "placeholder":"请输入物业公司" },
+              { "id": "floorheight","title": "层高","needs":true, "placeholder":"请输入层高" },
               search.structure,
               search.pricename,
               search.tenancy
@@ -572,6 +572,7 @@
                   color #909090
                   &.active 
                     border 1px solid $color-theme
+                    color $color-theme
             textarea
               flex 1
               border none 

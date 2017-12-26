@@ -16,6 +16,7 @@
                 </div>
                 <div class="textCont">
                   价格: {{item.pricename}}元/㎡
+                  <span :style="'color:' + getStateColor(item.state)">{{getStateText(item.state)}}</span>
                 </div>
               </div>
               <span class="color-theme">{{item.typename}}</span>
@@ -65,6 +66,36 @@
             return '住房'
             break;
           default: return ''
+            break;
+        }
+      },
+      getStateText(id) {
+        switch (id) {
+          case '0':
+            return '未审核'
+            break;
+          case '1':
+            return '审核通过'
+            break;
+          case '2':
+            return '审核未通过'
+            break;
+          default: return '未审核'
+            break;
+        }
+      },
+      getStateColor(id) {
+        switch (id) {
+          case '0':
+            return '#909090'
+            break;
+          case '1':
+            return '#59d33d'
+            break;
+          case '2':
+            return '#ef5b5c'
+            break;
+          default: return '#909090'
             break;
         }
       },
@@ -156,8 +187,13 @@
             align-items center
             .textBox
               flex 1
-              line-height 20px
+              line-height 22px
               font-size $font-size-medium-x
+              .textCont
+                display flex
+                justify-content space-between
+                font-size $font-size-medium-x
+                line-height 22px
             .posImg
               width 60px
               height 60px

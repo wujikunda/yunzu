@@ -107,10 +107,6 @@
           <input type="password" v-model="modifyObj.confirm"  placeholder="请再次输入密码" />
           <i v-show="modifyObj.confirm !== modifyObj.password"> &nbsp两次密码不一致</i>
         </div>
-        <div class="inputBox">
-          <span>验证码<i>*</i></span>
-          <input v-model="modifyObj.verify"  placeholder="请输入验证码" />
-        </div>  
       </div>
       <div class="buttonC" @click="modifyPassWord">确认修改</div>
       <div class="buttonC" style="background-color:#1da2fd" @click="logout">退出账号</div>
@@ -325,17 +321,12 @@ import iMlrz from 'lrz'
           alert('请输入新密码')
           return
         }
-        if(!this.modifyObj.verify){
-          alert('请输入验证码')
-          return
-        }
         modifyPW(this.userInfo.phone,this.modifyObj.oldpw,this.modifyObj.password).then((res) => {
           if(!res.code){
             alert('修改成功')
             this.modifyObj.oldpw = ""
             this.modifyObj.confirm = ""
             this.modifyObj.password = ""
-            this.modifyObj.verify = ""
             this.$router.push('/pc/setting/member')
           }else{
             alert(res.msg)

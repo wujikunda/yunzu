@@ -7,7 +7,7 @@ import store from './store'
 import VueLazyload from 'vue-lazyload'
 import axios from 'axios'
 import { setTitle } from 'common/js/dom'
-import iview from 'iview'
+import Modal from 'iview/src/components/modal'
 import 'iview/dist/styles/iview.css'
 import 'common/stylus/index.styl'
 
@@ -38,10 +38,12 @@ Vue.prototype.$setTitle = setTitle
 fastclick.attach(document.body)
 
 Vue.use(VueLazyload, {
-  loading: require('common/image/default.png')
+  loading: require('common/image/default_house.png'),
+  error: require('common/image/default_house.png'),
+  attempt: 2
 })
-// Vue.component('Modal', Modal)
-Vue.use(iview)
+Vue.component('Modal', Modal)
+// Vue.use(iview)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

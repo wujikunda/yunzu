@@ -49,7 +49,7 @@
       }
     },
     mounted() {
-      // this.checkLogin()
+      this.checkLogin()
     },
     methods: {
       menuClick( item ) {

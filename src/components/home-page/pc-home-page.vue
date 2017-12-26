@@ -22,7 +22,7 @@
         <li @click="selcetHome(item)"  v-for="(item,key) in homeList" class="list-content" :key="key">
           <div class="pictureBox">
             <!-- <img :src="item.picurl" :alt="item.title + '的房源图'" > -->
-            <img :src="item.picurl" alt="" ref="imgI"  @load="loadImage" @error="loaderror" >
+            <img v-lazy="item.picurl" alt="" ref="imgI"  @load="loadImage" >
           </div>
           <div class="textBox">
             <div class="nameBox">

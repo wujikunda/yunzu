@@ -515,7 +515,7 @@ const adminRouter = [
       component: AdminPreLease,
       meta: { title: '预租管理' }
     }, {
-      path: 'preLeaseDetial',
+      path: 'preLeaseDetial/:id',
       component: AdminPreLeaseDetial,
       meta: { title: '预租详情' }
     }, {

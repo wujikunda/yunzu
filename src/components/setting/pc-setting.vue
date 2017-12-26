@@ -3,7 +3,7 @@
     <section class="menuContent">
       <ul class="menuBox" v-for="(item, index) in menuList" :key="index">
         <p class="pTitle" @click="member">个人中心</p>
-        <li v-for="(menu, id) in item.menuItem" :key="id" @click="menuClick(menu)">
+        <li v-for="(menu, id) in item.menuItem" :key="id" @click="menuClick(menu)" :class="{'active': getActiveClass(menu)}">
           <div class="iconBox">
             <img :src="menu.icon">
           </div>
@@ -70,6 +70,9 @@
           }
         })
       },
+      getActiveClass(item) {
+        return this.$route.path.indexOf(item.type) >-1
+      },
       menuClick( item ) {
         this.$router.push({
           path:`/pc/setting/${item.type}`
@@ -113,7 +116,12 @@
       line-height 100px
       cursor pointer
     li
-      height 50px
+      height 45px
+      margin 3px 0
+      border-left 5px solid #f0f0f0
+      &.active
+        border-left 5px solid $color-theme
+        color $color-theme
       .iconBox 
         float left
         width 60px

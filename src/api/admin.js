@@ -200,13 +200,12 @@ export function managerAdvertDel(advertid) {
   return jsonpAdmin(url, objData, options)
 }
 // 意见列表
-export function managerFeedbackList(content) {
+export function managerFeedbackList(obj) {
   let url = HTTPIP + '/v1/managerFeedbackList'
 
-  let objData = {
-    content: content,
+  let objData = Object.assign({}, obj, {
     timestamp: getDate()
-  }
+  })
   let sign = getSign(objData)
   objData.sign = sign
   return jsonpAdmin(url, objData, options)

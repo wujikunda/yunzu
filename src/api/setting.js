@@ -120,3 +120,15 @@ export function uploadImg(token, file) {
     return Promise.resolve(res.data)
   })
 }
+
+// 获取押金
+export function managerCashGet() {
+  let url = HTTPIP + '/v1/managerCashGet'
+
+  let objData = {
+    timestamp: getDate()
+  }
+  let sign = getSign(objData)
+  objData.sign = sign
+  return jsonp(url, objData, options)
+}

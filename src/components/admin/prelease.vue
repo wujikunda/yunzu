@@ -14,7 +14,7 @@
     </m-dialog>
     <div class="headerBox">
       <p class="listCount">预租列表 (共{{tabListNumber}}条记录) <b class="refresh" @click="refresh">刷新</b></p>
-      <input-box @serachClick="_serachByPhone" class="inputBox" placeholder='请输入手机号...'></input-box>
+      <!-- <input-box @serachClick="_serachByPhone" class="inputBox" placeholder='请输入手机号...'></input-box> -->
     </div>
     <table-list 
       :tabData="tabData" 
@@ -33,7 +33,6 @@ import TableList from 'base/table-list/table-list'
 import InputBox from 'components/admin/input-box'
 import MDialog from 'base/dialog/dialog'
 import {managerBeforeList, managerBeforeDel, managerBeforeDetail} from 'api/admin'
-import {formatD} from 'common/js/util'
 
   export default {
     props: {
@@ -54,12 +53,17 @@ import {formatD} from 'common/js/util'
       }
     },
     mounted() {
-      this.tabTitle = ['ID', '姓名', '电话', '地址']
+      this.tabTitle = ['ID', '姓名', '电话', '业务范围', '面积(㎡)', '价格(元/㎡)', '地址']
       this.tabControls = [{
         text:'删除',
         icon: require('common/image/btn_trash.png'),
         funname:'delete',
         color :'#ef5b5c'
+      },{
+        text:'详情',
+        icon: require('common/image/btn_xiangqing.png'),
+        funname:'edit',
+        color :'#5cb5f2'
       }]
       this._getDataList(1)
     },
@@ -77,10 +81,8 @@ import {formatD} from 'common/js/util'
         this.showDialog = false
       },
       confirm() {
-        this.showDialog = false
-        return
         if(this.controlsType === 'delete') {
-          managerDelUser(this.deleteID).then((res) => {
+          managerBeforeDel(this.deleteID).then((res) => {
             if(!res.code){
               this.refresh()
               alert('删除成功')
@@ -92,16 +94,22 @@ import {formatD} from 'common/js/util'
         }
         
       },
+      _toDetial(index) {
+        this.$router.push(`/admin/preLeaseDetial/${index}`)
+      },
       toPage(index) {
         this.page = index
         this._getDataList( this.page )
       },
-      controls(type,item) {
+      controls(type, item, index) {
         if(type==='delete') {
           this.deleteID = item[0].text
           this.controlsType = type
+          this.showDialog = true
+        }else {
+          this._toDetial(item[0].text)
         }
-        this.showDialog = true
+        
       },
       _getDataList( page ) {
         managerBeforeList(page*10-9, page*10).then((res) => {
@@ -121,7 +129,7 @@ import {formatD} from 'common/js/util'
               {
                 type:'text',
                 id:'beforeid',
-                text:index+1
+                text:element.beforeid
               },
               {
                 type:'text',
@@ -130,12 +138,27 @@ import {formatD} from 'common/js/util'
               },
               {
                 type:'text',
-                id:'createdate',
+                id:'phone',
                 text:element.phone
               },
               {
                 type:'text',
-                id:'paycash',
+                id:'business',
+                text:element.business
+              },
+              {
+                type:'text',
+                id:'areaname',
+                text:element.areaname
+              },
+              {
+                type:'text',
+                id:'pricename',
+                text:element.pricename
+              },
+              {
+                type:'text',
+                id:'address',
                 text:element.address
               }
             ]

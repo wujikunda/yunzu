@@ -13,9 +13,8 @@
       </div>
     </m-dialog>
     <div class="headerBox">
-      <p class="listCount">广告列表 (共{{tabListNumber}}条记录) <b class="refresh" @click="refresh">刷新</b></p>
-      <a @click="_add">添加广告</a>
-      <!-- <input-box @serachClick="_serachByPhone" class="inputBox" placeholder='请输入手机号...'></input-box> -->
+      <p class="listCount">反馈列表 (共{{tabListNumber}}条记录) <b class="refresh" @click="refresh">刷新</b></p>
+      <input-box @serachClick="_serachByPhone" class="inputBox" placeholder='请输入内容...'></input-box>
     </div>
     <table-list 
       :tabData="tabData" 
@@ -33,7 +32,7 @@
 import TableList from 'base/table-list/table-list'
 import InputBox from 'components/admin/input-box'
 import MDialog from 'base/dialog/dialog'
-import {managerAdvertList, managerAdvertAdd, managerAdvertDel} from 'api/admin'
+import {managerFeedbackList, managerFeedbackDel, managerFeedbackState} from 'api/admin'
 import {formatD} from 'common/js/util'
 import {mapGetters, mapMutations} from 'vuex'
   export default {
@@ -56,7 +55,7 @@ import {mapGetters, mapMutations} from 'vuex'
       }
     },
     mounted() {
-      this.tabTitle = ['ID', '名称', '图片', '链接']
+      this.tabTitle = ['ID', '反馈内容', '是否处理', '反馈时间','处理时间']
       this.tabControls = [{
         text:'删除',
         icon: require('common/image/btn_trash.png'),
@@ -83,7 +82,7 @@ import {mapGetters, mapMutations} from 'vuex'
       },
       confirm() {
         if(this.controlsType === 'delete') {
-          managerAdvertDel(this.deleteID).then((res) => {
+          managerFeedbackDel(this.deleteID).then((res) => {
             if(!res.code){
               this.refresh()
               alert('删除成功')
@@ -110,12 +109,12 @@ import {mapGetters, mapMutations} from 'vuex'
           this.showDialog = true
         }else if(type==='edit'){
           let obj = {}
-          obj.advertid = item[0].text
-          obj.title = item[1].text
-          obj.picurl = item[2].text
-          obj.adverturl = item[3].realVal
+          obj.id = item[0].text
+          obj.content = item[1].text
+          obj.dealstate = item[2].realVal
+          obj.dealText = item[2].text
           this.setAdvertisement(obj)
-          this.$router.push('/admin/addAdvertisement')
+          this.$router.push('/admin/replyDetial')
         }
         
       },
@@ -123,10 +122,13 @@ import {mapGetters, mapMutations} from 'vuex'
         let obj = {}
         obj.start = page*10-9
         obj.limit = page*10
-        managerAdvertList(obj).then((res) => {
+        if(this.searchMobile){
+          obj.content = this.searchMobile
+        }
+        managerFeedbackList(obj).then((res) => {
           if(!res.code){
             this._formTabList(res.data.list)
-            this.tabListNumber = parseInt(res.data.advertnum)
+            this.tabListNumber = parseInt(res.data.feedbacknum)
           }else{
             alert(res.msg)
           }
@@ -139,29 +141,51 @@ import {mapGetters, mapMutations} from 'vuex'
             [
               {
                 type:'text',
-                id:'advertid',
-                text:element.advertid
+                id:'id',
+                text:element.id
               },
               {
                 type:'text',
-                id:'title',
-                text:element.title
-              },
-              {
-                type:'img',
-                id:'picurl',
-                text:element.picurl
+                id:'content',
+                text:element.content
               },
               {
                 type:'text',
-                id:'adverturl',
-                text:element.adverturl ? "是" : "否",
-                realVal:element.adverturl
+                id:'dealstate',
+                text:this.getDealState(element.dealstate)
+              },
+              {
+                type:'text',
+                id:'create_date',
+                text:formatD('yyyy.MM.dd',new Date(element.create_date)) || '--'
+              },
+              {
+                type:'text',
+                id:'dealdate',
+                text:element.dealdate ? formatD('yyyy.MM.dd',new Date(element.dealdate)) : '--'
               }
             ]
           )
         });
         this.tabData = newList
+      },
+      getDealState( dealstate) {
+        let str = ''
+        switch (dealstate) {
+          case '0':
+            str = '未处理'
+            break;
+          case '1':
+            str = '不处理'
+            break;
+          case '2':
+            str = '已处理'
+            break;
+          default:
+            str = '未处理'
+            break;
+        }
+        return str
       },
       ...mapMutations({
         setAdvertisement: 'SET_ADVERTISEMENT'

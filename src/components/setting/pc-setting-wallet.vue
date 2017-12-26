@@ -19,14 +19,14 @@
         <p>{{money}}元</p>
         <div style="color:#cbcbcb">({{checkPay() ? '已': '未'}}缴纳押金)</div>
       </div>
-      <div class="buttonC" @click="_payForRent">缴纳押金</div>
+      <div class="buttonC" @click="_managerCashGet">缴纳押金</div>
       <div class="buttonB" @click="_refund">退还押金</div>
     </section>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import {getAccountMoney, payForRent, refund, userInfo} from 'api/setting'
+  import {getAccountMoney, payForRent, refund, userInfo, managerCashGet} from 'api/setting'
   import QRcode from 'common/js/qrcode'
   import MDialog from 'base/dialog/dialog'
   export default {
@@ -36,7 +36,8 @@
       return {
         money:'0.00',
         showdialog:false,
-        timer:null
+        timer:null,
+        amount:''
       }
     },
     mounted() {
@@ -55,8 +56,17 @@
       checkPay() {
         return !!parseInt(localStorage.getItem('__paycash__'))
       },
-      _payForRent() {
-        let amount = 1
+      _managerCashGet() {
+        managerCashGet().then((res) => {
+          if(!res.code){
+            this.amount = parseFloat(res.data)
+            this._payForRent(this.amount)
+          }else{
+            alert(res.msg)
+          }
+        })
+      },
+      _payForRent(amount) {
         if(this.haspay){
           this.showdialog = true
           return

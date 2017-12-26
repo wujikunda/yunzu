@@ -31,12 +31,13 @@
 <script type="text/ecmascript-6">
   import MDialog from 'base/dialog/dialog'
   import {managerModifyPW} from 'api/admin'
+  import {mapMutations} from 'vuex'
   export default{
     data() {
       return {
         routerObj: [
           {path: '/pc/home', incoPath: require('common/image/icon_xiugai.png'), title: '修改密码',funParams:'midify'},
-          {path: '/pc/compareList', incoPath: require('common/image/btn_logout.png'), title: '安全退出'}
+          {path: '/pc/compareList', incoPath: require('common/image/btn_logout.png'), title: '安全退出',funParams:'logout'}
         ],
         tabIconList: [],
         showDialog:false,
@@ -57,10 +58,19 @@
           // managerModifyPW() {
             
           // }
+        }else if( item.funParams === 'logout'){
+          this._logout()
         }
+      },
+      _logout() {
+        this.setUserAdmin(false) 
+        this.$router.push({
+          path:'/admin/login'
+        })
       },
       confirm() {
         this._managerModifyPW()
+        
       },
       cancel() {
         this.showDialog = false
@@ -82,7 +92,10 @@
             alert(res.msg)
           }
         })
-      }
+      },
+      ...mapMutations({
+        setUserAdmin: 'SET_USER_ADMIN'
+      })
     },
     components: {
       MDialog

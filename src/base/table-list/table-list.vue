@@ -3,14 +3,14 @@
     <ul class="tab-list">
       <li class="tab-title" >
         <div  :class="{'mincel': index===0 }" :key="index" v-for="(item, index) in tabTitle" class="cel">{{item}}</div>
-         <div class="cel controlsBox" v-if="showTabControls"><div class="cel">操作</div></div>
+         <div class="cel controlsBox" v-if="showTabControls" :style="`flex: 0 0 ${100*tabControls.length}px`"><div class="cel">操作</div></div>
       </li>
       <li :key="i" class="tab-item" @click="selectItem(item)" v-for="(item, i) in tabData">
         <div class="cel" :class="{'mincel': index===0 }" :key="index" v-for="(ele, index) in item">
           <span v-if="ele.type === 'text'"  :style="ele.color ? 'color:'+ele.color : '' ">{{ele.text || '--'}}</span>
           <span v-else><img class="cel-icon" :src="ele.text" alt="--"></span>
         </div>
-        <div class="cel controlsBox" v-if="showTabControls">
+        <div class="cel controlsBox" v-if="showTabControls" :style="`flex: 0 0 ${100*tabControls.length}px`">
           <div @click.stop="control(ele, item, i)" class="cel btnBox" v-for="(ele,index) in tabControls" :key="index" v-show="stateNeedShow(item,index)">
             <img :src="ele.icon">
             <span :style="'color:'+ele.color">{{ele.text}}</span>
@@ -134,20 +134,19 @@
       .mincel
         flex 0 0 50px
       .controlsBox
-        flex 0 0 400px
         align-items: center
         height 100%
         display flex
         .btnBox
           cursor pointer
           display flex
-          width 100px
+          flex 0 0 100px
           height 100%
           align-items center
           justify-content center
           img
             width 18px
-            margin 5px 10px
+            margin-right 10px
           &:hover
             text-decoration underline
       .icon

@@ -57,11 +57,12 @@
         managerLogin(this.userphone, this.password, this.verifiction).then((res) => {
           if(!res.code){
             this.setUserAdmin(true) 
-            // localStorage.setItem('_',res.data.accesstoken)
-            // return
+            this.userphone = "" 
+            this.password = ""
             this.$router.push({
               path:'/admin/member'
             })
+            
           }else{
             alert(res.msg)
           }
