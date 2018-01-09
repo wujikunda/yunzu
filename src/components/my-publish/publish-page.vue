@@ -31,10 +31,13 @@
         </ul>
         <ul>
           <li v-for="(item, index) in publishTypeList" :key="index">
-            <b v-if="!item.select">{{item.title}} <i v-if="item.needs">*</i></b>
+            <b v-if="!item.select" :style="item.fontColor? 'color:'+item.fontColor : ''">{{item.title}} <i v-if="item.needs">*</i></b>
             <input type="text" v-model="formDate[item.id]" v-if="item.placeholder"  :placeholder="item.placeholder"/>
-            <div class="pickerSelect" @click="showPicker(item,index)" v-if="!item.placeholder && !item.select">{{item.selectIndex !== -1 ? item.list[item.selectIndex] : '请选择'}}</div>
-            <img v-if="!item.placeholder && !item.select" src="~common/image/icon_arror_right.png">
+            <div class="pickerSelect" @click="showPicker(item,index)" v-if="!item.placeholder && !item.select && !item.udefine">{{item.selectIndex !== -1 ? item.list[item.selectIndex] : '请选择'}}</div>
+            <img v-if="!item.placeholder && !item.select && !item.udefine" src="~common/image/icon_arror_right.png">
+            <div class="udefine"  v-if="item.udefine" >
+              <between @getValue="_getValue($event, item)"></between>
+            </div>
             <div class="arrBox" v-if="item.select">
               <b>{{item.title}} <i v-if="item.needs">*</i></b>
               <div class="arrSelect">
@@ -67,6 +70,7 @@
 <script type="text/ecmascript-6">
   import Picker from 'base/picker/picker'
   import Uploader from 'base/uploader/uploader'
+  import Between from 'base/between/between'
   import Loading from 'base/loading/loading'
   import Scroll from 'base/scroll/scroll'
   import {getPubliList, getAreaList} from 'api/home' 
@@ -116,6 +120,9 @@
       this._getPublishType()
     },
     methods: {
+      _getValue(event,item) {
+        this.formDate[item.id] = event + '年'
+      },
       _getPublishType() {
         var search  = deepCopy(getPubliList())
         this.publishTypeList = []
@@ -137,28 +144,30 @@
               search.address,
               search.areaname,
               search.pricename,
+              search.totalprice,
               search.rentway,
               search.showtype_ary,
               search.ageround,
               search.checkin,
-              search.tenancy,
               search.payway,
               search.floorheight,
               search.structure,
               search.transportation,
               search.carwidth,
+              search.carportnum,
+              search.carportarea,
               search.source,
               search.orientation,
               search.affect,
               search.awaywater,
               search.drain,
-              search.qs,
               search.powercharge,
               search.watercharge,
               search.propertyright,
               search.firecontrol,
               search.redchart,
-              search.power
+              search.power,
+              search.powersupply
             ]
             this.typeName = '厂房仓库高级筛选'
             break;
@@ -171,21 +180,21 @@
               search.address,
               search.areaname,
               search.pricename,
+              search.totalprice,
               search.rentway,
               search.showtype_ary,
               search.ageround,
               search.checkin,
-              search.tenancy,
               search.payway,
               search.nearpark,
               search.carportnum,
+              search.carportarea,
               search.register,
               search.floor,
               search.structure,
               search.source,
               search.propertyright,
               search.redchart,
-              search.qs,
               search.firecontrol,
               search.orientation
             ]
@@ -200,15 +209,16 @@
               search.address,
               search.areaname,
               search.pricename,
+              search.totalprice,
               search.rentway,
               search.place,
               search.showtype_ary,
               search.ageround,
               search.checkin,
-              search.tenancy,
               search.payway,
               search.nearpark,
               search.carportnum,
+              search.carportarea,
               search.transportation,
               search.floor,
               search.structure,
@@ -217,7 +227,7 @@
               search.redchart,
               search.firecontrol,
               search.power,
-              search.qs
+              search.powersupply
             ]
             this.typeName = '店面高级筛选'
             break;
@@ -230,6 +240,7 @@
               search.address,
               search.areaname,
               search.pricename,
+              search.totalprice,
               search.rentway,
               search.payway,
               search.completetime,
@@ -237,7 +248,6 @@
               search.ageround,
               search.source,
               search.checkin,
-              search.tenancy,
               search.floorheight,
               search.orientation,
               search.hourseage,
@@ -257,6 +267,8 @@
               { "id": "furniture","title": "家具", "placeholder":"请输入家具" },
               { "id": "stylelevel","title": "装修程度", "placeholder":"请输入装修程度" },
               search.nearby,
+              search.carportnum,
+              search.carportarea,
               search.lighting,
               search.monitoring,
               search.parknum,
@@ -277,8 +289,7 @@
               search.floor,
               { "id": "floorheight","title": "层高","needs":true, "placeholder":"请输入层高" },
               search.structure,
-              search.pricename,
-              search.tenancy
+              search.pricename
             ]
             this.isPre = true
             this.typeName = '我要预租'
@@ -339,6 +350,7 @@
         this.pickerData = [listCreat]
         this.pickerSelected = [item.selectIndex]
         picker.scrollTo(0,item.selectIndex)
+        picker.refresh()
         picker.show()
       },
       handleSelect(index, args) {
@@ -363,6 +375,34 @@
         }
         _this.formDate.areaname = parseFloat(_this.formDate.areaname)
         _this.formDate.pricename = parseFloat(_this.formDate.pricename)
+        if(_this.formDate.floor){
+           if(_this.formDate.floor === '10层以上'){
+             _this.formDate.floor = 11
+           }else{
+             _this.formDate.floor = parseFloat(_this.formDate.floor)
+           }
+        }
+        if(_this.formDate.carportnum){
+           if(_this.formDate.carportnum === '5个以上'){
+             _this.formDate.carportnum = 6
+           }else{
+             _this.formDate.carportnum = parseFloat(_this.formDate.carportnum)
+           }
+        }
+        if(_this.formDate.powercharge){
+           _this.formDate.powercharge = parseFloat(_this.formDate.powercharge)
+        }
+        if(_this.formDate.watercharge){
+           _this.formDate.watercharge = parseFloat(_this.formDate.watercharge)
+        }
+        if(_this.formDate.powersupply){
+           _this.formDate.powersupply = parseFloat(_this.formDate.powersupply)
+        }
+        if(_this.formDate.ageround){
+            let ageroundArr = _this.formDate.ageround.split('-')
+           _this.formDate.ageroundone = parseFloat(ageroundArr[0])
+           _this.formDate.ageroundtwo = parseFloat(ageroundArr[1])
+        }
          //预租
         if(this.isPre){
           _this._preRentHouse()
@@ -459,7 +499,8 @@
       Scroll,
       Picker,
       Uploader,
-      Loading
+      Loading,
+      Between
     }
   }
 </script>
@@ -552,6 +593,22 @@
               flex 1
               line-height 40px
               text-align right
+            .udefine
+              flex 1
+              display flex
+              flex-direction row-reverse
+              line-height 30px
+              input
+                outline none
+                flex 0
+                width 60px
+                margin 0 5px
+                line-height 30px
+                border 1px solid $color-border
+                background: $color-white
+                color: $color-text
+                &::placeholder
+                  color: $color-text-d
             .arrBox
               b
                 width 100%

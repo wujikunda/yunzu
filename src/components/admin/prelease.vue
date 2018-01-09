@@ -112,7 +112,7 @@ import {managerBeforeList, managerBeforeDel, managerBeforeDetail} from 'api/admi
         
       },
       _getDataList( page ) {
-        managerBeforeList(page*10-9, page*10).then((res) => {
+        managerBeforeList(page, 10).then((res) => {
           if(!res.code){
             this._formTabList(res.data.list)
             this.tabListNumber = parseInt(res.data.beforenum)

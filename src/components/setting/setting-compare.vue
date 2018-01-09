@@ -3,25 +3,25 @@
     
     <section class="compareListCont">
       <p class="no-title" v-show="!conpareList.length">无对比房源</p>
-      <scroll :data = "conpareList" class="listContentS" >
+      <scroll :data = "conpareList" class="listContentS" :pullup="true" @scrollToEnd="updateLoad">
         <div class="listContent">
           <ul>
-            <li v-for="(item, index) in conpareList" :key="index" @click="selectToCompare(item.listid)" class="needsclick">
-              <img class="posImg" :src="item.picurl" @error="_loadError" alt="">
+            <li v-for="(item, index) in conpareList" :key="index" @click="selectToCompare(item)" class="needsclick">
+              <img class="posImg" :src="item.picurl" @error="_loadError" >
               <div class="textBox">
                 <div class="textCont">
                   <b>{{item.title}}</b>
                 </div>
                 <div class="textCont">
-                  销量: {{item.hot}}
-                  <span class="color-theme">{{houseType(item.housetype)}}</span>
+                  浏览量: {{item.hot}}
+                   <span class="color-theme">{{houseType(item.housetype)}}</span>
                 </div>
                 <div class="textCont">
                   价格: {{item.pricename}}元/㎡
                 </div>
               </div>
-              <img class="selImg" v-show="selectList.indexOf(item.listid) > -1" src="~common/image/secect_checked.png" alt="">
-              <img class="selImg" v-show="selectList.indexOf(item.listid) < 0" src="~common/image/select_normal.png" alt="">
+              <img class="selImg" v-show="selectList.indexOf(item) > -1" src="~common/image/secect_checked.png" alt="">
+              <img class="selImg" v-show="selectList.indexOf(item) < 0" src="~common/image/select_normal.png" alt="">
             </li>
           </ul>
           <div class="blank"></div>
@@ -53,7 +53,7 @@
       }
     },
     mounted() {
-      this._getHomeList()
+      this._getCompareList()
     },
     methods: {
       houseType(id) {
@@ -74,9 +74,13 @@
             break;
         }
       },
-      _getHomeList() {
+      _getCompareList() {
+        this.selectList=[]
         getCompareList(localStorage.getItem('usertoken')).then((res) => {
           if(!res.code){
+            if(!res.data){
+              return
+            }
             this.conpareList = res.data
           }else{
             alert(res.msg)
@@ -88,7 +92,7 @@
         let type = [];
         that.conpareList.forEach(function(element, index) {
           that.selectList.forEach(function(item,i) {
-            if(item === element.listid){
+            if(item.listid === element.listid){
               type.push(element.housetype)
             }
           });
@@ -103,6 +107,12 @@
         this.setSelectList([this.selectList[0],this.selectList[1]])
         
       },
+      updateLoad() {
+        if(this.conpareList.length<10){
+          return
+        }
+        this._getCompareList({limit: this.conpareList.length+10})
+      }, 
       _loadError(event) {
         loadError(event)
       },

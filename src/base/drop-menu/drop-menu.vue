@@ -1,7 +1,7 @@
 <template>
   <div class="sortBox">
     <ul class="sortMenuBox" >
-      <li class="menu" v-for="(item,index) in dropData" :key="index" @click.stop='select(index)'>
+      <li class="menu" v-for="(item,index) in dropData" :key="index" @click.stop='select(index)' style="cursor:pointer">
         <span v-if="singleTitle">{{singleTitle}}</span>
         <span v-else>{{item.title}}</span>
         <img v-show="selectIndex!==index || !showContent" src="~common/image/icon_arror_bottom.png" alt="">

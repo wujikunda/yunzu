@@ -106,7 +106,6 @@ import {formatD} from 'common/js/util'
         this._getDataList( this.page )
       },
       controls(type,item) {
-        console.log(type,item)
         if(type==='delete') {
           this.deleteID = item[0].text
           this.controlsType = type
@@ -114,7 +113,7 @@ import {formatD} from 'common/js/util'
         this.showDialog = true
       },
       _getDataList( page ) {
-        managerUserList(page*10-9, page*10).then((res) => {
+        managerUserList(page, 10).then((res) => {
           if(!res.code){
             this._formTabList(res.data.list)
             this.tabListNumber = parseInt(res.data.usernum)

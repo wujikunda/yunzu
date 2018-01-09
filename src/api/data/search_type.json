@@ -1,13 +1,14 @@
 {
-  "area":{ "id": "spacename","selectIndex":-1, "title": "面积 (㎡)", "list": ["100以内", "100-200", "200-300", "300-400", "400-500", "500-1000", "1000以上"] },
-  "areaprice":{ "id": "rentname","selectIndex":-1, "title": "租金 (㎡)", "list": ["0-25", "25-50", "50-75", "75-100", "100-150", "150以上"] },
-  "payway":{ "id": "payway","selectIndex":-1, "title": "付款方式", "list": ["押一付一","押一付三","半年一交","一年一交","一次性交齐"] },
+  "area":{ "id": "spacename","selectIndex":-1, "title": "面积 (㎡)", "list": ["100以内", "100-200", "200-300", "300-400", "400-500", "500-1000", "1000以上"], "udefine":true },
+  "areaprice":{ "id": "rentname","selectIndex":-1, "title": "价格 (㎡)", "list": ["0-25", "25-50", "50-75", "75-100", "100-150", "150以上"], "udefine":true },
+  "payway":{ "id": "payway","selectIndex":-1, "title": "付款方式", "list": ["押一付一","押一付三","押二付三","半年一交","一年一交","一次性交齐"] },
+  "tenancy":{ "id": "tenancy","title": "租期", "selectIndex":-1,  "list": ["一个月","三个月","半年","一年","两年","三年以上"] },
   "storepis":{ "id": "location","selectIndex":-1, "title": "店面位置", "list": ["小区","社区","沿街","商场","其他"] },
   "floor":{ "id": "floorname","selectIndex":-1, "title": "层高", "list": ["3米以内", "3-5米", "5-7米", "7-10米", "10-15米", "15米以上"] },
   "structure":{ "id": "structurename","selectIndex":-1, "title": "结构", "list": ["钢筋混凝土", "工字钢结构", "一般钢结构", "混合结构", "其他"] },
-  "transportation":{ "id": "transportationname","selectIndex":-1, "title": "交通", "list": ["单车道", "双车道", "四车道", "六车道"] },
+  "transportation":{ "id": "transportationname","selectIndex":-1, "title": "交通", "list": ["单车道", "双车道", "四车道", "六车道", "八车道"] },
   "carwidth":{ "id": "carwidthname","selectIndex":-1, "title": "允许最大车辆进出长度", "list": ["3.6M", "3.8M", "4.2M", "4.8M", "5.2M", "5.6M", "5.8M", "6.2M", "6.8M", "7.6M",  "7.8M", "8.4M", "8.6M", "9.4M", "9.6M", "13M", "15M", "17M", "21M"] },
-  "ageround":{ "id": "rentage","selectIndex":-1, "title": "年限(可租年限)", "list": ["1年以内", "1-3年","3-5年","5-10年","10-20年","20年以上"] },
+  "ageround":{ "id": "ageround", "title": "年限(可租年限)", "udefine":true },
   "floorheight":{ "id": "floorname","selectIndex":-1, "title": "楼房层高", "list": ["1层","2层","3层","4层","5层","6层","7层","8层","9层","10层以上"] },
   "parknum":{ "id": "parknum","selectIndex":-1, "title": "车位个数", "list": ["1个","2个","3个","4个","5个","5个以上"] },
   "nearpark":{ "id": "nearpark","selectIndex":-1, "title": "附近停车场", "list": ["50米内有","100米内有","200米内有"] },
@@ -16,7 +17,7 @@
   "propertyright":{ "id": "propertyright","selectIndex":-1, "title": "产权", "list": ["有", "无"] },
   "redchart":{ "id": "redchart","selectIndex":-1, "title": "红线图", "list": ["有", "无"] },
   "firecontrol":{ "id": "firecontrol","selectIndex":-1, "title": "消防设施", "list": ["有", "无"] },
-  "orientation":{ "id": "orientation","selectIndex":-1, "title": "朝向", "list": ["朝南", "朝北"] },
+  "orientation":{ "id": "orientation","selectIndex":-1, "title": "朝向", "list": ["朝东", "朝西", "朝南", "朝北", "西南", "东南", "东北", "西北", "南北"] },
   "type":{ "id": "type", "title": "类型","selectIndex":-1, "list": ["小区", "民房","公寓"] },
   "balcony":{ "id": "balcony","selectIndex":-1, "title": "阳台", "list": ["有","无"] },
   "furniture":{ "id": "furniture","selectIndex":-1, "title": "家具", "list": ["有","无"] },
@@ -25,5 +26,8 @@
   "monitoring":{ "id": "monitoring","selectIndex":-1, "title": "保安监控", "list": ["有","无"] },
   "carportnum":{ "id": "carportnum","selectIndex":-1, "title": "停车位", "list": ["有","无"] },
   "elevator":{ "id": "elevator","selectIndex":-1, "title": "电梯", "list": ["有","无"] },
-  "power":{ "id": "power","selectIndex":-1, "title": "供电", "list": ["两相", "三相"] }
+  "power":{ "id": "power","selectIndex":-1, "title": "供电", "list": ["两相", "三相"] },
+  "powersupply":{ "id": "powersupply","title": "供电率(千瓦)","udefine":true},
+  "powercharge":{ "id": "powercharge","title": "电费(元/度)", "udefine":true},
+  "watercharge":{ "id": "watercharge","title": "水费(元/度)","udefine":true }
 }

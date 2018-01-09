@@ -12,9 +12,9 @@
             <div class="listBox">
               <div class="uploadImgBox" v-for="(item, index) in uploadImgs" :key="index">
                 <img class="uploadItem" :src="item.src" >
-                <img class="deletBtn" @click="deleteUploadImg(index)" src="~common/image/button_shanchu.png" alt="删除">
+                <img class="deletBtn" @click="deleteUploadImg(index)" style="cursor:pointer" src="~common/image/button_shanchu.png" alt="删除">
               </div>
-              <div class="addButton"><img @click="selectImg" class="needsclick" src="~common/image/button_addHouse.png" alt="上传照片"></div>
+              <div class="addButton"><img @click="selectImg" class="needsclick" style="cursor:pointer" src="~common/image/button_addHouse.png" alt="上传照片"></div>
             </div>
             <uploader ref="uploadFiles"  @selectFinish="selectDone" v-show="false" :hideImg="true"></uploader>
           </div>
@@ -23,13 +23,16 @@
             <li v-for="(item, index) in publishTypeList" :key="index">
             <b v-if="!item.select">{{item.title}} <i v-if="item.needs">*</i></b>
             <input type="text" v-model="formDate[item.id]" v-if="item.placeholder"  :placeholder="item.placeholder"/>
-            <select v-model="formDate[item.id]" v-if="!item.placeholder && !item.select" >
+            <select v-model="formDate[item.id]" v-if="!item.placeholder && !item.select && !item.udefine" >
               <option v-for="(ele, i) in item.list" :key="i">{{ele}}</option>
             </select>
+            <div class="udefine"  v-if="item.udefine" >
+              <between @getValue="_getValue($event, item)"></between>
+            </div>
             <div class="arrBox" v-if="item.select">
               <b>{{item.title}} <i v-if="item.needs">*</i></b>
               <div class="arrSelect">
-                <span  @click="arrSelect(item,a)" class="arrItem" :class="{'active': item.arrSelectIndex.indexOf(a)>-1}" v-for="(arr,a) in item.list" :key="a">
+                <span  @click="arrSelect(item,a)" style="cursor:pointer" class="arrItem" :class="{'active': item.arrSelectIndex.indexOf(a)>-1}" v-for="(arr,a) in item.list" :key="a">
                   {{arr}}
                 </span>
               </div>
@@ -45,7 +48,7 @@
             <textarea placeholder="请输入您对房源周边的简单描述..." v-model="formDate.addressdesc"></textarea>
           </li>
         </ul>
-        <div class="buttonG" @click="submitBtn">{{isPre? "确认提交" : "立即发布"}}</div>
+        <div class="buttonG" style="cursor:pointer" @click="submitBtn">{{isPre? "确认提交" : "立即发布"}}</div>
         <div class="blank"></div>
       </div>
     </div>
@@ -56,6 +59,7 @@
 <script type="text/ecmascript-6">
   import Picker from 'base/picker/picker'
   import Uploader from 'base/uploader/uploader'
+  import Between from 'base/between/between'
   import Loading from 'base/loading/loading'
   import {getPubliList, getAreaList} from 'api/home' 
   import {deepCopy} from 'common/js/util'
@@ -104,6 +108,9 @@
       this._getPublishType()
     },
     methods: {
+      _getValue(event,item) {
+        this.formDate[item.id] = event + '年'
+      },
       _getPublishType() {
         var search  = deepCopy(getPubliList())
         this.publishTypeList = []
@@ -125,28 +132,30 @@
               search.address,
               search.areaname,
               search.pricename,
+              search.totalprice,
               search.rentway,
               search.showtype_ary,
               search.ageround,
               search.checkin,
-              search.tenancy,
               search.payway,
               search.floorheight,
               search.structure,
               search.transportation,
               search.carwidth,
+              search.carportnum,
+              search.carportarea,
               search.source,
               search.orientation,
               search.affect,
               search.awaywater,
               search.drain,
-              search.qs,
               search.powercharge,
               search.watercharge,
               search.propertyright,
               search.firecontrol,
               search.redchart,
-              search.power
+              search.power,
+              search.powersupply
             ]
             this.typeName = '厂房仓库高级筛选'
             break;
@@ -159,21 +168,21 @@
               search.address,
               search.areaname,
               search.pricename,
+              search.totalprice,
               search.rentway,
               search.showtype_ary,
               search.ageround,
               search.checkin,
-              search.tenancy,
               search.payway,
               search.nearpark,
               search.carportnum,
+              search.carportarea,
               search.register,
               search.floor,
               search.structure,
               search.source,
               search.propertyright,
               search.redchart,
-              search.qs,
               search.firecontrol,
               search.orientation
             ]
@@ -188,15 +197,16 @@
               search.address,
               search.areaname,
               search.pricename,
+              search.totalprice,
               search.rentway,
               search.place,
               search.showtype_ary,
               search.ageround,
               search.checkin,
-              search.tenancy,
               search.payway,
               search.nearpark,
               search.carportnum,
+              search.carportarea,
               search.transportation,
               search.floor,
               search.structure,
@@ -205,7 +215,7 @@
               search.redchart,
               search.firecontrol,
               search.power,
-              search.qs
+              search.powersupply
             ]
             this.typeName = '店面高级筛选'
             break;
@@ -218,6 +228,7 @@
               search.address,
               search.areaname,
               search.pricename,
+              search.totalprice,
               search.rentway,
               search.payway,
               search.completetime,
@@ -225,7 +236,6 @@
               search.ageround,
               search.source,
               search.checkin,
-              search.tenancy,
               search.floorheight,
               search.orientation,
               search.hourseage,
@@ -245,6 +255,8 @@
               { "id": "furniture","title": "家具", "placeholder":"请输入家具" },
               { "id": "stylelevel","title": "装修程度", "placeholder":"请输入装修程度" },
               search.nearby,
+              search.carportnum,
+              search.carportarea,
               search.lighting,
               search.monitoring,
               search.parknum,
@@ -266,7 +278,6 @@
               { "id": "floorheight","title": "层高","needs":true, "placeholder":"请输入层高" },
               search.structure,
               search.pricename,
-              search.tenancy
             ]
             this.isPre = true
             this.typeName = '我要预租'
@@ -332,6 +343,7 @@
         this.formDate[obj.id] = text[0]
       },
       submitBtn() {
+        
         let _this = this
         let allneeds = true
         _this.publishTypeList.forEach(element => {
@@ -345,6 +357,35 @@
         }
         _this.formDate.areaname = parseFloat(_this.formDate.areaname)
         _this.formDate.pricename = parseFloat(_this.formDate.pricename)
+        if(_this.formDate.floor){
+           if(_this.formDate.floor === '10层以上'){
+             _this.formDate.floor = 11
+           }else{
+             _this.formDate.floor = parseFloat(_this.formDate.floor)
+           }
+        }
+        if(_this.formDate.carportnum){
+           if(_this.formDate.carportnum === '5个以上'){
+             _this.formDate.carportnum = 6
+           }else{
+             _this.formDate.carportnum = parseFloat(_this.formDate.carportnum)
+           }
+        }
+        if(_this.formDate.powercharge){
+           _this.formDate.powercharge = parseFloat(_this.formDate.powercharge)
+        }
+        if(_this.formDate.watercharge){
+           _this.formDate.watercharge = parseFloat(_this.formDate.watercharge)
+        }
+        if(_this.formDate.powersupply){
+           _this.formDate.powersupply = parseFloat(_this.formDate.powersupply)
+        }
+        if(_this.formDate.ageround){
+            let ageroundArr = _this.formDate.ageround.split('-')
+           _this.formDate.ageroundone = parseFloat(ageroundArr[0])
+           _this.formDate.ageroundtwo = parseFloat(ageroundArr[1])
+        }
+        
          //预租
         if(this.isPre){
           _this._preRentHouse()
@@ -440,7 +481,8 @@
     components: {
       Picker,
       Uploader,
-      Loading
+      Loading,
+      Between
     }
   }
 </script>

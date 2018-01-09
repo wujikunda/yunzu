@@ -1,17 +1,24 @@
 <template>
   <div class = "settingView">
-    <m-dialog v-show="showdialog" >
-      
+    <Modal
+      v-model="showdialog"
+      title="云租房产"
+      ok-text="支付完成"
+      @on-ok="_closeBtn"
+      @on-cancel="dialog=false">
       <div class="dialog">
-        <div class="closeBtn" @click="_closeBtn">
-          <img src="~common/image/button_shanchu.png">
-        </div>
         <div id="qrcode"></div>
-        <p>请用微信扫描完成押金充值</p>
+        <p style="font-size:18px">请用微信扫描完成押金充值</p>
       </div>
-
-      
-    </m-dialog>
+    </Modal>
+    <Modal
+      v-model="dialog"
+      title="云租房产"
+      ok-text="确认"
+      @on-ok="_refund"
+      @on-cancel="dialog=false">
+      <p style="font-size:18px">是否确认退还押金?</p>
+    </Modal>
     <section class="member">
       <div class="box">
         <img src="~common/image/wodeqianbao.png" alt="">
@@ -19,8 +26,8 @@
         <p>{{money}}元</p>
         <div style="color:#cbcbcb">({{checkPay() ? '已': '未'}}缴纳押金)</div>
       </div>
-      <div class="buttonC" @click="_managerCashGet">缴纳押金</div>
-      <div class="buttonB" @click="_refund">退还押金</div>
+      <div class="buttonC" @click="_managerCashGet" style="cursor:pointer">缴纳押金</div>
+      <div class="buttonB" @click="dialog=true" style="cursor:pointer">退还押金</div>
     </section>
   </div>
 </template>
@@ -36,6 +43,7 @@
       return {
         money:'0.00',
         showdialog:false,
+        dialog:false,
         timer:null,
         amount:''
       }
@@ -56,7 +64,7 @@
       checkPay() {
         return !!parseInt(localStorage.getItem('__paycash__'))
       },
-      _managerCashGet() {
+      _managerCashGet() { 
         managerCashGet().then((res) => {
           if(!res.code){
             this.amount = parseFloat(res.data)
@@ -150,8 +158,8 @@
       color $color-theme
   .dialog
     background-color #fff
-    width 300px
-    height 300px
+    width 100%
+    height 100%
     display flex
     justify-content center
     align-items center

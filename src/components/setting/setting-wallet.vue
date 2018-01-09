@@ -1,5 +1,13 @@
 <template>
   <div class = "settingView">
+    <Modal
+      v-model="dialog"
+      title="云租房产"
+      ok-text="确认"
+      @on-ok="_refund"
+      @on-cancel="dialog=false">
+      <p style="font-size:18px">是否确认退还押金?</p>
+    </Modal>
     <section class="member">
       <div class="box">
         <img src="~common/image/wodeqianbao.png" alt="">
@@ -11,7 +19,7 @@
         <div style="color:#cbcbcb">({{checkPay() ? '已': '未'}}缴纳押金)</div>
       </div>
       <div class="buttonC" @click="_managerCashGet">缴纳押金</div>
-      <div class="buttonB" @click="_refund">退还押金</div>
+      <div class="buttonB" @click="dialog = true">退还押金</div>
     </section>
   </div>
 </template>
@@ -25,7 +33,8 @@
     data() {
       return {
         money:'0.00',
-        amount:''
+        amount:'',
+        dialog:false
       }
     },
     mounted() {

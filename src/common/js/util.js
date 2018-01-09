@@ -41,6 +41,10 @@ export function deepCopy(obj) {
   return newObj
 }
 
+export function clone(origin) { //深拷贝
+  let originProto = Object.getPrototypeOf(origin);
+  return Object.assign(Object.create(originProto), origin);
+}
 export function formatD(format, dateT) {
   // formatD('yyyy-MM-dd hh:mm:ss', Date)
   let $1

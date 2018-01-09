@@ -59,11 +59,10 @@
                   </div>
                   <div class="textBox">
                     <div><span>类型:</span>{{houseType(detial.house_type) || '--'}}</div>
-                    <div><span>入住:</span>{{detial.checkin || '--'}}</div>
+                    <div><span>装修期:</span>{{detial.checkin || '--'}}</div>
                   </div>
                   <div class="textBox">
                     <div><span>楼层:</span>{{detial.floor || '--'}}楼</div>
-                    <div><span>租期:</span>{{detial.tenancy || '--'}}</div>
                   </div>
                   <div class="textBox">
                     <div v-if="areaList[detial.area_id]"><span>区域:</span>{{areaList[detial.area_id].areaname || '--'}}</div>

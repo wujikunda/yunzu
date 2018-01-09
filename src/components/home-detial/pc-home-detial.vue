@@ -31,8 +31,8 @@
             <div class="leftContent">
               <div class="pictureBox">
                 <div v-if="detial.pic_ary"  class="slider-wrapper" ref="sliderWrapper">
-                  <div class="btnBox">
-                    <img @click="motoPage('left')" src="~common/image/btn_left.png" alt="左箭头">
+                  <div class="btnBox" >
+                    <img @click="motoPage('left')" src="~common/image/btn_left.png" alt="左箭头" style="cursor:pointer">
                   </div>
                   <slider ref="slider" class="slider-content"  :showCount="false">
                     <div v-for="(item,index) in detial.pic_ary" :key="index">
@@ -40,11 +40,11 @@
                     </div>
                   </slider>
                   <div class="btnBox">
-                    <img @click="motoPage('right')" src="~common/image/btn_right.png" alt="右箭头">
+                    <img @click="motoPage('right')" src="~common/image/btn_right.png" alt="右箭头" style="cursor:pointer">
                   </div>
                 </div> 
                 <ul class="pshowList" v-if="detial.pic_ary"> 
-                  <li v-for="(item,index) in detial.pic_ary" :key="index">
+                  <li v-for="(item,index) in detial.pic_ary" :key="index" style="cursor:pointer">
                     <img  ref="showListPic" @click="motoPage(index)" :class="{'active': index===0 }"  :src="item.picurl"  @error="loaderror" > 
                   </li>
                 </ul>
@@ -58,15 +58,12 @@
                   </div>
                   <div class="textBox">
                     <div><span>类型:</span>{{houseType(detial.house_type) || '--'}}</div>
-                    <div><span>入住:</span>{{detial.checkin || '--'}}</div>
-                  </div>
-                  <div class="textBox">
-                    <div><span>楼层:</span>{{detial.floor || '--'}}楼</div>
-                    <div><span>租期:</span>{{detial.tenancy || '--'}}</div>
                   </div>
                   <div class="textBox">
                     <div v-if="areaList[detial.area_id]"><span>区域:</span>{{areaList[detial.area_id].areaname || '--'}}</div>
-                    <div><span>付款方式:</span>{{detial.payway || '--'}}</div>
+                  </div>
+                  <div class="textBox">
+                    <div><span>总价格:</span>{{detial.totalprice || '--'}}元</div>
                   </div>
                   <div class="textBox">
                     <div><span>发布时间:</span>{{_formatDate(detial.crate_date) || '--'}}</div>
@@ -77,10 +74,10 @@
                     </span>
                   </div>
                 </div>
-                <detial-type  :paycash="paycash" :detial = "detial"></detial-type>
-                <div class="detialBox" v-if="detial.longitude && detial.latitude" v-show="paycash">
-                  <p class="title">位置:{{detial.addressdesc || '--'}}</p>
-                  <bdmap ref="map" :height="mapheight" :longitude="detial.longitude" :latitude="detial.latitude"></bdmap>
+                <detial-type  :paycash="_getAuthority()" :detial = "detial"></detial-type>
+                <div class="detialBox" v-if="detial.longitude && detial.latitude" v-show="_getAuthority()">
+                  <p class="title">位置:{{detial.address || '--'}}</p>
+                  <bdmap ref="map" :height="mapheight" :mapTitle="detial.address" :longitude="detial.longitude" :latitude="detial.latitude"></bdmap>
                 </div>
                 <div class="detialBox lastBox">
                   
@@ -88,12 +85,12 @@
               </section>
             </div>
             <div class="rightContent">
-                <h3>{{paycash ? detial.ownname : ''}}</h3>
-                <h4>{{ paycash ? detial.owntel || '--' : paycashNoneStr}}</h4>
+                <h3>{{_getAuthority() ? detial.ownname : ''}}</h3>
+                <h4>{{ _getAuthority() ? detial.owntel || '--' : paycashNoneStr}}</h4>
                 <h3>平台电话</h3>
-                <h4>{{detial.platformname || '--'}}</h4>
+                <h4>{{ '0592-6220892'}}</h4>
                 <h3>附近房源</h3>
-              <div class="nearBy" v-for="(item, index) in detial.nearlist" :key="index"  @click="selcetHome(item)"  >
+              <div class="nearBy" v-for="(item, index) in detial.nearlist" :key="index"  @click="selcetHome(item)" style="cursor:pointer" >
                 <img :src="item.picurl" @load="loadImage" @error="loaderror"  >
                 <span>{{item.title}}</span>
                 <span class="color-theme">{{item.pricename}}元/㎡</span>
@@ -103,8 +100,8 @@
         </div>
        <footer>
          <div class="footerBox">
-          <span :class="{'theme': isCompare}" @click="addToCompare">{{isCompare ? '取消对比' : '加入对比'}}</span>
-          <span :class="{'theme': isCollect}" @click="addToCollect">{{isCollect ? '取消收藏' : '加入收藏'}}</span>
+          <span style="cursor:pointer" :class="{'theme': isCompare}" @click="addToCompare">{{isCompare ? '取消对比' : '加入对比'}}</span>
+          <span style="cursor:pointer" :class="{'theme': isCollect}" @click="addToCollect">{{isCollect ? '取消收藏' : '加入收藏'}}</span>
           <span  @click="_rentHouse" style="cursor:pointer" 
           class="theme" 
           >我要租房</span>
@@ -196,6 +193,17 @@
           }
         })
       },
+      _getAuthority() {
+        if(this.paycash){
+          return true
+        }else{
+          if(localStorage.getItem('usertoken')){
+            return this.detial.shownum < 4
+          }else{
+            return false
+          }
+        }
+      },
       loaderror(event) {
         event.target.src = require('common/image/default_house.png')
       },
@@ -260,7 +268,7 @@
         })
       },
       _rentHouse(){
-        if(this.paycash){
+        if(this._getAuthority()){
           this.dialog2 = true
         }else{
           this.dialog = true

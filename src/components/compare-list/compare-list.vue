@@ -4,7 +4,7 @@
       <scroll :data = "conpareList" class="listContentS" :pullup="true" @scrollToEnd="updateLoad">
         <div class="listContent">
           <ul>
-            <li v-for="(item, index) in conpareList" :key="index" @click="selectToCompare(item.listid)" class="needsclick">
+            <li v-for="(item, index) in conpareList" :key="index" @click="selectToCompare(item)" class="needsclick">
               <img class="posImg" :src="item.picurl" @error="_loadError" >
               <div class="textBox">
                 <div class="textCont">
@@ -18,8 +18,8 @@
                   价格: {{item.pricename}}元/㎡
                 </div>
               </div>
-              <img class="selImg" v-show="selectList.indexOf(item.listid) > -1" src="~common/image/secect_checked.png" alt="">
-              <img class="selImg" v-show="selectList.indexOf(item.listid) < 0" src="~common/image/select_normal.png" alt="">
+              <img class="selImg" v-show="selectList.indexOf(item) > -1" src="~common/image/secect_checked.png" alt="">
+              <img class="selImg" v-show="selectList.indexOf(item) < 0" src="~common/image/select_normal.png" alt="">
             </li>
           </ul>
           <div class="blank"></div>
@@ -73,6 +73,7 @@
         }
       },
       _getCompareList(obj) {
+        this.selectList=[]
         getCompareList(localStorage.getItem('usertoken'),obj).then((res) => {
           if(!res.code){
             if(!res.data){
@@ -89,7 +90,7 @@
         let type = [];
         that.conpareList.forEach(function(element, index) {
           that.selectList.forEach(function(item,i) {
-            if(item === element.listid){
+            if(item.listid === element.listid){
               type.push(element.housetype)
             }
           });
@@ -114,7 +115,6 @@
         loadError(event)
       },
       selectToCompare(id) {
-        console.log("selectToCompare",id)
         var index = this.selectList.indexOf(id)
         if(index < 0){
           if(this.selectList.length < 2){

@@ -186,6 +186,7 @@ import {mapGetters, mapMutations} from 'vuex'
         if(this.searchkey !== ""){
           obj.searchkey = this.searchkey
         }
+        obj.start = page
         managerHouseList(obj).then((res) => {
           if(!res.code){
             this._formTabList(res.data.list)

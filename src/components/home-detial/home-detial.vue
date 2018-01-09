@@ -31,16 +31,11 @@
                 <div><span>面积:</span>{{detial.areaname || '--'}}㎡</div>
               </div>
               <div class="textBox">
-                <div><span>类型:</span>{{houseType(detial.house_type) || '--'}}</div>
-                <div><span>入住:</span>{{detial.checkin || '--'}}</div>
-              </div>
-              <div class="textBox">
-                <div><span>楼层:</span>{{detial.floor || '--'}}楼</div>
-                <div><span>租期:</span>{{detial.tenancy || '--'}}</div>
-              </div>
-              <div class="textBox">
                 <div v-if="areaList[detial.area_id]"><span>区域:</span>{{areaList[detial.area_id].areaname || '--'}}</div>
-                <div><span>付款方式:</span>{{detial.payway || '--'}}</div>
+                <div><span>类型:</span>{{houseType(detial.house_type) || '--'}}</div>
+              </div>
+              <div class="textBox">
+                <div><span>总价格:</span>{{detial.totalprice || '--'}}元</div>
               </div>
               <div class="textBox">
                 <div><span>发布时间:</span>{{_formatDate(detial.crate_date) || '--'}}</div>
@@ -51,17 +46,17 @@
                 </span>
               </div>
             </div>
-            <detial-type :paycash="paycash" :detial = "detial"></detial-type>
+            <detial-type :paycash="_getAuthority()" :detial = "detial"></detial-type>
             <div class="detialBox">
               <p class="title">联系我们</p>
               <div class="phoneBox">
-                <div><img src="~common/image/icon_phone_grey.png" alt="电话">房东电话: <span> {{ paycash ? detial.owntel || '--' : paycashNoneStr}}</span>  <span>{{paycash ? detial.ownname : ''}}</span></div>
-                <div><img src="~common/image/icon_phone_grey.png" alt="电话">平台电话: <span> {{detial.platformname || '--'}}</span></div>
+                <div @click="callPhone(detial.owntel, true)"><img src="~common/image/icon_phone_grey.png" alt="电话">房东电话: <span> {{ _getAuthority() ? detial.owntel || '--' : paycashNoneStr}}</span>  <span>{{_getAuthority() ? detial.ownname : ''}}</span></div>
+                <div @click="callPhone('0592-6220892')"><img src="~common/image/icon_phone_grey.png" alt="电话">平台电话: <span> {{'0592-6220892'}}</span></div>
               </div>
             </div>
-            <div class="detialBox" v-if="detial.longitude && detial.latitude"  v-show="paycash">
-              <p class="title">位置:{{detial.addressdesc || '--'}}</p>
-              <bdmap :height="mapheight" :longitude="detial.longitude" :latitude="detial.latitude"></bdmap>
+            <div class="detialBox" v-if="detial.longitude && detial.latitude"  v-show="_getAuthority()">
+              <p class="title">位置:{{detial.address || '--'}}</p>
+              <bdmap :height="mapheight" :mapTitle="detial.address" :longitude="detial.longitude" :latitude="detial.latitude"></bdmap>
             </div>
             <div class="detialBox lastBox">
               <p class="title">附近房源</p>
@@ -153,6 +148,27 @@
       loaderror(event) {
         event.target.src = require('common/image/default_house.png')
       },
+      _getAuthority() {
+        if(this.paycash){
+          return true
+        }else{
+          if(localStorage.getItem('usertoken')){
+            return this.detial.shownum < 4
+          }else{
+            return false
+          }
+        }
+      },
+      callPhone(phone, checked) {
+        if(checked){
+          if(this._getAuthority()){
+            location.href = 'tel:'+phone
+          }
+        }else{
+          location.href = 'tel:'+phone
+        }
+        
+      },
       _formatDate(str){
         return formatDate(str)
       },
@@ -207,7 +223,7 @@
         })
       },
       _rentHouse(){
-        if(this.paycash){
+        if(this._getAuthority()){
           location.href = 'tel:'+this.detial.owntel
         }else{
           this.dialog = true

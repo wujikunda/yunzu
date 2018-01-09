@@ -5,7 +5,7 @@
       <div class="listContentS">
         <div class="listContent">
           <ul>
-            <li v-for="(item, index) in collectList" :key="index" @click="selcetHome(item)" class="needsclick">
+            <li v-for="(item, index) in collectList" :key="index" @click="selcetHome(item)" class="needsclick" style="cursor:pointer">
               <img class="posImg" :src="item.picurl" @error="_loadError" alt="">
               <div class="textBox">
                 <div class="textCont">

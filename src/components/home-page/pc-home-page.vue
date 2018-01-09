@@ -217,7 +217,11 @@
       },
       _getAreaList(cirtyId){
         let _this = this
-        getAreaList(localStorage.getItem('usertoken'), cirtyId).then((res) => {
+        let realCicy = cirtyId || localStorage.getItem('cityid')
+        if(!realCicy){
+          return
+        }
+        getAreaList(localStorage.getItem('usertoken'), realCicy).then((res) => {
           if(!res.code){
             _this.sortObjects[1].data = []
             _this.sortObjects[1].data.push({text:'不限',id:''})
@@ -237,7 +241,11 @@
         })
       },
       _initSearchCondition(cityID) {
-        getSearchCondition(localStorage.getItem('usertoken'), cityID).then((res) => {
+        let realCicy = cityID || localStorage.getItem('cityid')
+        if(!realCicy){
+          return
+        }
+        getSearchCondition(localStorage.getItem('usertoken'), realCicy).then((res) => {
           let sortObj = this.sortObjects
           if(!res.code){
             sortObj[0].data = []
@@ -348,8 +356,10 @@
       justify-content center
       .shaixuan
         position absolute
-        right 100px
+        right 150px
         top -30px
+        font-size $font-size-large
+        font-weight bold
         cursor pointer
         color $color-theme
       .home-list-content 

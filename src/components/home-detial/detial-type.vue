@@ -9,16 +9,19 @@
           <div><span>地址:</span>{{paycash? detial.address || '--' : '缴纳押金后可见'}}</div>
         </div>
         <div class="textBox">
+          <div><span>装修期:</span>{{detial.checkin || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>楼层:</span>{{detial.floor || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>付款方式:</span>{{detial.payway || '--'}}</div>
+        </div>
+        <div class="textBox">
           <div><span>租金递增方式:</span>{{detial.rentway || '--'}}</div>
         </div>
         <div class="textBox">
           <div><span>年限:</span>{{detial.ageround || '--'}}</div>
-        </div>
-        <div class="textBox">
-          <div><span>供电:</span>{{detial.power || '--'}}</div>
-        </div>
-        <div class="textBox">
-          <div><span>车辆进出长度:</span>{{detial.carwidth || '--'}}米</div>
         </div>
         <div class="textBox">
           <div><span>结构:</span>{{detial.structure || '--'}}</div>
@@ -28,23 +31,39 @@
           <div><span>扰民:</span>{{detial.affect || '--'}}</div>
         </div>
         <div class="textBox">
-          <div><span>排水:</span>{{detial.awaywater || '--'}}</div>
-          <div><span>排污:</span>{{detial.drain || '--'}}</div>
-        </div>
-        <div class="textBox">
-          <div><span>电费:</span>{{detial.powercharge || '--'}}元/度</div>
-          <div><span>水费:</span>{{detial.watercharge || '--'}}元/吨</div>
+          <div><span>排水量:</span>{{detial.awaywater || '--'}}</div>
+          <div><span>排污量:</span>{{detial.drain || '--'}}</div>
         </div>
         <div class="textBox">
           <div><span>红线图:</span>{{detial.redchart || '--'}}</div>
           <div><span>产权:</span>{{detial.propertyright}}</div>
         </div>
         <div class="textBox">
+          <div><span>水费:</span>{{detial.watercharge || '--'}}元/吨</div>
+        </div>
+        <div class="textBox">
+          <div><span>电费:</span>{{detial.powercharge || '--'}}元/度</div>
+        </div>
+        <div class="textBox">
+          <div><span>供电:</span>{{detial.power || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>供电率:</span>{{detial.powersupply || '--'}}千瓦</div>
+        </div>
+        <div class="textBox">
           <div><span>消防措施:</span>{{detial.firecontrol || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>车辆进出长度:</span>{{detial.carwidth || '--'}}米</div>
+        </div>
+        <div class="textBox">
           <div><span>交通:</span>{{detial.transportation || '--'}}</div>
         </div>
         <div class="textBox">
-          <div><span>QS认证:</span>{{detial.qs || '--'}}</div>
+          <div><span>车位个数:</span>{{detial.carportnum || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>车位面积:</span>{{detial.carportarea || '--'}}㎡</div>
         </div>
         <div class="textBox">
           <div><span>房源描述:</span>{{detial.housedec || '--'}}</div>
@@ -62,6 +81,15 @@
           <div><span>地址:</span>{{paycash? detial.address || '--' : '缴纳押金后可见'}}</div>
         </div>
         <div class="textBox">
+          <div><span>装修期:</span>{{detial.checkin || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>楼层:</span>{{detial.floor || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>付款方式:</span>{{detial.payway || '--'}}</div>
+        </div>
+        <div class="textBox">
           <div><span>租金递增方式:</span>{{detial.rentway || '--'}}</div>
         </div>
         <div class="textBox">
@@ -72,6 +100,9 @@
         </div>
         <div class="textBox">
           <div><span>车位个数:</span>{{detial.carportnum || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>车位面积:</span>{{detial.carportarea || '--'}}㎡</div>
         </div>
         <div class="textBox">
           <div><span>附近停车场:</span>{{detial.nearpark || '--'}}</div>
@@ -104,6 +135,15 @@
           <div><span>地址:</span>{{paycash? detial.address || '--' : '缴纳押金后可见'}}</div>
         </div>
         <div class="textBox">
+          <div><span>装修期:</span>{{detial.checkin || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>楼层:</span>{{detial.floor || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>付款方式:</span>{{detial.payway || '--'}}</div>
+        </div>
+        <div class="textBox">
           <div><span>租金递增方式:</span>{{detial.rentway || '--'}}</div>
         </div>
         <div class="textBox">
@@ -113,7 +153,13 @@
           <div><span>供电:</span>{{detial.power || '--'}}</div>
         </div>
         <div class="textBox">
+          <div><span>供电率:</span>{{detial.powersupply || '--'}}千瓦</div>
+        </div>
+        <div class="textBox">
           <div><span>车位个数:</span>{{detial.carportnum || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>车位面积:</span>{{detial.carportarea || '--'}}㎡</div>
         </div>
         <div class="textBox">
           <div><span>结构:</span>{{detial.structure || '--'}}</div>
@@ -134,9 +180,6 @@
           <div><span>消防措施:</span>{{detial.firecontrol || '--'}}</div>
         </div>
         <div class="textBox">
-          <div><span>QS认证:</span>{{detial.qs || '--'}}</div>
-        </div>
-        <div class="textBox">
           <div><span>房源描述:</span>{{detial.housedec || '--'}}</div>
         </div>
         <div class="textBox">
@@ -150,6 +193,15 @@
         </div>
         <div class="textBox">
           <div><span>地址:</span>{{paycash? detial.address || '--' : '缴纳押金后可见'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>装修期:</span>{{detial.checkin || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>楼层:</span>{{detial.floor || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>付款方式:</span>{{detial.payway || '--'}}</div>
         </div>
         <div class="textBox">
           <div><span>竣工时间:</span>{{detial.completetime || '--'}}</div>
@@ -212,6 +264,12 @@
           <div><span>附近:</span>
             <b v-for="place in detial.nearby" v-html="place.nearbyname +' | '"></b>
           </div>
+        </div>
+        <div class="textBox">
+          <div><span>车位个数:</span>{{detial.carportnum || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>车位面积:</span>{{detial.carportarea || '--'}}㎡</div>
         </div>
         <div class="textBox">
           <div><span>采光:</span>{{detial.lighting || '--'}}</div>

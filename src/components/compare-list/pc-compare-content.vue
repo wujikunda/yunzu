@@ -4,19 +4,17 @@
         <div class="listContent">
           <div class="comparePicCont">
             <div class="picLs">
-              <div class="compPictureBox"  v-for="(item, index) in compareCont" :key="index">
+              <div class="compPictureBox"  v-for="(item, index) in selectList" :key="index">
                 <img class="posImg" :src="item.picurl" @error="_loadError" >
               </div>
             </div>
-            <div class="compareBtn"  @click="reCompare"><span>重新选择</span></div>
+            <div class="compareBtn"  @click="reCompare" style="cursor:pointer"><span>重新选择</span></div>
           </div>
           <p>对比信息</p>
-          <ul class="tableBox">
-            <li><span>方式</span><div>{{compareCont[0].way || '--'}}</div><div>{{compareCont[1].way || '--'}}</div></li>
-            <li><span>价格</span><div>{{compareCont[0].pricename}}元/㎡</div><div>{{compareCont[1].pricename}}元/㎡</div></li>
-            <li><span>面积</span><div>{{compareCont[0].spacename}}㎡</div><div>{{compareCont[1].spacename}}㎡</div></li>
-            <li><span>付款方式</span><div>{{compareCont[0].payway}}</div><div>{{compareCont[1].payway}}</div></li>
-            <li><span>楼层</span><div>{{compareCont[0].floor}}</div><div>{{compareCont[1].floor}}</div></li>
+          <ul class="tableBox" v-if="compareCont[1].title">
+            <li v-for="(item, index, key ) in compareCont[1]" :key="key" v-if="showID.hasOwnProperty(index)">
+              <span>{{showID[index]}}</span><div>{{compareCont[0][index] || '--'}}</div><div>{{compareCont[1][index] || '--'}}</div>
+            </li>
           </ul>
         </div>
       </div>
@@ -26,6 +24,7 @@
 <script type="text/ecmascript-6">
   import {loadError} from 'common/js/dom'
   import {getCompareCont} from 'api/compare'
+  import {getHomeDetial} from 'api/home'
   import {mapGetters} from 'vuex'
   export default {
     props: {
@@ -35,7 +34,58 @@
       return {
         compareCont:[
           {},{}
-        ]
+        ],
+        showID:{
+          address:'导航地址',
+          addressdesc:'周边描述',
+          affect:'扰民程度',
+          ageround:'年限',
+          awaywater:'排水量',
+          carportarea:'车位面积',
+          carportnum:'车位个数',
+          carwidth:'车辆进出长度',
+          checkin:'装修期',
+          drain:'排污量:',
+          firecontrol:'消防措施',
+          floor:'楼层',
+          housedec:'房源描述',
+          nearpark:'附近停车场',
+          orientation:'朝向',
+          payway:'付款方式',
+          power:'供电',
+          powersupply:'供电率',
+          powercharge:'电费',
+          propertyright:'产权',
+          pricename:'价格',
+          register:'能否注册公司',
+          redchart:'红线图',
+          rentway:'租金递增方式',
+          source:'来源',
+          structure:'结构',
+          tenancy:'租期',
+          title:'名称',
+          totalprice:'总价',
+          transportation:'交通',
+          type:'类型',
+          watercharge:'水费',
+          hourseage:'年代',
+          propertycharge:'物业费',
+          balcony:'是否有阳台',
+          developers:'开发商',
+          propertycompany:'物业公司',
+          sharedarea:'公摊比例',
+          households:'总户数',
+          plotratio:'容积率',
+          brandmessage:'品牌信息',
+          style:'装修风格',
+          furniture:'家具',
+          stylelevel:'装修程度',
+          nearby:'附近',
+          lighting:'采光',
+          monitoring:'保安监控',
+          noise:'噪音',
+          elevator:'电梯'
+        }
       }
     },
     computed: {
@@ -57,12 +107,16 @@
           })
           return
         }
-        getCompareCont(localStorage.getItem('usertoken'),this.selectList[0],this.selectList[1]).then((res) => {
+        this._getHomeDetial(this.selectList[0].listid,this.selectList[0].housetype,0)
+        this._getHomeDetial(this.selectList[1].listid,this.selectList[1].housetype,1)
+      },
+      _getHomeDetial( listid, housetype, index) {
+        getHomeDetial(localStorage.getItem('usertoken'), listid, housetype).then((res) => {
           if(!res.code){
-            this.compareCont = res.data
+            this.$set(this.compareCont, index, res.data)
           }else{
-            alert(res.msg)
             this.$router.back()
+            alert(res.msg)
           }
         })
       },
@@ -85,11 +139,11 @@
   @import "~common/stylus/variable"
   @import "~common/stylus/mixin"
   #compareContent
-    position fixed
+    position relative
     width 100%
     height 100%
     z-index 102
-    top 100px
+    top 0px
     left 0
     background-color $color-white
     .listContentS
@@ -179,7 +233,7 @@
             border 1px solid $color-border
             width 100%
             span
-              width 79px
+              width 109px
               box-sizing border-box
               border 1px solid $color-border
             div 

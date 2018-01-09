@@ -310,11 +310,11 @@
         .mask-top
           position: absolute
           top: 0
-          background: linear-gradient(to top, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.8))
+          background: linear-gradient(to top, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 1))
         .mask-bottom
           position: absolute
           bottom: 1px
-          background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.8))
+          background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 1))
       .wheel-wrapper
         display: flex
         padding: 0 16px
@@ -334,7 +334,8 @@
               height: 36px
               overflow: hidden
               white-space: nowrap
-              color: $color-dark-grey
+              color: #000
+              font-weight bold
     .picker-footer
       height: 20px
 </style>

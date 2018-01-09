@@ -105,8 +105,8 @@ import {formatD} from 'common/js/util'
         if(this.searchMobile){
           obj.mobile = this.searchMobile
         }
-        obj.start = page*10-9
-        obj.limit = page*10
+        obj.start = page
+        obj.limit = 10
         managerAccountList(obj).then((res) => {
           if(!res.code){
             this._formTabList(res.data.list)
@@ -134,7 +134,7 @@ import {formatD} from 'common/js/util'
               {
                 type:'text',
                 id:'createdate',
-                text:formatD('yyyy.MM.dd',new Date(element.createdate))
+                text:formatD('yyyy.MM.dd hh:mm',new Date(element.createdate))
               },
               {
                 type:'text',

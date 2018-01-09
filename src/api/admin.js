@@ -261,11 +261,11 @@ export function managerCashUpdate(cashmoney) {
 }
 
 // 我要预租列表
-export function managerBeforeList(cashmoney) {
+export function managerBeforeList(start, limit) {
   let url = HTTPIP + '/v1/managerBeforeList'
-
   let objData = {
-    cashmoney: cashmoney,
+    start: start,
+    limit: limit,
     timestamp: getDate()
   }
   let sign = getSign(objData)

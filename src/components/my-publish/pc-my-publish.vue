@@ -6,14 +6,14 @@
           <div class="publishHeader">
             <p class="headerTitle">选择上传房源属性</p>
             <div class="picLs">
-              <div class="iconBox"  v-for="(item, index) in publishType" :key="index" @click="toPublish(item.id)">
+              <div class="iconBox"  v-for="(item, index) in publishType" :key="index" @click="toPublish(item.id)" style="cursor:pointer">
                 <img class="iconPic" :src="item.iconSrc" @error="_loadError" >
                 <span v-html="item.text"></span>
               </div>
             </div>
           </div>
           <ul>
-            <li v-for="(item, index) in publishList" :key="index" @click="selcetHome(item)">
+            <li v-for="(item, index) in publishList" :key="index" @click="selcetHome(item)" style="cursor:pointer">
               <img class="posImg" :src="item.picurl" @error="_loadError">
               <div class="textBox">
                 <div class="textCont">

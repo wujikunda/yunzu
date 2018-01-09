@@ -28,7 +28,7 @@
         <div class="gText">可以直接拨打客服热线</div>
       </div>
       <div class="connectBox">
-        <div class="tText">17750660008</div>
+        <a class="tText" href="tel:17750660008">17750660008</a>
       </div>
       <div class="connectBox">
         <div class="gText">感谢您的支持</div>
@@ -37,7 +37,7 @@
       <div class="connectBox">
         <div class="bText">商业合作联系微信: <div class="tText inline">ly710353029</div></div>
         <div class="bText">联系QQ: <div class="tText inline">710353029</div></div>
-        <div class="bText">手机: <div class="tText inline">17750660008</div></div>
+        <div class="bText">手机: <a class="tText inline" href="tel:17750660008">17750660008</a></div>
         <div class="bText">邮箱: <div class="tText inline">710353029@qq.com</div></div>
       </div>
     </section>
@@ -117,7 +117,7 @@ import iMlrz from 'lrz'
             this.type = 'connect'
           break;
           default : 
-            console.log('no such page')
+            // console.log('no such page')
           break
         }
       },

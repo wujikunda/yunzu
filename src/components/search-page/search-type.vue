@@ -14,8 +14,8 @@
             <b>{{item.title}}</b>
             <div class="selectBox">
               <span :class="{'active': num==item.selectIndex}" @click="selectItem(item,num)" v-for="(list, num) in item.list" :key="num">{{list}}</span>
-              <div class="inputBox" v-if="item.id === 'spacename'" >
-                自定义: <input type="number" @change="spacenameIn($event,'min')"> - <input  type="number" @change="spacenameIn($event,'max')">
+              <div class="inputBox" v-if="item.udefine" >
+                <between  @getValue="_getValue($event, item)" :title="'自定义:'"></between>
               </div>
             </div>
           </li>
@@ -34,6 +34,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import Between from 'base/between/between'
   import Scroll from 'base/scroll/scroll'
   import {getSearchList,getCityList,getHomeSearch} from 'api/home'
   import {deepCopy} from 'common/js/util'
@@ -80,7 +81,9 @@
       '$route':['_getSearchDate']
     },
     methods: {
-      
+      _getValue(event,item) {
+        this.formData[item.id] = event
+      },
       _getSearchDate() {
         let search = deepCopy(getSearchList())
         this.sortObjects = []
@@ -97,6 +100,8 @@
             this.sortObjects = [
               search.area,
               search.areaprice,
+              search.payway,
+              search.ageround,
               search.floor,
               search.structure,
               search.transportation,
@@ -104,7 +109,10 @@
               search.source,
               search.propertyright,
               search.firecontrol,
-              search.power
+              search.power,
+              search.powersupply,
+              search.powercharge,
+              search.watercharge,
             ]
             this.typeName = '厂房仓库高级筛选'
             break;
@@ -112,6 +120,7 @@
             this.sortObjects = [
               search.area,
               search.areaprice,
+              search.payway,
               search.ageround,
               search.floorheight,
               search.structure,
@@ -120,8 +129,7 @@
               search.register,
               search.source,
               search.propertyright,
-              search.firecontrol,
-              search.power
+              search.firecontrol
             ]
             this.typeName = '办公写字楼高级筛选'
             break;
@@ -129,6 +137,7 @@
             this.sortObjects = [
               search.area,
               search.areaprice,
+              search.payway,
               search.storepis,
               search.ageround,
               search.floorheight,
@@ -139,7 +148,8 @@
               search.source,
               search.propertyright,
               search.firecontrol,
-              search.power
+              search.power,
+              search.powersupply
             ]
             this.typeName = '店面高级筛选'
             break;
@@ -158,7 +168,9 @@
               search.lighting,
               search.monitoring,
               search.parknum,
-              search.elevator
+              search.elevator,
+              search.powercharge,
+              search.watercharge
             ]
             this.typeName = '住房高级筛选'
             break;
@@ -250,6 +262,12 @@
       },
       toIndex(  ){
         let _this = this
+        if(_this.formData.ageround){
+            let ageroundArr = _this.formData.ageround.split('-')
+           _this.formData.ageroundone = parseFloat(ageroundArr[0])
+           _this.formData.ageroundtwo = parseFloat(ageroundArr[1])
+           delete _this.formData.ageround
+        }
         getHomeSearch(localStorage.getItem('usertoken'), _this.formData,this.$route.params.id).then((res) => {
           if(!res.code){
             _this.setHomeList(res.data)
@@ -269,7 +287,8 @@
       })
     },
     components: {
-      Scroll
+      Scroll,
+      Between
     }
   }
 </script>

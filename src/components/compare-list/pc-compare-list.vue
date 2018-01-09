@@ -7,13 +7,13 @@
             <div class="picLs">
               <div class="compPictureBox"  v-for="(item, index) in selectList" :key="index">
                 <img class="posImg" :src="item.picurl" @error="_loadError" >
-                <img class="deleBtn" @click="selectToCompare(item)" src="~common/image/button_shanchu.png" alt="删除">
+                <img class="deleBtn" @click="selectToCompare(item)" src="~common/image/button_shanchu.png" alt="删除" style="cursor:pointer">
               </div>
             </div>
-            <div class="compareBtn"  @click="compareStart"  v-show="selectList.length > 1"><span>开始对比</span></div>
+            <div class="compareBtn"  style="cursor:pointer" @click="compareStart"  v-show="selectList.length > 1"><span>开始对比</span></div>
           </div>
           <ul>
-            <li v-for="(item, index) in conpareList" :key="index" class="needsclick"  @click="selcetHome(item)">
+            <li v-for="(item, index) in conpareList" :key="index" class="needsclick"  @click="selcetHome(item)" style="cursor:pointer">
               <img class="posImg" :src="item.picurl" @error="_loadError" >
               <div class="textBox">
                 <div class="textCont">
@@ -112,7 +112,7 @@
         this.$router.push({
           path:'/pc/compareList/comp'
         })
-        this.setSelectList([this.selectList[0].listid, this.selectList[1].listid])
+        this.setSelectList([this.selectList[0], this.selectList[1]])
         
       },
       updateLoad() {

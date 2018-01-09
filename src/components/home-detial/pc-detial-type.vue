@@ -44,9 +44,6 @@
           <div><span>交通:</span>{{detial.transportation || '--'}}</div>
         </div>
         <div class="textBox">
-          <div><span>QS认证:</span>{{detial.qs || '--'}}</div>
-        </div>
-        <div class="textBox">
           <div><span>周边描述:</span>{{detial.addressdesc || '--'}}</div>
         </div>
       </div>
@@ -123,9 +120,6 @@
         </div>
         <div class="textBox">
           <div><span>消防措施:</span>{{detial.firecontrol || '--'}}</div>
-        </div>
-        <div class="textBox">
-          <div><span>QS认证:</span>{{detial.qs || '--'}}</div>
         </div>
         <div class="textBox">
           <div><span>周边描述:</span>{{detial.addressdesc || '--'}}</div>

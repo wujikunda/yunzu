@@ -121,8 +121,8 @@ import {mapGetters, mapMutations} from 'vuex'
       },
       _getDataList( page ) {
         let obj = {}
-        obj.start = page*10-9
-        obj.limit = page*10
+        obj.start = page
+        obj.limit = 10
         managerAdvertList(obj).then((res) => {
           if(!res.code){
             this._formTabList(res.data.list)

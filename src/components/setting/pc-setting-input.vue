@@ -183,7 +183,7 @@ import iMlrz from 'lrz'
             this.pTitle = '联系我们'
           break;
           default : 
-            console.log('no such page')
+            // console.log('no such page')
           break
         }
       },
