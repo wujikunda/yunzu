@@ -8,6 +8,7 @@
       <div class="inputBox"><span>客户姓名</span> <input type="text" v-model="adverObj.name" readonly ></div>
       <div class="inputBox"><span>电话号码</span> <input type="text" v-model="adverObj.phone" readonly></div>
       <div class="inputBox"><span>业务范围</span> <input type="text" v-model="adverObj.business" readonly></div>
+      <div class="inputBox"><span>房源类型</span> <input type="text" v-model="adverObj.house_type" readonly></div>
       <div class="inputBox"><span>预租面积</span> <input type="text" v-model="adverObj.areaname" readonly></div>
       <div class="inputBox"> <span>区域</span><input type="text" v-model="adverObj.address" readonly></div>
       <div class="inputBox"> <span>交通/车流量</span><input type="text" v-model="adverObj.transportation" readonly></div>
@@ -16,7 +17,7 @@
       <div class="inputBox"><span>结构</span> <input type="text" v-model="adverObj.structure" readonly></div>
       <div class="inputBox"><span>价格</span> <input type="text" v-model="adverObj.pricename" readonly></div>
       <div class="inputBox"><span>租期</span> <input type="text" v-model="adverObj.tenancy" readonly></div>
-      <div class="inputBox"><span>其他要求</span> <textarea type="text" v-model="adverObj.desc" disabled></textarea></div>
+      <div class="inputBox"><span>其他要求</span> <textarea type="text" v-model="adverObj.instruction" disabled></textarea></div>
     </div>
   </section>
 </template>
@@ -44,6 +45,24 @@ import {managerBeforeDetail} from 'api/admin'
       _back() {
         this.$router.back()
       },
+      getHouseTypeText(id) {
+        switch (id) {
+          case 1:
+            return '厂房仓库'
+            break;
+          case 2:
+            return '办公写字楼'
+            break;
+          case 3:
+            return '店面'
+            break;
+          case 4:
+            return '住房'
+            break;
+          default: return ''
+            break;
+        }
+      },
       selectImg() {
         this.$refs.uploadFiles.$refs.file.click()
       },
@@ -59,6 +78,7 @@ import {managerBeforeDetail} from 'api/admin'
         let id = this.$route.params.id
         managerBeforeDetail(id).then((res) => {
           if(!res.code){
+            res.data.house_type = this.getHouseTypeText(res.data.house_type)
              this.$set(this, 'adverObj', res.data)
           }else{
             alert(res.msg)

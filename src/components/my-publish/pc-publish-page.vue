@@ -40,7 +40,7 @@
             </div>
           </li>
           <li v-if="isPre">
-            <textarea placeholder="请输入其他要求..." v-model="formDate.desc"></textarea>
+            <textarea placeholder="请输入其他要求..." v-model="formDate.instruction"></textarea>
           </li>
           <li v-if="!isPre">
             <textarea placeholder="请输入您对房源的简单描述..." v-model="formDate.housedec"></textarea>
@@ -301,8 +301,8 @@
               { "id": "name","title": "姓名","needs":true, "placeholder":"请输入您的姓名" },
               { "id": "phone","title": "电话","needs":true, "placeholder":"请输入您的电话" },
               { "id": "business","title": "业务范围","needs":true, "placeholder":"请详细填写业务范围" },
-              { "id": "housetype","selectIndex":-1,"needs":true, "title": "房源类型", "list": ["厂房仓库", "办公写字楼", "店铺", "住房"] },
               search.areaname,
+              { "id": "houseType","selectIndex":-1,"needs":true, "title": "房源类型", "list": ["厂房仓库", "办公写字楼", "店铺", "住房"] },
               { "id": "address","title": "区域","needs":true, "placeholder":"请输入区域"},
               { "id": "transportation","title": "交通/车流量","needs":true, "placeholder":"请输入交通/车流量要求" },
               search.floor,
@@ -423,6 +423,7 @@
            _this.formDate.ageroundtwo = parseFloat(ageroundArr[1])
         }
         
+        
          //预租
         if(this.isPre){
           _this._preRentHouse()
@@ -472,6 +473,26 @@
       },
       _preRentHouse() {
         let _this = this
+        if(_this.formDate.houseType){
+          switch (_this.formDate.houseType) {
+            case "厂房仓库":
+              _this.formDate.houseType = 1
+              break;
+            case "办公写字楼":
+              _this.formDate.houseType = 2
+              break;
+            case "店铺":
+              _this.formDate.houseType = 3
+              break;
+            case "住房":
+              _this.formDate.houseType = 4
+              break;
+            default:
+              break;
+          }
+        }
+          delete _this.formDate.picAry
+          delete _this.formDate.showtypeAry
         addBefore(localStorage.getItem('usertoken'),this.formDate).then((res) => {
           if(!res.code){
             alert('提交成功')

@@ -485,6 +485,24 @@
       },
       _preRentHouse() {
         let _this = this
+        if(_this.formDate.houseType){
+          switch (_this.formDate.houseType) {
+            case "厂房仓库":
+              _this.formDate.houseType = 1
+              break;
+            case "办公写字楼":
+              _this.formDate.houseType = 2
+              break;
+            case "店铺":
+              _this.formDate.houseType = 3
+              break;
+            case "住房":
+              _this.formDate.houseType = 4
+              break;
+            default:
+              break;
+          }
+        }
         addBefore(localStorage.getItem('usertoken'),this.formDate).then((res) => {
           if(!res.code){
             alert('提交成功')

@@ -233,7 +233,7 @@
           <div><span>保安监控:</span>{{detial.monitoring || '--'}}</div>
         </div>
         <div class="textBox">
-          <div><span>停车位:</span>{{detial.parknum || '--'}}</div>
+          <div><span>停车位:</span>{{detial.hascarpark || '--'}}</div>
           <div><span>车位面积:</span>{{detial.carportarea || '--'}}㎡</div>
         </div>
         <div class="textBox">

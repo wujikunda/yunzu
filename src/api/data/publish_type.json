@@ -26,7 +26,7 @@
   "nearby":{ "id": "nearbyAry","title": "附近", "keyVal":"nearbyname", "arrSelectIndex":[],"select":true,  "list": ["交通","商城","公园","医院","学校","地铁"] },
   "lighting":{ "id": "lighting","title": "采光", "selectIndex":-1,  "list": ["差","一般","良好","很好"] },
   "monitoring":{ "id": "monitoring","title": "保安监控", "selectIndex":-1,  "list": ["有","无"] },
-  "parknum":{ "id": "parknum","title": "停车位", "selectIndex":-1,  "list": ["有","无"] },
+  "parknum":{ "id": "hascarpark","title": "停车位", "selectIndex":-1,  "list": ["有","无"] },
   "noise":{ "id": "noise","title": "噪音", "selectIndex":-1,  "list": ["安静","轻微","喧闹"] },
   "propertycharge":{ "id": "propertycharge","title": "物业费(元/月)","needs":true, "placeholder":"请输入物业费" },
   "healthcharge":{ "id": "healthcharge","title": "卫生费(元/月)", "placeholder":"请输入卫生费" },

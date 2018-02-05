@@ -324,7 +324,7 @@
           <div><span>保安监控:</span>{{detial.monitoring || '--'}}</div>
         </div>
         <div class="textBox">
-          <div><span>停车位:</span>{{detial.parknum || '--'}}</div>
+          <div><span>停车位:</span>{{detial.hascarpark || '--'}}</div>
         </div>
         <div class="textBox">
           <div><span>噪音:</span>{{detial.noise || '--'}}</div>
