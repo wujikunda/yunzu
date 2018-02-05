@@ -58,14 +58,10 @@
                   </div>
                   <div class="textBox">
                     <div><span>类型:</span>{{houseType(detial.house_type) || '--'}}</div>
-                  </div>
-                  <div class="textBox">
-                    <div v-if="areaList[detial.area_id]"><span>区域:</span>{{areaList[detial.area_id].areaname || '--'}}</div>
-                  </div>
-                  <div class="textBox">
                     <div><span>总价格:</span>{{detial.totalprice || '--'}}元</div>
                   </div>
                   <div class="textBox">
+                    <div v-if="areaList[detial.area_id]"><span>区域:</span>{{areaList[detial.area_id].areaname || '--'}}</div>
                     <div><span>发布时间:</span>{{_formatDate(detial.crate_date) || '--'}}</div>
                   </div>
                   <div class="showType">
@@ -111,7 +107,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import DetialType from 'components/home-detial/detial-type'
+  import DetialType from 'components/home-detial/pc-detial-type'
   import Slider from 'base/slider/slider'
   import Bdmap from 'base/bdmap/bdmap'
   import {mapGetters, mapMutations} from 'vuex'

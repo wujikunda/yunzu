@@ -20,7 +20,7 @@
             <b>{{item.title}}:</b>
             <div class="selectBox">
               <span :class="{'active': num==item.selectIndex}" @click="selectItem(item,num)" v-for="(list, num) in item.list" :key="num">{{list}}</span>
-              <between  v-if="item.udefine"  @getValue="_getValue($event, item)" :title="'自定义:'"></between>
+              <between  v-if="item.udefine"  @getValue="_getValue($event, item)" :surText="item.defineText" :title="'自定义:'"></between>
             </div>
           </li>
         </ul>
@@ -115,9 +115,10 @@
               search.propertyright,
               search.firecontrol,
               search.power,
+              search.haslift,
               search.powersupply,
               search.powercharge,
-              search.watercharge,
+              search.watercharge
             ]
             this.typeName = '厂房仓库高级筛选'
             break;
@@ -133,6 +134,7 @@
               search.nearpark,
               search.register,
               search.source,
+              search.haslift,
               search.propertyright,
               search.firecontrol
             ]
@@ -151,6 +153,7 @@
               search.nearpark,
               search.transportation,
               search.source,
+              search.haslift,
               search.propertyright,
               search.firecontrol,
               search.power,
@@ -168,12 +171,11 @@
               search.orientation,
               search.type,
               search.balcony,
-              search.furniture,
               search.stylelevel,
               search.lighting,
               search.monitoring,
               search.parknum,
-              search.elevator,
+              search.haslift,
               search.powercharge,
               search.watercharge
             ]
@@ -349,6 +351,7 @@
             display block
             white-space nowrap
             margin 0 10px
+            font-weight bold
           .selectBox
             box-sizing border-box
             display flex
@@ -367,7 +370,7 @@
               cursor pointer
               font-size $font-size-medium-x
               color $color-text-l
-              &.active,&.router-link-active 
+              &.active,&.router-link-active,&:hover
                 color $color-theme
               
                 

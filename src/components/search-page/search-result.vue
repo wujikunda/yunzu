@@ -8,7 +8,7 @@
             <img class="posImg" :src="item.picurl" @load="loadImage" @error="loaderror"  >
             <div class="nameBox">
               <span>{{item.title}}</span>
-              <span>{{item.pricename}}元/㎡</span>
+              <span>{{item.pricename}}元/㎡ &nbsp&nbsp {{item.spacename}}㎡</span>
             </div>
             <div class="nameBox">
               <span class="hotNum"><img src="~common/image/icon_fire.png" alt="">{{item.hot}}</span>

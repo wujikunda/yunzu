@@ -29,7 +29,7 @@
               <p>{{item.title}}</p>
             </div>
             <div class="nameBox">
-              <span>{{item.pricename}}元/㎡</span>
+              <span>{{item.pricename}}元/㎡ &nbsp&nbsp {{item.spacename}}㎡</span>
               <span>{{houseType(item.housetype)}}</span>
             </div>
             <div class="nameBox">

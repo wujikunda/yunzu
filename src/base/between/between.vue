@@ -1,7 +1,11 @@
 <template>
   <div class="inputBox">
     <b v-html="title"></b>
-    <input @click.stop.prevent="" type="text" @change.stop="pricenameIn($event,'min')"> - <input  @click.stop.prevent=""  type="text" @change.stop="pricenameIn($event,'max')">
+    {{surText.left}}
+    <input ref="inputf" @click.stop.prevent="" type="text" @change.stop="pricenameIn($event,'min')">
+    {{surText.mid}} 
+    <input  @click.stop.prevent=""   ref="inputb" type="text" @change.stop="pricenameIn($event,'max')">
+    {{surText.right}}
     <span v-show="confirmBtn" style="margin-top:5px"  class="inputBtn" @click.stop="pricenameIn($event,'confirm')">确认</span>
   </div>
 </template>
@@ -16,6 +20,16 @@
       title: {
         type: String,
         default: ""
+      },
+      surText:{
+        type: Object,
+        default() {
+          return {
+            left: "",
+            mid: "",
+            right: ""
+          }
+        }
       }
     },
     data() {
@@ -30,9 +44,13 @@
       pricenameIn(event,id){
         this.pricename[id] = event.target.value
         if(this.pricename.max && this.pricename.min ){
-          let text = this.pricename.min + '-' + this.pricename.max 
+          let text = this.surText.left + this.pricename.min + this.surText.mid + this.pricename.max + this.surText.right
           this.$emit('getValue', text)
         }
+      },
+      _refresh() {
+        this.$refs.inputf.value = ''
+        this.$refs.inputb.value = '' 
       }
     }
   }

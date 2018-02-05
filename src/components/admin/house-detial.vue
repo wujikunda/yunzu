@@ -59,7 +59,7 @@
                   </div>
                   <div class="textBox">
                     <div><span>类型:</span>{{houseType(detial.house_type) || '--'}}</div>
-                    <div><span>装修期:</span>{{detial.checkin || '--'}}</div>
+                    <div><span>装修期(天):</span>{{detial.checkin || '--'}}</div>
                   </div>
                   <div class="textBox">
                     <div><span>楼层:</span>{{detial.floor || '--'}}楼</div>

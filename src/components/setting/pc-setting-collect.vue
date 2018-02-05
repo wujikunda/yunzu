@@ -13,6 +13,7 @@
                 </div>
                 <div class="textCont">
                   {{item.pricename}}元/㎡
+                  &nbsp&nbsp {{item.spacename}}㎡
                   <span class="color-theme">{{houseType(item.housetype)}}</span>
                 </div>
                 <div class="textCont">

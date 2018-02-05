@@ -26,7 +26,8 @@
             <!-- <img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" alt=""  @load="loadImage" > -->
             <div class="nameBox">
               <span>{{item.title}}</span>
-              <span>{{item.pricename}}元/㎡</span>
+              <span>{{item.pricename}}元/㎡
+                  &nbsp&nbsp {{item.spacename}}㎡</span>
             </div>
             <div class="nameBox">
               <span class="hotNum"><img src="~common/image/icon_fire.png" alt="">{{item.hot}}</span>

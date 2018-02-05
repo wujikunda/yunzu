@@ -137,7 +137,7 @@
           pageIndex += 1
         }
         this.timer = setTimeout(() => {
-          this.slider.goToPage(pageIndex, 0, 400)
+          // this.slider.goToPage(pageIndex, 0, 400)
         }, this.interval)
       },
       _dotClick(index) {

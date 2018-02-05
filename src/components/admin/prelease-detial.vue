@@ -9,7 +9,7 @@
       <div class="inputBox"><span>电话号码</span> <input type="text" v-model="adverObj.phone" readonly></div>
       <div class="inputBox"><span>业务范围</span> <input type="text" v-model="adverObj.business" readonly></div>
       <div class="inputBox"><span>预租面积</span> <input type="text" v-model="adverObj.areaname" readonly></div>
-      <div class="inputBox"> <span>地址</span><input type="text" v-model="adverObj.address" readonly></div>
+      <div class="inputBox"> <span>区域</span><input type="text" v-model="adverObj.address" readonly></div>
       <div class="inputBox"> <span>交通/车流量</span><input type="text" v-model="adverObj.transportation" readonly></div>
       <div class="inputBox"><span>楼层</span> <input type="text" v-model="adverObj.floor" readonly></div>
       <div class="inputBox"><span>层高</span> <input type="text" v-model="adverObj.floorheight" readonly></div>

@@ -45,6 +45,9 @@ export function houseUpload(token, upobj, type) {
   if (objData.nearbyAry) {
     objData.nearbyAry = JSON.stringify(objData.nearbyAry)
   }
+  if (objData.furnitureAry) {
+    objData.furnitureAry = JSON.stringify(objData.furnitureAry)
+  }
   // return axios({
   //   url: url,
   //   method: 'get',

@@ -14,7 +14,8 @@
                   销量: {{item.hot}}
                 </div>
                 <div class="textCont">
-                  价格: {{item.pricename}}元/㎡
+                  {{item.pricename}}元/㎡
+                  &nbsp&nbsp {{item.spacename}}㎡
                 </div>
               </div>
                   <div class="textCont color-theme">{{houseType(item.housetype)}}</div>  

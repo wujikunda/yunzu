@@ -16,6 +16,7 @@
                 </div>
                 <div class="textCont">
                   价格: {{item.pricename}}元/㎡
+                  &nbsp&nbsp 面积:{{item.spacename}}㎡
                 </div>
               </div>
               <img class="selImg" v-show="selectList.indexOf(item) > -1" src="~common/image/secect_checked.png" alt="">

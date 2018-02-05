@@ -15,7 +15,8 @@
                   <span class="color-theme">{{houseType(item.housetype)}}</span>
                 </div>
                 <div class="textCont">
-                  价格: {{item.pricename}}元/㎡
+                  {{item.pricename}}元/㎡
+                  &nbsp&nbsp {{item.spacename}}㎡
                   <span :style="'color:' + getStateColor(item.state)">{{getStateText(item.state)}}</span>
                 </div>
               </div>

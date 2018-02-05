@@ -200,13 +200,14 @@
     width 143px
     height 35px
 .tab 
-  width 300px
+  width 360px
   display flex
-  font-size: $font-size-medium;
+  font-size: $font-size-large;
   .tab-items 
     &>.router-link-active 
       .tab-link 
         color: $color-theme;
+        
   .tab-item 
     display block
     padding 10px
@@ -215,5 +216,8 @@
     .tab-link 
       color: $color-text-l
       line-height: 20px
+      font-weight bold
       display : block
+      &:hover
+        color: $color-theme;
 </style>

@@ -17,7 +17,8 @@
                    <span class="color-theme">{{houseType(item.housetype)}}</span>
                 </div>
                 <div class="textCont">
-                  价格: {{item.pricename}}元/㎡
+                  {{item.pricename}}元/㎡
+                  &nbsp&nbsp {{item.spacename}}㎡
                 </div>
               </div>
               <img class="selImg" v-show="selectList.indexOf(item) > -1" src="~common/image/secect_checked.png" alt="">

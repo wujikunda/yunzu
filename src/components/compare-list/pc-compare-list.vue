@@ -21,6 +21,7 @@
                 </div>
                 <div class="textCont">
                   {{item.pricename}}元/㎡
+                  | {{item.spacename}}㎡
                    | {{houseType(item.housetype)}}
                 </div>
                 <div class="textCont contBtnBox">

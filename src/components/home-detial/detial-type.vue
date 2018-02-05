@@ -9,7 +9,7 @@
           <div><span>地址:</span>{{paycash? detial.address || '--' : '缴纳押金后可见'}}</div>
         </div>
         <div class="textBox">
-          <div><span>装修期:</span>{{detial.checkin || '--'}}</div>
+          <div><span>装修期(天):</span>{{detial.checkin || '--'}}</div>
         </div>
         <div class="textBox">
           <div><span>楼层:</span>{{detial.floor || '--'}}</div>
@@ -24,25 +24,40 @@
           <div><span>年限:</span>{{detial.ageround || '--'}}</div>
         </div>
         <div class="textBox">
-          <div><span>结构:</span>{{detial.structure || '--'}}</div>
-        </div>
-        <div class="textBox">
           <div><span>朝向:</span>{{detial.orientation || '--'}}</div>
           <div><span>扰民:</span>{{detial.affect || '--'}}</div>
         </div>
         <div class="textBox">
-          <div><span>排水量:</span>{{detial.awaywater || '--'}}</div>
-          <div><span>排污量:</span>{{detial.drain || '--'}}</div>
+          <div><span>结构:</span>{{detial.structure || '--'}}</div>
         </div>
         <div class="textBox">
-          <div><span>红线图:</span>{{detial.redchart || '--'}}</div>
-          <div><span>产权:</span>{{detial.propertyright}}</div>
+          <div><span>交通:</span>{{detial.transportation || '--'}}</div>
         </div>
         <div class="textBox">
           <div><span>水费:</span>{{detial.watercharge || '--'}}元/吨</div>
         </div>
         <div class="textBox">
           <div><span>电费:</span>{{detial.powercharge || '--'}}元/度</div>
+        </div>
+        <div class="textBox">
+          <div><span>排水量:</span>{{detial.awaywater || '--'}}</div>
+          <div><span>排污量:</span>{{detial.drain || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>物业费:</span>{{detial.propertycharge || '--'}}元/月</div>
+        </div>
+        <div class="textBox">
+          <div><span>卫生费:</span>{{detial.healthcharge || '--'}}元/月</div>
+        </div>
+        <div class="textBox">
+          <div><span>是否有电梯:</span>{{detial.haslift || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>电梯数:</span>{{detial.liftnum || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>红线图:</span>{{detial.redchart || '--'}}</div>
+          <div><span>产权:</span>{{detial.propertyright}}</div>
         </div>
         <div class="textBox">
           <div><span>供电:</span>{{detial.power || '--'}}</div>
@@ -56,9 +71,7 @@
         <div class="textBox">
           <div><span>车辆进出长度:</span>{{detial.carwidth || '--'}}米</div>
         </div>
-        <div class="textBox">
-          <div><span>交通:</span>{{detial.transportation || '--'}}</div>
-        </div>
+        
         <div class="textBox">
           <div><span>车位个数:</span>{{detial.carportnum || '--'}}</div>
         </div>
@@ -81,7 +94,7 @@
           <div><span>地址:</span>{{paycash? detial.address || '--' : '缴纳押金后可见'}}</div>
         </div>
         <div class="textBox">
-          <div><span>装修期:</span>{{detial.checkin || '--'}}</div>
+          <div><span>装修期(天):</span>{{detial.checkin || '--'}}</div>
         </div>
         <div class="textBox">
           <div><span>楼层:</span>{{detial.floor || '--'}}</div>
@@ -97,6 +110,24 @@
         </div>
         <div class="textBox">
           <div><span>结构:</span>{{detial.structure || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>水费:</span>{{detial.watercharge || '--'}}元/吨</div>
+        </div>
+        <div class="textBox">
+          <div><span>电费:</span>{{detial.powercharge || '--'}}元/度</div>
+        </div>
+        <div class="textBox">
+          <div><span>物业费:</span>{{detial.propertycharge || '--'}}元/月</div>
+        </div>
+        <div class="textBox">
+          <div><span>卫生费:</span>{{detial.healthcharge || '--'}}元/月</div>
+        </div>
+        <div class="textBox">
+          <div><span>是否有电梯:</span>{{detial.haslift || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>电梯数:</span>{{detial.liftnum || '--'}}</div>
         </div>
         <div class="textBox">
           <div><span>车位个数:</span>{{detial.carportnum || '--'}}</div>
@@ -135,7 +166,7 @@
           <div><span>地址:</span>{{paycash? detial.address || '--' : '缴纳押金后可见'}}</div>
         </div>
         <div class="textBox">
-          <div><span>装修期:</span>{{detial.checkin || '--'}}</div>
+          <div><span>装修期(天):</span>{{detial.checkin || '--'}}</div>
         </div>
         <div class="textBox">
           <div><span>楼层:</span>{{detial.floor || '--'}}</div>
@@ -168,6 +199,24 @@
           <div><span>交通:</span>{{detial.transportation || '--'}}</div>
         </div>
         <div class="textBox">
+          <div><span>水费:</span>{{detial.watercharge || '--'}}元/吨</div>
+        </div>
+        <div class="textBox">
+          <div><span>电费:</span>{{detial.powercharge || '--'}}元/度</div>
+        </div>
+        <div class="textBox">
+          <div><span>物业费:</span>{{detial.propertycharge || '--'}}元/月</div>
+        </div>
+        <div class="textBox">
+          <div><span>卫生费:</span>{{detial.healthcharge || '--'}}元/月</div>
+        </div>
+        <div class="textBox">
+          <div><span>是否有电梯:</span>{{detial.haslift || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>电梯数:</span>{{detial.liftnum || '--'}}</div>
+        </div>
+        <div class="textBox">
           <div><span>附近停车场:</span>{{detial.nearpark || '--'}}</div>
         </div>
         <div class="textBox">
@@ -195,7 +244,7 @@
           <div><span>地址:</span>{{paycash? detial.address || '--' : '缴纳押金后可见'}}</div>
         </div>
         <div class="textBox">
-          <div><span>装修期:</span>{{detial.checkin || '--'}}</div>
+          <div><span>装修期(天):</span>{{detial.checkin || '--'}}</div>
         </div>
         <div class="textBox">
           <div><span>楼层:</span>{{detial.floor || '--'}}</div>
@@ -203,9 +252,7 @@
         <div class="textBox">
           <div><span>付款方式:</span>{{detial.payway || '--'}}</div>
         </div>
-        <div class="textBox">
-          <div><span>竣工时间:</span>{{detial.completetime || '--'}}</div>
-        </div>
+        
         <div class="textBox">
           <div><span>出租年限:</span>{{detial.ageround || '--'}}</div>
         </div>
@@ -214,6 +261,9 @@
         </div>
         <div class="textBox">
           <div><span>年代:</span>{{detial.hourseage || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>装修程度:</span>{{detial.stylelevel || '--'}}</div>
         </div>
         <div class="textBox">
           <div><span>电费:</span>{{detial.powercharge || '--'}}元/度</div>
@@ -225,10 +275,10 @@
           <div><span>物业费:</span>{{detial.propertycharge || '--'}}元/月</div>
         </div>
         <div class="textBox">
-          <div><span>类型:</span>{{detial.type || '--'}}</div>
+          <div><span>卫生费:</span>{{detial.healthcharge || '--'}}元/月</div>
         </div>
         <div class="textBox">
-          <div><span>是否有阳台:</span>{{detial.type || '--'}}</div>
+          <div><span>类型:</span>{{detial.type || '--'}}</div>
         </div>
         <div class="textBox">
           <div><span>是否有阳台:</span>{{detial.balcony || '--'}}</div>
@@ -255,18 +305,14 @@
           <div><span>装修风格:</span>{{detial.style || '--'}}</div>
         </div>
         <div class="textBox">
-          <div><span>家具:</span>{{detial.furniture || '--'}}</div>
-        </div>
-        <div class="textBox">
-          <div><span>装修程度:</span>{{detial.stylelevel || '--'}}</div>
+          <div><span>家具:</span>
+            <b v-for="place in detial.furniture_ary" v-html="place.furniturename +' | '"></b>
+          </div>
         </div>
         <div class="textBox">
           <div><span>附近:</span>
             <b v-for="place in detial.nearby" v-html="place.nearbyname +' | '"></b>
           </div>
-        </div>
-        <div class="textBox">
-          <div><span>车位个数:</span>{{detial.carportnum || '--'}}</div>
         </div>
         <div class="textBox">
           <div><span>车位面积:</span>{{detial.carportarea || '--'}}㎡</div>
@@ -284,7 +330,13 @@
           <div><span>噪音:</span>{{detial.noise || '--'}}</div>
         </div>
         <div class="textBox">
-          <div><span>电梯:</span>{{detial.elevator || '--'}}</div>
+          <div><span>是否有电梯:</span>{{detial.haslift || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>电梯数:</span>{{detial.liftnum || '--'}}</div>
+        </div>
+        <div class="textBox">
+          <div><span>竣工时间:</span>{{detial.completetime || '--'}}</div>
         </div>
         <div class="textBox">
           <div><span>房源描述:</span>{{detial.housedec || '--'}}</div>

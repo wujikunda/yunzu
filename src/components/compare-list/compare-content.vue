@@ -12,8 +12,8 @@
           </ul>
           <p>对比信息</p>
           <ul class="tableBox" v-if="compareCont[1].title">
-            <li v-for="(item, index, key ) in compareCont[1]" :key="key" v-if="showID.hasOwnProperty(index)">
-              <span>{{showID[index]}}</span><div>{{compareCont[0][index] || '--'}}</div><div>{{compareCont[1][index] || '--'}}</div>
+            <li v-for="(item, index) in showRound" :key="index" v-if="compareCont[1].hasOwnProperty(item) && showID.hasOwnProperty(item) ">
+              <span>{{showID[item]}}</span><div>{{compareCont[0][item] || '--'}}</div><div>{{compareCont[1][item] || '--'}}</div>
             </li>
           </ul>
         </div>
@@ -37,6 +37,65 @@
         compareCont:[
           {},{}
         ],
+        showRound: [
+          "title",
+          "pricename",
+          "areaname",
+          "type",
+          "floor",
+          "floorheight",
+          "checkin",
+          "tenancy", ,
+          "payway",
+          "rentway",
+          "structure",
+          "transportation",
+          "powercharge",
+          "watercharge",
+          "source",
+          "redchart",
+          "propertyright",
+          "firecontrol",
+          "carportnum",
+          "nearpark",
+          "address",
+          "ageroundone",
+          "ageroundtwo",
+          "ageround",
+          "housedec",
+          "owntel",
+          "ownname",
+          "addressdesc",
+          "city_id",
+          "area_id",
+          "state",
+          "user_id",
+          "update_date",
+          "crate_date",
+          "showtype_ary",
+          "hot",
+          "baseid",
+          "power",
+          "carwidth",
+          "orientation",
+          "affect",
+          "awaywater",
+          "drain",
+          "qs",
+          "longitude",
+          "latitude",
+          "is_collect",
+          "is_in_comparison",
+          "shownum",
+          "powersupply",
+          "carportarea",
+          "totalprice",
+          "propertycharge",
+          "healthcharge",
+          "haslift",
+          "liftnum",
+          "nearlist"
+        ],
         showID:{
           address:'导航地址',
           addressdesc:'周边描述',
@@ -46,17 +105,18 @@
           carportarea:'车位面积',
           carportnum:'车位个数',
           carwidth:'车辆进出长度',
-          checkin:'装修期',
+          checkin:'装修期(天)',
           drain:'排污量:',
           firecontrol:'消防措施',
           floor:'楼层',
+          floorheight:'层高(米)',
           housedec:'房源描述',
           nearpark:'附近停车场',
           orientation:'朝向',
           payway:'付款方式',
           power:'供电',
-          powersupply:'供电率',
-          powercharge:'电费',
+          powersupply:'供电率(千瓦)',
+          powercharge:'电费(元/度)',
           propertyright:'产权',
           pricename:'价格',
           register:'能否注册公司',
@@ -69,9 +129,9 @@
           totalprice:'总价',
           transportation:'交通',
           type:'类型',
-          watercharge:'水费',
+          watercharge:'水费(元/吨)',
           hourseage:'年代',
-          propertycharge:'物业费',
+          propertycharge:'物业费(元/月)',
           balcony:'是否有阳台',
           developers:'开发商',
           propertycompany:'物业公司',
@@ -86,7 +146,9 @@
           lighting:'采光',
           monitoring:'保安监控',
           noise:'噪音',
-          elevator:'电梯'
+          haslift:'是否有电梯',
+          liftnum:'电梯数',
+          healthcharge:'卫生费(元/月)'
         }
       }
     },

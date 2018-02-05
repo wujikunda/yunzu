@@ -128,9 +128,9 @@ import Scroll from 'base/scroll/scroll'
         align-items: center
         justify-content center
         height 40px
-        
         span 
-          font-size: $font-size-medium
+          font-size: $font-size-medium-x
+          font-weight bold
         img
           width: 12px
           margin 0 6px
@@ -188,6 +188,7 @@ import Scroll from 'base/scroll/scroll'
       justify-content center
       align-items center
       height 40px
-      .active
+      .active,&:hover
         color: $color-theme
+
 </style>

@@ -15,7 +15,7 @@
             <div class="selectBox">
               <span :class="{'active': num==item.selectIndex}" @click="selectItem(item,num)" v-for="(list, num) in item.list" :key="num">{{list}}</span>
               <div class="inputBox" v-if="item.udefine" >
-                <between  @getValue="_getValue($event, item)" :title="'自定义:'"></between>
+                <between  v-if="item.udefine"  @getValue="_getValue($event, item)" :surText="item.defineText" :title="'自定义:'"></between>
               </div>
             </div>
           </li>
@@ -109,10 +109,11 @@
               search.source,
               search.propertyright,
               search.firecontrol,
+              search.haslift,
               search.power,
               search.powersupply,
               search.powercharge,
-              search.watercharge,
+              search.watercharge
             ]
             this.typeName = '厂房仓库高级筛选'
             break;
@@ -128,6 +129,7 @@
               search.nearpark,
               search.register,
               search.source,
+              search.haslift,
               search.propertyright,
               search.firecontrol
             ]
@@ -149,7 +151,8 @@
               search.propertyright,
               search.firecontrol,
               search.power,
-              search.powersupply
+              search.powersupply,
+              search.haslift
             ]
             this.typeName = '店面高级筛选'
             break;
@@ -163,12 +166,11 @@
               search.orientation,
               search.type,
               search.balcony,
-              search.furniture,
               search.stylelevel,
               search.lighting,
               search.monitoring,
               search.parknum,
-              search.elevator,
+              search.haslift,
               search.powercharge,
               search.watercharge
             ]

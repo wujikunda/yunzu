@@ -36,7 +36,7 @@
             <div class="pickerSelect" @click="showPicker(item,index)" v-if="!item.placeholder && !item.select && !item.udefine">{{item.selectIndex !== -1 ? item.list[item.selectIndex] : '请选择'}}</div>
             <img v-if="!item.placeholder && !item.select && !item.udefine" src="~common/image/icon_arror_right.png">
             <div class="udefine"  v-if="item.udefine" >
-              <between @getValue="_getValue($event, item)"></between>
+              <between @getValue="_getValue($event, item)" :surText="item.defineText" ref="between"></between>
             </div>
             <div class="arrBox" v-if="item.select">
               <b>{{item.title}} <i v-if="item.needs">*</i></b>
@@ -121,12 +121,17 @@
     },
     methods: {
       _getValue(event,item) {
-        this.formDate[item.id] = event + '年'
+        this.formDate[item.id] = event
       },
       _getPublishType() {
         var search  = deepCopy(getPubliList())
         this.publishTypeList = []
         this.uploadImgs = []
+        if(this.$refs.between) {
+          for (let index = 0; index < this.$refs.between.length; index++) {
+            const element = this.$refs.between[index]._refresh()
+          }
+        }
         this.formDate = {
           'picAry':[
           ],
@@ -150,9 +155,14 @@
               search.ageround,
               search.checkin,
               search.payway,
+              search.floor,
               search.floorheight,
               search.structure,
               search.transportation,
+              search.powercharge,
+              search.watercharge,
+              search.propertycharge,
+              search.healthcharge,
               search.carwidth,
               search.carportnum,
               search.carportarea,
@@ -161,15 +171,15 @@
               search.affect,
               search.awaywater,
               search.drain,
-              search.powercharge,
-              search.watercharge,
               search.propertyright,
               search.firecontrol,
               search.redchart,
               search.power,
-              search.powersupply
+              search.powersupply,
+              search.haslift,
+              search.liftnum
             ]
-            this.typeName = '厂房仓库高级筛选'
+            this.typeName = '厂房仓库发布'
             break;
           case '2':
             this.publishTypeList = [
@@ -191,14 +201,21 @@
               search.carportarea,
               search.register,
               search.floor,
+              search.floorheight,
               search.structure,
+              search.powercharge,
+              search.watercharge,
+              search.propertycharge,
+              search.healthcharge,
               search.source,
               search.propertyright,
               search.redchart,
               search.firecontrol,
-              search.orientation
+              search.orientation,
+              search.haslift,
+              search.liftnum
             ]
-            this.typeName = '办公写字楼高级筛选'
+            this.typeName = '办公写字楼发布'
             break;
           case '3':
             this.publishTypeList = [
@@ -219,17 +236,24 @@
               search.nearpark,
               search.carportnum,
               search.carportarea,
-              search.transportation,
               search.floor,
+              search.floorheight,
               search.structure,
+              search.transportation,
+              search.powercharge,
+              search.watercharge,
               search.source,
               search.propertyright,
+              search.propertycharge,
+              search.healthcharge,
               search.redchart,
               search.firecontrol,
               search.power,
-              search.powersupply
+              search.powersupply,
+              search.haslift,
+              search.liftnum
             ]
-            this.typeName = '店面高级筛选'
+            this.typeName = '店面发布'
             break;
           case '4':
             this.publishTypeList = [
@@ -239,8 +263,8 @@
               this.areaidListobj,
               search.address,
               search.areaname,
-              search.pricename,
-              search.totalprice,
+              { "id": "pricename", "title": "价格 (元/㎡)", "placeholder":"请输入价格"  },
+              { "id": "totalprice", "title": "总价格 (元)", "needs":true, "placeholder":"请输入总价格"},
               search.rentway,
               search.payway,
               search.completetime,
@@ -248,43 +272,47 @@
               search.ageround,
               search.source,
               search.checkin,
+              search.floor,
               search.floorheight,
               search.orientation,
               search.hourseage,
               search.powercharge,
               search.watercharge,
-              { "id": "propertycharge","title": "物业费(元/月)","needs":true, "placeholder":"请输入物业费" },
+              search.propertycharge,
+              search.healthcharge,
               search.type,
               search.balcony,
-              { "id": "developers","title": "开发商","needs":true, "placeholder":"请输入开发商" },
-              { "id": "propertycompany","title": "物业公司","needs":true, "placeholder":"请输入物业公司" },
-              { "id": "sharedarea","title": "公摊比例","needs":true, "placeholder":"请输入公摊比例" },
+              { "id": "developers","title": "开发商", "placeholder":"请输入开发商" },
+              { "id": "propertycompany","title": "物业公司", "placeholder":"请输入物业公司" },
+              { "id": "sharedarea","title": "公摊比例", "placeholder":"请输入公摊比例" },
               { "id": "households","title": "总户数", "placeholder":"请输入总户数" },
               { "id": "plotratio","title": "容积率", "placeholder":"请输入容积率" },
               { "id": "greenrate","title": "绿化率", "placeholder":"请输入绿化率" },
               { "id": "brandmessage","title": "品牌信息", "placeholder":"请输入品牌信息" },
               { "id": "style","title": "装修风格", "placeholder":"请输入装修风格" },
-              { "id": "furniture","title": "家具", "placeholder":"请输入家具" },
+              search.furniture,
               { "id": "stylelevel","title": "装修程度", "placeholder":"请输入装修程度" },
               search.nearby,
-              search.carportnum,
               search.carportarea,
               search.lighting,
               search.monitoring,
               search.parknum,
               search.noise,
-              search.elevator
+              search.haslift,
+              search.liftnum
             ]
             this.formDate.nearbyAry = []
-            this.typeName = '住房高级筛选'
+            this.formDate.furnitureAry = []
+            this.typeName = '住房发布'
             break;
           case 'preLease':
             this.publishTypeList = [
               { "id": "name","title": "姓名","needs":true, "placeholder":"请输入您的姓名" },
               { "id": "phone","title": "电话","needs":true, "placeholder":"请输入您的电话" },
-              { "id": "business","title": "业务范围","needs":true, "placeholder":"请输入业务范围" },
+              { "id": "business","title": "业务范围","needs":true, "placeholder":"请详细填写业务范围" },
+              { "id": "housetype","selectIndex":-1,"needs":true, "title": "房源类型", "list": ["厂房仓库", "办公写字楼", "店铺", "住房"] },
               search.areaname,
-              search.address,
+              { "id": "address","title": "区域","needs":true, "placeholder":"请输入区域"},
               { "id": "transportation","title": "交通/车流量","needs":true, "placeholder":"请输入交通/车流量要求" },
               search.floor,
               { "id": "floorheight","title": "层高","needs":true, "placeholder":"请输入层高" },
@@ -297,7 +325,7 @@
           default:
             break;
         }
-        
+        document.title = this.typeName
       },
       toSelectCity() {
         this.$router.push({
@@ -374,7 +402,9 @@
           return
         }
         _this.formDate.areaname = parseFloat(_this.formDate.areaname)
-        _this.formDate.pricename = parseFloat(_this.formDate.pricename)
+        if(_this.formDate.pricename) {
+          _this.formDate.pricename = parseFloat(_this.formDate.pricename)
+        }
         if(_this.formDate.floor){
            if(_this.formDate.floor === '10层以上'){
              _this.formDate.floor = 11
@@ -397,6 +427,9 @@
         }
         if(_this.formDate.powersupply){
            _this.formDate.powersupply = parseFloat(_this.formDate.powersupply)
+        }
+        if(_this.formDate.healthcharge){
+           _this.formDate.healthcharge = parseFloat(_this.formDate.healthcharge)
         }
         if(_this.formDate.ageround){
             let ageroundArr = _this.formDate.ageround.split('-')
