@@ -1,7 +1,8 @@
-# vuedemo
+# 云租平台
 
-> A Vue.js project
-
+> 基于VUE开发的租房平台,兼容PC和移动端
+- http://58zupo.com/
+- http://yunzu.wjkapp.top
 ## Build Setup
 
 ``` bash
